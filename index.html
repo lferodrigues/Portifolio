@@ -46,7 +46,7 @@ body, html {
   line-height: 1.8;
 }
 
-/* Full height image header */
+/*Cabeçalho da imagem em altura total */
 .bgimg-1 {
   background-position: center;
   background-size: cover;
@@ -64,7 +64,7 @@ body, html {
 </head>
 <body>
 
-<!-- Navbar (sit on top) -->
+<!-- Navbar -->
 <div class="w3-top">
   <div class="w3-bar w3-white w3-card" id="myNavbar">
     <a href="https://feliperodrigues.net/" class="w3-bar-item w3-button w3-wide"><img class="w3-image w3-round-large" src="Assets/img/banner4.png" alt="Home" width="100" height="100" ></a></a>
@@ -75,13 +75,11 @@ body, html {
       <a href="#work" class="w3-bar-item w3-button"><i class="fa fa-th"></i> Certificações</a>
       <a href="#contact" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> Contato</a>
     </div>
-    <!-- Hide right-floated links on small screens and replace them with a menu icon -->
 
-   
   </div>
 </div>
 
-<!-- Sidebar on small screens when clicking the menu icon -->
+<!-- Barra lateral em telas pequenas ao clicar no ícone do menu - Não utilizado na primeira versão -->
 <nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium " style="display:none" id="mySidebar">
  
   </nav>
@@ -107,7 +105,7 @@ body, html {
 
 </header>
 
-<!-- About Section -->
+<!-- Sobre -->
 <div class="w3-container" style="padding:128px 16px" id="about">
   <h3 class="w3-center">Sobre</h3>
   <div class="w3-row-padding w3-center" style="margin-top:64px">
@@ -134,13 +132,13 @@ body, html {
   </div>
 </div>
 
-<!-- Promo Section - "We know design" -->
+<!--Bioggrafia -->
 <div class="w3-container  w3-dark-grey" style="padding:128px 16px" id="bio">
   <div class="w3-row-padding">
     <div class="w3-col m6">
       <center> <h3>Biografia</h3> </center>
 	  <br>
-      <p>Mestrando do Curso de Ciencias da Computação UFJF - Turma 2023.1<br>
+      <p>Mestrando no Curso de Ciencias da Computação UFJF - Turma 2023.1<br>
 	  Graduado em Analises e Desenvolvimento de Sistemas - Estacio de Sá Turma 2017.1<br>
 	  Possui varios cursos tecnicos em Tecnologia da Informação e Segurança da Informação.
 	  <br> Atualmente Trabalha na Unimed São João Nepomuceno
@@ -291,7 +289,7 @@ body, html {
 </div>
 
 
-<!-- Contact Section -->
+<!-- Contato -->
 <div class="w3-container w3-dark-grey" style="padding:40px 16px" id="contact">
   <h3 class="w3-center">Contato</h3>
   <div class="w3-row-padding" style="margin-top:64px">
@@ -348,7 +346,7 @@ body, html {
         exibirAnoAtual();
     </script>
 <script>
-// Modal Image Gallery
+// Modal de Imagens
 function onClick(element) {
   document.getElementById("img01").src = element.src;
   document.getElementById("modal01").style.display = "block";
@@ -357,7 +355,7 @@ function onClick(element) {
 }
 
 
-// Toggle between showing and hiding the sidebar when clicking the menu icon
+// Alternar entre mostrar e ocultar a barra lateral ao clicar no ícone do menu
 var mySidebar = document.getElementById("mySidebar");
 
 function w3_open() {
@@ -368,7 +366,7 @@ function w3_open() {
   }
 }
 
-// Close the sidebar with the close button
+//Feche a barra lateral com o botão Fechar - Não utilizado na primeira versão
 function w3_close() {
     mySidebar.style.display = "none";
 }
@@ -380,7 +378,6 @@ function w3_close() {
 
          
     
-// Modal Image Gallery
 
 </script>
 
