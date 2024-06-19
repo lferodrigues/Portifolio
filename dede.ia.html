@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dedé I.A a sua geradora de prompts Virtual</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dedé I.A a sua geradora de prompts Virtual</h1>
+        <p>Digite o tema do seu prompt:</p>
+        <textarea id="userInput" rows="4" cols="50" placeholder="Digite o tema aqui..."></textarea>
+        <br>
+        <button onclick="enviarNecessidade()">Enviar</button>
+    </div>
+
+    <script>
+        function enviarNecessidade() {
+            var tema = document.getElementById('userInput').value.trim();
+
+            if (tema !== '') {
+                gerarPromptProfissional(tema);
+            } else {
+                alert('Por favor, digite o tema antes de enviar.');
+            }
+        }
+
+        function gerarPromptProfissional(tema) {
+            var promptProfissional = `Estou desenvolvendo um conteúdo sobre "${tema}". Por favor, gere um texto que inclua as seguintes seções:\n\n1. Introdução\n2. Contexto e importância do tema\n3. Principais pontos e argumentos\n4. Exemplos e casos práticos\n5. Conclusão e sugestões adicionais\n\nO texto deve ser claro, conciso e informativo, com referências a recursos adicionais, se aplicável.`;
+
+            mostrarResposta(promptProfissional);
+        }
+
+        function mostrarResposta(prompt) {
+            var respostaContainer = document.createElement('div');
+            respostaContainer.style.backgroundColor = '#e9ecef';
+            respostaContainer.style.padding = '10px';
+            respostaContainer.style.borderRadius = '4px';
+            respostaContainer.style.marginTop = '20px';
+            respostaContainer.style.textAlign = 'left';
+            respostaContainer.innerText = prompt;
+
+            var container = document.querySelector('.container');
+            var oldResposta = document.getElementById('resposta');
+            if (oldResposta) {
+                container.removeChild(oldResposta);
+            }
+            respostaContainer.id = 'resposta';
+            container.appendChild(respostaContainer);
+        }
+    </script>
+</body>
+</html>
