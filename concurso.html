@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./Assets/img/icone.png" type="image/png">
+    <link rel="stylesheet" type="text/css" href="./Assets/css/estilo-temp.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <meta http-equiv="refresh" content="2; url=https://drive.google.com/drive/folders/15wdw0Hre4_G5R4Qsbcs9QWLrr3B3XqUN?usp=drive_link">
+    <title>Felipe Rodrigues |Esquadrão de Elite - PF/title>
+</head>
+
+<body>
+    <img class="pre-nav-image" src="./Assets/img/banner04.png" alt="Logo">
+    <!--Efeito das engrenagem-->
+	<p> Redirencionando para o curso </p>
+    <div class="engrenagem"> </div>
+    <div class="content">
+        <div class="construction">
+            <span class="progress">0%</span>
+        </div>
+    </div>
+    <div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <a href="https://feliperodrigues.net"><img
+                    src="./Assets/img/banner04.png" alt="Logo da Zapher Security"></a>
+            <p>© <span id="currentYear"></span> Todos os direitos reservados</p>
+        </div>
+
+    </footer>
+    <script>
+        // Atualiza o ano no rodapé
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        // Atualiza a numeração de 0% a 100% em 5 segundos
+        let progressSpan = document.querySelector('.progress');
+        let progress = 0;
+        let interval = setInterval(function () {
+            progress += 6; // Incremento de 1% a cada 100 milissegundos
+            if (progress > 100) {
+                clearInterval(interval);
+            } else {
+                progressSpan.textContent = progress + '%';
+            }
+        }, 50); // Intervalo de 50 milissegundos
+    </script>
+</body>
+
+</html>
