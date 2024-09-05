@@ -59,6 +59,10 @@ body, html {
 
 
 }
+#slideshow {
+          transition: opacity 1s ease-in-out;
+          opacity: 0;
+      }
 </style>
 
 </head>
@@ -153,7 +157,8 @@ body, html {
 	  <p><a href="https://github.com/lferodrigues" class="w3-button w3-black"><i > </i> <img src="Assets/img/github.png" alt="Ícone" width="20" height="20"> Github</a></p>
     </div>
     <div class="w3-col m6">
-      <img class="w3-image w3-round-large" src="Assets/img/felipe.jpg" alt="Luis e seu irmao" width="700" height="394">
+    <img class="w3-image w3-round-large" id="slideshow" src="Assets/img/felipe.jpg" alt="Felipe" width="700" height="394" onload="this.style.opacity=1">
+</div>
     </div>
   </div>
 </div>
@@ -643,6 +648,28 @@ body, html {
    <p class= "w3-section w3-center"  id="anoAtual"></p>
 </footer>
 <script>
+var images = [
+            "Assets/img/felipe.jpg",
+            "Assets/img/office.jpeg",
+            "Assets/img/excel.jpeg",
+            "Assets/img/word.jpeg",
+            "Assets/img/canva.jpeg",
+            "Assets/img/senai.jpeg"
+        ];
+        var currentIndex = 0;
+
+        function changeImage() {
+            var img = document.getElementById("slideshow");
+            img.style.opacity = 0;
+            setTimeout(function() {
+                currentIndex = (currentIndex + 1) % images.length;
+                img.src = images[currentIndex];
+                img.style.opacity = 1;
+            }, 1000);
+        }
+
+        setInterval(changeImage, 5000);
+
         function exibirAnoAtual() {
             // Obtém a data atual
             const dataAtual = new Date();
@@ -659,6 +686,9 @@ body, html {
 
         // Chama a função para exibir o ano atual
         exibirAnoAtual();
+
+        // muda imagem
+
     </script>
 <script>
 // Modal de Imagens
@@ -685,6 +715,7 @@ function w3_open() {
 function w3_close() {
     mySidebar.style.display = "none";
 }
+
 </script>
 
 <script>
