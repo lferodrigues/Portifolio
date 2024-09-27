@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./Assets/img/icone.png" type="image/png">
+    <link rel="stylesheet" type="text/css" href="./Assets/css/estilo-temp.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="icon" href="Assets/img/logo.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="Assets/img/logo.ico" type="image/x-icon" />
+    
+    <title>Felipe Rodrigues |Automação de processo</title>
+</head>
+<body>
+    <a href="https://feliperodrigues.net"><img class="pre-nav-image" src="./Assets/img/banner04.png" alt="Logo"></a>
+
+    <h2>Solicite seu orçamento:</h2>
+    <form onsubmit="event.preventDefault(); enviarWhatsApp_excel();">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+
+        <label for="sobrenome">Sobrenome:</label>
+        <input type="text" id="sobrenome" name="sobrenome" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <button type="submit">Enviar</button>
+    </form>
+    <footer>
+        <div class="footer-content">
+            <a href="https://feliperodrigues.net"><img
+                    src="./Assets/img/banner04.png" alt="Logo da Zapher Security"></a>
+            <p>© <span id="currentYear"></span> Todos os direitos reservados</p>
+        </div>
+
+    </footer>
+    <script src="./Assets/js/scripts.js"></script>
+</body>
+
+</html>
