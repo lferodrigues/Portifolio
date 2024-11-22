@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecionando...</title>
+</head>
+<body>
+  <script>
+    // Função para buscar o código na URL e redirecionar
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+
+    // Descodificar o código para gerar o link real
+    if (code) {
+      // Aqui você pode usar o 'code' para construir a URL real, por exemplo:
+      const [name, date, price] = code.split('-');
+      const realLink = `https://feliperodrigues.net/assinatura.html?name=${name}&date=${date}&price=${price}`;
+      window.location.href = realLink; // Redireciona para o link real
+    } else {
+      alert("Código inválido.");
+    }
+  </script>
+</body>
+</html>
