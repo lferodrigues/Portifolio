@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Informações da Excursão</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+    }
+    input, button {
+      width: 100%;
+      margin-top: 5px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Informações da Excursão</h1>
+    <form id="excursion-form">
+      <label for="excursion-name">Nome da Excursão:</label>
+      <input type="text" id="excursion-name" placeholder="Digite o nome da excursão" required>
+
+      <label for="excursion-date">Data da Excursão:</label>
+      <input type="date" id="excursion-date" required>
+
+      <label for="excursion-price">Valor da Excursão (R$):</label>
+      <input type="number" id="excursion-price" placeholder="Digite o valor da excursão" required>
+
+      <button type="button" id="generate-link">Gerar Link</button>
+    </form>
+    <p id="generated-link" style="margin-top: 20px; display: none;">
+      Link gerado: <a id="link" href="#" target="_blank"></a>
+    </p>
+  </div>
+
+  <script>
+    document.getElementById('generate-link').addEventListener('click', () => {
+      const name = encodeURIComponent(document.getElementById('excursion-name').value);
+      const date = encodeURIComponent(document.getElementById('excursion-date').value);
+      const price = encodeURIComponent(document.getElementById('excursion-price').value);
+
+      if (!name || !date || !price) {
+        alert('Por favor, preencha todos os campos.');
+        return;
+      }
+
+      const link = `https://feliperodrigues.net/contrato.html?name=${name}&date=${date}&price=${price}`;
+      const generatedLink = document.getElementById('generated-link');
+      const linkElement = document.getElementById('link');
+
+      linkElement.href = link;
+      linkElement.textContent = link;
+      generatedLink.style.display = 'block';
+    });
+  </script>
+</body>
+</html>
