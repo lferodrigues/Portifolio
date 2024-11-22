@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contrato de Viagem</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+    }
+    input, canvas, button {
+      width: 100%;
+      margin-top: 5px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    #signature {
+      border: 1px solid #000;
+      height: 150px;
+      touch-action: none; /* Evita o comportamento padrão de zoom em dispositivos móveis */
+    }
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Contrato de Viagem</h1>
+    <form id="travel-contract">
+      <label for="name">Nome:</label>
+      <input type="text" id="name" placeholder="Digite seu nome" required>
+
+      <label for="cpf">CPF:</label>
+      <input type="text" id="cpf" placeholder="Digite seu CPF" required>
+
+      <label for="contact">Contato:</label>
+      <input type="text" id="contact" placeholder="Digite seu contato" required>
+
+      <label for="signature">Assinatura:</label>
+      <canvas id="signature"></canvas>
+      <div class="actions">
+        <button type="button" id="clear-signature">Limpar Assinatura</button>
+        <button type="button" id="generate-pdf">Gerar PDF</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // Configuração do Canvas para assinatura
+    const canvas = document.getElementById('signature');
+    const ctx = canvas.getContext('2d');
+    let isSigning = false;
+    let lastX = 0;
+    let lastY = 0;
+
+    // Configurar o tamanho do canvas para dispositivos móveis
+    function resizeCanvas() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Funções de desenho
+    function startDrawing(x, y) {
+      isSigning = true;
+      lastX = x;
+      lastY = y;
+    }
+
+    function draw(x, y) {
+      if (!isSigning) return;
+      ctx.lineWidth = 2; // Ajuste da espessura da linha
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = '#000';
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(x, y);
+      ctx.stroke();
+      lastX = x;
+      lastY = y;
+    }
+
+    function stopDrawing() {
+      isSigning = false;
+    }
+
+    // Eventos para mouse
+    canvas.addEventListener('mousedown', (e) => startDrawing(e.offsetX, e.offsetY));
+    canvas.addEventListener('mousemove', (e) => draw(e.offsetX, e.offsetY));
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseout', stopDrawing);
+
+    // Eventos para toque
+    canvas.addEventListener('touchstart', (e) => {
+      const touch = e.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      startDrawing(touch.clientX - rect.left, touch.clientY - rect.top);
+    });
+
+    canvas.addEventListener('touchmove', (e) => {
+      const touch = e.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      draw(touch.clientX - rect.left, touch.clientY - rect.top);
+      e.preventDefault(); // Evitar o comportamento de rolagem
+    });
+
+    canvas.addEventListener('touchend', stopDrawing);
+
+    // Limpar assinatura
+    document.getElementById('clear-signature').addEventListener('click', () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+
+    // Gerar PDF
+    document.getElementById('generate-pdf').addEventListener('click', () => {
+      const name = document.getElementById('name').value;
+      const cpf = document.getElementById('cpf').value;
+      const contact = document.getElementById('contact').value;
+
+      if (!name || !cpf || !contact) {
+        alert('Por favor, preencha todos os campos.');
+        return;
+      }
+
+      const pdf = new jspdf.jsPDF();
+      pdf.setFontSize(16);
+      pdf.text('Contrato de Viagem', 105, 20, { align: 'center' });
+
+      pdf.setFontSize(12);
+      pdf.text(`Nome: ${name}`, 10, 40);
+      pdf.text(`CPF: ${cpf}`, 10, 50);
+      pdf.text(`Contato: ${contact}`, 10, 60);
+
+      // Capturar assinatura do canvas
+      const signatureImage = canvas.toDataURL('image/png');
+      pdf.text('Assinatura:', 10, 80);
+      pdf.addImage(signatureImage, 'PNG', 10, 90, 80, 40);
+
+      // Baixar PDF
+      pdf.save('contrato_de_viagem.pdf');
+    });
+  </script>
+</body>
+</html>
