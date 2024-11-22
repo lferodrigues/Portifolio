@@ -39,6 +39,35 @@
     button:hover {
       background-color: #0056b3;
     }
+    #generated-link-popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+    #popup-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      width: 300px;
+    }
+    #popup-content button {
+      margin-top: 15px;
+      background-color: #28a745;
+      color: white;
+    }
+    #shortened-link {
+      display: block;
+      margin: 10px 0;
+      word-wrap: break-word;
+    }
   </style>
 </head>
 <body>
@@ -56,9 +85,16 @@
 
       <button type="button" id="generate-link">Gerar Link</button>
     </form>
-    <p id="generated-link" style="margin-top: 20px; display: none;">
-      Link gerado: <a id="link" href="#" target="_blank"></a>
-    </p>
+  </div>
+
+  <!-- Pop-up Modal -->
+  <div id="generated-link-popup">
+    <div id="popup-content">
+      <p>Link gerado:</p>
+      <span id="shortened-link"></span>
+      <button id="copy-link">Copiar Link</button>
+      <button id="close-popup">Fechar</button>
+    </div>
   </div>
 
   <script>
@@ -72,13 +108,35 @@
         return;
       }
 
-      const link = `https://feliperodrigues.net/excursao.html?name=${name}&date=${date}&price=${price}`;
-      const generatedLink = document.getElementById('generated-link');
-      const linkElement = document.getElementById('link');
+      // Gerar o link completo
+      const baseLink = `https://feliperodrigues.net/assinatura.html?name=${name}&date=${date}&price=${price}`;
 
-      linkElement.href = link;
-      linkElement.textContent = link;
-      generatedLink.style.display = 'block';
+      // Criar um link visualmente "encurtado" (exibir apenas uma parte do link)
+      const shortenedLink = baseLink.substring(0, 25) + "..." + baseLink.slice(-10); // Link visualmente mais curto
+
+      // Exibir o pop-up com o link gerado
+      const generatedLinkElement = document.getElementById('shortened-link');
+      generatedLinkElement.textContent = shortenedLink;
+
+      // Mostrar o pop-up
+      const popup = document.getElementById('generated-link-popup');
+      popup.style.display = 'flex';
+
+      // Função para copiar o link completo
+      document.getElementById('copy-link').addEventListener('click', () => {
+        const textArea = document.createElement('textarea');
+        textArea.value = baseLink;  // Copia o link completo
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        alert('Link copiado!');
+      });
+
+      // Fechar o pop-up
+      document.getElementById('close-popup').addEventListener('click', () => {
+        popup.style.display = 'none';
+      });
     });
   </script>
 </body>
