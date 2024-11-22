@@ -7,18 +7,31 @@
 </head>
 <body>
   <script>
-    // Função para buscar o código na URL e redirecionar
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
+    // Função para converter os valores ASCII de volta para texto
+    function fromAscii(str) {
+      return str.split(',').map(code => String.fromCharCode(code)).join('');
+    }
 
-    // Descodificar o código para gerar o link real
-    if (code) {
-      // Aqui você pode usar o 'code' para construir a URL real, por exemplo:
-      const [name, date, price] = code.split('-');
-      const realLink = `https://feliperodrigues.net/assinatura.html?name=${name}&date=${date}&price=${price}`;
-      window.location.href = realLink; // Redireciona para o link real
+    // Buscar os parâmetros da URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const nameAscii = urlParams.get('name');
+    const dateAscii = urlParams.get('date');
+    const priceAscii = urlParams.get('price');
+
+    // Verificar se os parâmetros existem
+    if (nameAscii && dateAscii && priceAscii) {
+      // Converter de ASCII para texto
+      const name = fromAscii(nameAscii);
+      const date = fromAscii(dateAscii);
+      const price = fromAscii(priceAscii);
+
+      // Construir o link real para a página de assinatura
+      const realLink = `https://feliperodrigues.net/assinatura.html?name=${encodeURIComponent(name)}&date=${encodeURIComponent(date)}&price=${encodeURIComponent(price)}`;
+
+      // Redirecionar para o link real
+      window.location.href = realLink;
     } else {
-      alert("Código inválido.");
+      alert("Erro: Dados não encontrados.");
     }
   </script>
 </body>
