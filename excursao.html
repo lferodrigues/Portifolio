@@ -98,21 +98,33 @@
   </div>
 
   <script>
+    function toAscii(str) {
+      return str.split('').map(char => char.charCodeAt(0)).join(',');
+    }
+
+    function fromAscii(str) {
+      return str.split(',').map(code => String.fromCharCode(code)).join('');
+    }
+
     document.getElementById('generate-link').addEventListener('click', () => {
-      const name = encodeURIComponent(document.getElementById('excursion-name').value);
-      const date = encodeURIComponent(document.getElementById('excursion-date').value);
-      const price = encodeURIComponent(document.getElementById('excursion-price').value);
+      const name = document.getElementById('excursion-name').value;
+      const date = document.getElementById('excursion-date').value;
+      const price = document.getElementById('excursion-price').value;
 
       if (!name || !date || !price) {
         alert('Por favor, preencha todos os campos.');
         return;
       }
 
-      // Gerar um código único para o link
-      const code = `${name}-${date}-${price}`;  // Isso pode ser uma combinação de informações ou um ID único
-      const maskedLink = `https://feliperodrigues.net/redirect.html?code=${encodeURIComponent(code)}`;
+      // Converter para valores ASCII
+      const nameAscii = toAscii(name);
+      const dateAscii = toAscii(date);
+      const priceAscii = toAscii(price);
 
-      // Exibir o link mascarado no pop-up
+      // Gerar o link mascarado com os valores ASCII
+      const maskedLink = `https://feliperodrigues.net/redirect.html?name=${nameAscii}&date=${dateAscii}&price=${priceAscii}`;
+
+      // Exibir o link no pop-up
       const generatedLinkElement = document.getElementById('shortened-link');
       generatedLinkElement.textContent = maskedLink;
 
