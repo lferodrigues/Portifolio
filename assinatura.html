@@ -43,7 +43,6 @@
     #signature {
       border: 1px solid #000;
       height: 150px;
-      touch-action: none; /* Evita o comportamento padrão de zoom em dispositivos móveis */
     }
     .actions {
       display: flex;
@@ -65,6 +64,9 @@
       <label for="contact">Contato:</label>
       <input type="text" id="contact" placeholder="Digite seu contato" required>
 
+      <label>Excursão:</label>
+      <p id="excursion-info"></p>
+
       <label for="signature">Assinatura:</label>
       <canvas id="signature"></canvas>
       <div class="actions">
@@ -75,14 +77,14 @@
   </div>
 
   <script>
-    // Configuração do Canvas para assinatura
+    // Configuração do Canvas
     const canvas = document.getElementById('signature');
     const ctx = canvas.getContext('2d');
     let isSigning = false;
     let lastX = 0;
     let lastY = 0;
 
-    // Configurar o tamanho do canvas para dispositivos móveis
+    // Redimensionar o canvas
     function resizeCanvas() {
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
@@ -90,56 +92,30 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    // Funções de desenho
-    function startDrawing(x, y) {
-      isSigning = true;
-      lastX = x;
-      lastY = y;
-    }
-
-    function draw(x, y) {
+    // Funções para assinatura
+    canvas.addEventListener('mousedown', (e) => isSigning = true);
+    canvas.addEventListener('mousemove', (e) => {
       if (!isSigning) return;
-      ctx.lineWidth = 2; // Ajuste da espessura da linha
+      ctx.lineWidth = 2;
       ctx.lineCap = 'round';
       ctx.strokeStyle = '#000';
-      ctx.beginPath();
-      ctx.moveTo(lastX, lastY);
-      ctx.lineTo(x, y);
+      const rect = canvas.getBoundingClientRect();
+      ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
       ctx.stroke();
-      lastX = x;
-      lastY = y;
-    }
-
-    function stopDrawing() {
-      isSigning = false;
-    }
-
-    // Eventos para mouse
-    canvas.addEventListener('mousedown', (e) => startDrawing(e.offsetX, e.offsetY));
-    canvas.addEventListener('mousemove', (e) => draw(e.offsetX, e.offsetY));
-    canvas.addEventListener('mouseup', stopDrawing);
-    canvas.addEventListener('mouseout', stopDrawing);
-
-    // Eventos para toque
-    canvas.addEventListener('touchstart', (e) => {
-      const touch = e.touches[0];
-      const rect = canvas.getBoundingClientRect();
-      startDrawing(touch.clientX - rect.left, touch.clientY - rect.top);
+      ctx.beginPath();
+      ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
     });
+    canvas.addEventListener('mouseup', () => isSigning = false);
+    canvas.addEventListener('mouseout', () => isSigning = false);
 
-    canvas.addEventListener('touchmove', (e) => {
-      const touch = e.touches[0];
-      const rect = canvas.getBoundingClientRect();
-      draw(touch.clientX - rect.left, touch.clientY - rect.top);
-      e.preventDefault(); // Evitar o comportamento de rolagem
-    });
+    // Preencher informações da excursão
+    const params = new URLSearchParams(window.location.search);
+    const excursionName = params.get('name');
+    const excursionDate = params.get('date');
+    const excursionPrice = params.get('price');
 
-    canvas.addEventListener('touchend', stopDrawing);
-
-    // Limpar assinatura
-    document.getElementById('clear-signature').addEventListener('click', () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    });
+    const excursionInfo = document.getElementById('excursion-info');
+    excursionInfo.textContent = `${excursionName} - Data: ${excursionDate} - Valor: R$ ${excursionPrice}`;
 
     // Gerar PDF
     document.getElementById('generate-pdf').addEventListener('click', () => {
@@ -160,13 +136,14 @@
       pdf.text(`Nome: ${name}`, 10, 40);
       pdf.text(`CPF: ${cpf}`, 10, 50);
       pdf.text(`Contato: ${contact}`, 10, 60);
+      pdf.text(`Excursão: ${excursionName}`, 10, 70);
+      pdf.text(`Data: ${excursionDate}`, 10, 80);
+      pdf.text(`Valor: R$ ${excursionPrice}`, 10, 90);
 
-      // Capturar assinatura do canvas
       const signatureImage = canvas.toDataURL('image/png');
-      pdf.text('Assinatura:', 10, 80);
-      pdf.addImage(signatureImage, 'PNG', 10, 90, 80, 40);
+      pdf.text('Assinatura:', 10, 100);
+      pdf.addImage(signatureImage, 'PNG', 10, 110, 80, 40);
 
-      // Baixar PDF
       pdf.save('contrato_de_viagem.pdf');
     });
   </script>
