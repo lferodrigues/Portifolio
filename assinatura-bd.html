@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contrato de Viagem</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-storage.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+    }
+    input, canvas, button {
+      width: 100%;
+      margin-top: 5px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    #signature {
+      border: 1px solid #000;
+      height: 150px;
+      touch-action: none;
+    }
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Contrato de Viagem</h1>
+    <form id="travel-contract">
+      <label for="name">Nome:</label>
+      <input type="text" id="name" placeholder="Digite seu nome" required>
+
+      <label for="cpf">CPF:</label>
+      <input type="text" id="cpf" placeholder="Digite seu CPF" required>
+
+      <label for="contact">Contato:</label>
+      <input type="text" id="contact" placeholder="Digite seu contato" required>
+
+      <label>Excursão:</label>
+      <p id="excursion-info"></p>
+
+      <label for="signature">Assinatura:</label>
+      <canvas id="signature"></canvas>
+      <div class="actions">
+        <button type="button" id="clear-signature">Limpar Assinatura</button>
+        <button type="button" id="generate-pdf">Gerar PDF</button>
+        <button type="button" id="send-whatsapp">Enviar para WhatsApp</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // Configuração do Firebase
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    // Inicializa o Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const storage = firebase.storage();
+
+    const canvas = document.getElementById('signature');
+    const ctx = canvas.getContext('2d');
+    let isDrawing = false;
+
+    // Ajusta o tamanho do canvas
+    function resizeCanvas() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Funções para desenhar no canvas
+    canvas.addEventListener('mousedown', (e) => {
+      isDrawing = true;
+      const rect = canvas.getBoundingClientRect();
+      ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+      if (!isDrawing) return;
+      const rect = canvas.getBoundingClientRect();
+      ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+      ctx.stroke();
+    });
+
+    canvas.addEventListener('mouseup', () => {
+      isDrawing = false;
+      ctx.beginPath();
+    });
+
+    canvas.addEventListener('mouseout', () => {
+      isDrawing = false;
+    });
+
+    // Limpar assinatura
+    document.getElementById('clear-signature').addEventListener('click', () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+
+    // Gerar PDF
+    document.getElementById('generate-pdf').addEventListener('click', () => {
+      const name = document.getElementById('name').value;
+      const cpf = document.getElementById('cpf').value;
+      const contact = document.getElementById('contact').value;
+
+      if (!name || !cpf || !contact) {
+        alert('Por favor, preencha todos os campos.');
+        return;
+      }
+
+      const pdf = new jsPDF();
+      pdf.text('Contrato de Viagem', 10, 10);
+      pdf.text(`Nome: ${name}`, 10, 20);
+      pdf.text(`CPF: ${cpf}`, 10, 30);
+      pdf.text(`Contato: ${contact}`, 10, 40);
+
+      // Adicionar assinatura
+      const signatureImage = canvas.toDataURL('image/png');
+      pdf.addImage(signatureImage, 'PNG', 10, 50, 100, 40);
+
+      // Criar o Blob do PDF
+      const pdfBlob = pdf.output('blob');
+      const pdfFile = new Blob([pdfBlob], { type: 'application/pdf' });
+
+      // Referência para o Firebase Storage
+      const storageRef = storage.ref().child('office/contrato_de_viagem.pdf');
+
+      // Upload do PDF para o Firebase Storage
+      const uploadTask = storageRef.put(pdfFile);
+
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          // Progresso do upload (opcional)
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log(`Upload está ${progress}% completo`);
+        },
+        (error) => {
+          // Erro no upload
+          console.error('Erro no upload:', error);
+        },
+        () => {
+          // Upload concluído com sucesso
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            console.log('Arquivo disponível em:', downloadURL);
+
+            // Enviar o link para WhatsApp
+            const whatsappMessage = `Aqui está o contrato: ${downloadURL}`;
+            const whatsappLink = `https://wa.me/5532998409798?text=${encodeURIComponent(whatsappMessage)}`;
+
+            // Redireciona para o WhatsApp com o link
+            window.open(whatsappLink, '_blank');
+          });
+        }
+      );
+    });
+  </script>
+</body>
+</html>
