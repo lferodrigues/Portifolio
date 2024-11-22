@@ -43,6 +43,7 @@
     #signature {
       border: 1px solid #000;
       height: 150px;
+      touch-action: none; /* Previne gestos padrão em dispositivos móveis */
     }
     .actions {
       display: flex;
@@ -77,14 +78,13 @@
   </div>
 
   <script>
-    // Configuração do Canvas
     const canvas = document.getElementById('signature');
     const ctx = canvas.getContext('2d');
     let isSigning = false;
     let lastX = 0;
     let lastY = 0;
 
-    // Redimensionar o canvas
+    // Ajusta o tamanho do canvas ao carregar e redimensionar a página
     function resizeCanvas() {
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
@@ -92,21 +92,64 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    // Funções para assinatura
-    canvas.addEventListener('mousedown', (e) => isSigning = true);
-    canvas.addEventListener('mousemove', (e) => {
+    // Funções para desenhar
+    function startDrawing(x, y) {
+      isSigning = true;
+      lastX = x;
+      lastY = y;
+    }
+
+    function draw(x, y) {
       if (!isSigning) return;
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 2; // Ajuste da espessura da linha
       ctx.lineCap = 'round';
       ctx.strokeStyle = '#000';
-      const rect = canvas.getBoundingClientRect();
-      ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
-      ctx.stroke();
       ctx.beginPath();
-      ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(x, y);
+      ctx.stroke();
+      lastX = x;
+      lastY = y;
+    }
+
+    function stopDrawing() {
+      isSigning = false;
+    }
+
+    // Eventos de mouse
+    canvas.addEventListener('mousedown', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      startDrawing(e.clientX - rect.left, e.clientY - rect.top);
     });
-    canvas.addEventListener('mouseup', () => isSigning = false);
-    canvas.addEventListener('mouseout', () => isSigning = false);
+
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      draw(e.clientX - rect.left, e.clientY - rect.top);
+    });
+
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseout', stopDrawing);
+
+    // Eventos de toque (para dispositivos móveis)
+    canvas.addEventListener('touchstart', (e) => {
+      const touch = e.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      startDrawing(touch.clientX - rect.left, touch.clientY - rect.top);
+    });
+
+    canvas.addEventListener('touchmove', (e) => {
+      const touch = e.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      draw(touch.clientX - rect.left, touch.clientY - rect.top);
+      e.preventDefault(); // Previne a rolagem enquanto desenha
+    });
+
+    canvas.addEventListener('touchend', stopDrawing);
+
+    // Limpar assinatura
+    document.getElementById('clear-signature').addEventListener('click', () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
 
     // Preencher informações da excursão
     const params = new URLSearchParams(window.location.search);
