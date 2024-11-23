@@ -7,9 +7,37 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="./Assets/css/styles-excursao.css">
+  <style>
+    #signature {
+      width: 100%;
+      height: 150px;
+      border: 1px solid #ccc;
+    }
+    .floating-whatsapp {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #25D366;
+      border: none;
+      color: white;
+      padding: 15px;
+      border-radius: 50%;
+      display: none; /* Só será exibido após o PDF ser gerado */
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+    }
+    .floating-whatsapp i {
+      font-size: 24px;
+    }
+    .pdf-viewer {
+      border: 1px solid #ccc;
+      height: 65vh; /* 65% da altura da tela */
+    }
+  </style>
 </head>
 <body>
-
   <div class="container">
     <h1>Contrato de Viagem</h1>
     <form id="travel-contract" class="contract-form">
@@ -35,7 +63,7 @@
 
     <!-- Container para o visualizador do PDF -->
     <div id="pdf-container" style="display: none;">
-      <iframe id="pdf-viewer" class="pdf-viewer" style="width: 100%; height: 80vh;"></iframe>
+      <iframe id="pdf-viewer" class="pdf-viewer" style="width: 100%;"></iframe>
     </div>
   </div>
 
@@ -74,27 +102,54 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    const startDrawing = (x, y) => { isSigning = true; ctx.moveTo(x, y); };
-    const draw = (x, y) => { if (!isSigning) return; ctx.lineTo(x, y); ctx.stroke(); };
-    const stopDrawing = () => { isSigning = false; };
+    const startDrawing = (x, y) => { 
+      isSigning = true; 
+      ctx.beginPath(); 
+      ctx.moveTo(x, y); 
+    };
+    const draw = (x, y) => { 
+      if (!isSigning) return; 
+      ctx.lineTo(x, y); 
+      ctx.stroke(); 
+    };
+    const stopDrawing = () => { 
+      isSigning = false; 
+    };
 
+    // Suporte para eventos de toque (dispositivos móveis)
     canvas.addEventListener('mousedown', (e) => {
       const rect = canvas.getBoundingClientRect();
       startDrawing(e.clientX - rect.left, e.clientY - rect.top);
     });
-
     canvas.addEventListener('mousemove', (e) => {
       if (!isSigning) return;
       const rect = canvas.getBoundingClientRect();
       draw(e.clientX - rect.left, e.clientY - rect.top);
     });
-
     canvas.addEventListener('mouseup', stopDrawing);
 
-    document.getElementById('clear-signature').addEventListener('click', () => ctx.clearRect(0, 0, canvas.width, canvas.height));
+    canvas.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      const rect = canvas.getBoundingClientRect();
+      const touch = e.touches[0];
+      startDrawing(touch.clientX - rect.left, touch.clientY - rect.top);
+    });
+    canvas.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      if (!isSigning) return;
+      const rect = canvas.getBoundingClientRect();
+      const touch = e.touches[0];
+      draw(touch.clientX - rect.left, touch.clientY - rect.top);
+    });
+    canvas.addEventListener('touchend', stopDrawing);
+
+    document.getElementById('clear-signature').addEventListener('click', () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
 
     const excursionInfo = new URLSearchParams(window.location.search);
-    document.getElementById('excursion-info').textContent = `${excursionInfo.get('name')} - Data: ${excursionInfo.get('date')} - Valor: R$ ${excursionInfo.get('price')}`;
+    const excursionText = `${excursionInfo.get('name')} - Data: ${excursionInfo.get('date')} - Valor: R$ ${excursionInfo.get('price')}`;
+    document.getElementById('excursion-info').textContent = excursionText;
 
     document.getElementById('generate-pdf').addEventListener('click', async () => {
       const name = document.getElementById('name').value;
@@ -106,16 +161,25 @@
         return;
       }
 
-      const pdf = new jspdf.jsPDF();
-      pdf.text(`Contrato de Viagem\n\nNome: ${name}\nCPF: ${cpf}\nContato: ${contact}`, 10, 10);
-
-      const signatureImage = canvas.toDataURL("image/png");
-      pdf.addImage(signatureImage, "PNG", 10, 50, 80, 40);
-
-      pdfBlob = pdf.output('blob');
-
-      const fileRef = ref(storage, `contracts/${Date.now()}_contrato.pdf`);
       try {
+        // Obter o IP público do usuário
+        const response = await fetch('https://api.ipify.org?format=json');
+        const ipData = await response.json();
+        const userIP = ipData.ip;
+
+        const pdf = new jspdf.jsPDF();
+        pdf.text(`Contrato de Viagem\n\nNome: ${name}\nCPF: ${cpf}\nContato: ${contact}\n\nExcursão: ${excursionText}`, 10, 10);
+
+        const signatureImage = canvas.toDataURL("image/png");
+        pdf.addImage(signatureImage, "PNG", 10, 60, 80, 40);
+
+        // Adicionar IP no rodapé do PDF
+        pdf.setFontSize(10);
+        pdf.text(`IP do usuário: ${userIP}`, 10, pdf.internal.pageSize.height - 10);
+
+        pdfBlob = pdf.output('blob');
+
+        const fileRef = ref(storage, `contracts/${Date.now()}_contrato.pdf`);
         await uploadBytes(fileRef, pdfBlob);
         const downloadURL = await getDownloadURL(fileRef);
 
@@ -125,19 +189,55 @@
         const pdfViewer = document.getElementById('pdf-viewer');
         pdfViewer.src = URL.createObjectURL(pdfBlob);
 
-        // Exibir o botão flutuante
         const sendButton = document.querySelector('.floating-whatsapp');
         sendButton.style.display = 'flex';
 
         sendButton.addEventListener('click', () => {
           window.open(`https://wa.me/5532998409798?text=${encodeURIComponent("Aqui está o contrato: " + downloadURL)}`);
         });
-
       } catch (error) {
-        console.error("Erro ao salvar o PDF no Firebase:", error);
-        alert("Erro ao salvar o contrato no Firebase.");
+        console.error("Erro ao gerar o PDF ou buscar o IP:", error);
+        alert("Erro ao gerar o contrato ou buscar o IP.");
       }
     });
-  </script>
+
+    // Bloquear clique direito
+    document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+    // Bloquear combinações de teclas específicas
+    document.addEventListener('keydown', (e) => {
+      if (
+        e.key === 'F12' || // Bloqueia F12
+        (e.ctrlKey && e.shiftKey && e.key === 'I') || // Bloqueia Ctrl+Shift+I
+        (e.ctrlKey && e.shiftKey && e.key === 'J') || // Bloqueia Ctrl+Shift+J
+        (e.ctrlKey && e.key === 'U') // Bloqueia Ctrl+U
+      ) {
+        e.preventDefault();
+        alert("Ação bloqueada!");
+      }
+    });
+
+    // Detectar abertura do DevTools
+    (function () {
+      const devtools = {
+        open: false,
+        orientation: null,
+      };
+      const threshold = 160; // Largura ou altura típica do DevTools
+      setInterval(() => {
+        const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+        const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+        if ((widthThreshold || heightThreshold) && !devtools.open) {
+          devtools.open = true;
+          alert("Ferramentas de desenvolvimento detectadas. Ação bloqueada!");
+          window.location.href = "about:blank"; // Redireciona para página vazia
+        } else if (!widthThreshold && !heightThreshold && devtools.open) {
+          devtools.open = false;
+        }
+      }, 1000);
+    })();
+</script>
+
+
 </body>
 </html>
