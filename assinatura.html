@@ -5,57 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contrato de Viagem</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    h1 {
-      text-align: center;
-      color: #333;
-    }
-    label {
-      font-weight: bold;
-      margin-top: 10px;
-      display: block;
-    }
-    input, canvas, button {
-      width: 100%;
-      margin-top: 5px;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    button {
-      background-color: #28a745;
-      color: white;
-      border: none;
-      cursor: pointer;
-      padding: 10px;
-    }
-    button:hover {
-      background-color: #218838;
-    }
-    #signature {
-      border: 1px solid #000;
-      height: 150px;
-      touch-action: none; /* Previne gestos padrão em dispositivos móveis */
-    }
-    .actions {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 10px;
-    }
-  </style>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/styles-excursao.css">
 </head>
 <body>
+
   <div class="container">
     <h1>Contrato de Viagem</h1>
-    <form id="travel-contract">
+    <form id="travel-contract" class="contract-form">
       <label for="name">Nome:</label>
       <input type="text" id="name" placeholder="Digite seu nome" required>
 
@@ -75,119 +32,111 @@
         <button type="button" id="generate-pdf">Gerar PDF</button>
       </div>
     </form>
+
+    <!-- Container para o visualizador do PDF -->
+    <div id="pdf-container" style="display: none;">
+      <iframe id="pdf-viewer" class="pdf-viewer" style="width: 100%; height: 80vh;"></iframe>
+    </div>
   </div>
 
-  <script>
+  <!-- Botão flutuante de WhatsApp -->
+  <button class="floating-whatsapp" id="send-pdf">
+    <i class="fab fa-whatsapp"></i>
+  </button>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-storage.js";
+
+    // Configuração do Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyALOwBHLqnDH9e3n8Oe3lGUMCX0NMu7GZY",
+      authDomain: "excursao-c53e3.firebaseapp.com",
+      projectId: "excursao-c53e3",
+      storageBucket: "excursao-c53e3.firebasestorage.app",
+      messagingSenderId: "755186833932",
+      appId: "1:755186833932:web:2d6fae30cb11610b4d6c29",
+      measurementId: "G-RHDG54423J"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const storage = getStorage(app);
+
     const canvas = document.getElementById('signature');
     const ctx = canvas.getContext('2d');
     let isSigning = false;
-    let lastX = 0;
-    let lastY = 0;
+    let pdfBlob;
 
-    // Ajusta o tamanho do canvas ao carregar e redimensionar a página
-    function resizeCanvas() {
+    const resizeCanvas = () => {
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
-    }
+    };
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    // Funções para desenhar
-    function startDrawing(x, y) {
-      isSigning = true;
-      lastX = x;
-      lastY = y;
-    }
+    const startDrawing = (x, y) => { isSigning = true; ctx.moveTo(x, y); };
+    const draw = (x, y) => { if (!isSigning) return; ctx.lineTo(x, y); ctx.stroke(); };
+    const stopDrawing = () => { isSigning = false; };
 
-    function draw(x, y) {
-      if (!isSigning) return;
-      ctx.lineWidth = 2; // Ajuste da espessura da linha
-      ctx.lineCap = 'round';
-      ctx.strokeStyle = '#000';
-      ctx.beginPath();
-      ctx.moveTo(lastX, lastY);
-      ctx.lineTo(x, y);
-      ctx.stroke();
-      lastX = x;
-      lastY = y;
-    }
-
-    function stopDrawing() {
-      isSigning = false;
-    }
-
-    // Eventos de mouse
     canvas.addEventListener('mousedown', (e) => {
       const rect = canvas.getBoundingClientRect();
       startDrawing(e.clientX - rect.left, e.clientY - rect.top);
     });
 
     canvas.addEventListener('mousemove', (e) => {
+      if (!isSigning) return;
       const rect = canvas.getBoundingClientRect();
       draw(e.clientX - rect.left, e.clientY - rect.top);
     });
 
     canvas.addEventListener('mouseup', stopDrawing);
-    canvas.addEventListener('mouseout', stopDrawing);
 
-    // Eventos de toque (para dispositivos móveis)
-    canvas.addEventListener('touchstart', (e) => {
-      const touch = e.touches[0];
-      const rect = canvas.getBoundingClientRect();
-      startDrawing(touch.clientX - rect.left, touch.clientY - rect.top);
-    });
+    document.getElementById('clear-signature').addEventListener('click', () => ctx.clearRect(0, 0, canvas.width, canvas.height));
 
-    canvas.addEventListener('touchmove', (e) => {
-      const touch = e.touches[0];
-      const rect = canvas.getBoundingClientRect();
-      draw(touch.clientX - rect.left, touch.clientY - rect.top);
-      e.preventDefault(); // Previne a rolagem enquanto desenha
-    });
+    const excursionInfo = new URLSearchParams(window.location.search);
+    document.getElementById('excursion-info').textContent = `${excursionInfo.get('name')} - Data: ${excursionInfo.get('date')} - Valor: R$ ${excursionInfo.get('price')}`;
 
-    canvas.addEventListener('touchend', stopDrawing);
-
-    // Limpar assinatura
-    document.getElementById('clear-signature').addEventListener('click', () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    });
-
-    // Preencher informações da excursão
-    const params = new URLSearchParams(window.location.search);
-    const excursionName = params.get('name');
-    const excursionDate = params.get('date');
-    const excursionPrice = params.get('price');
-
-    const excursionInfo = document.getElementById('excursion-info');
-    excursionInfo.textContent = `${excursionName} - Data: ${excursionDate} - Valor: R$ ${excursionPrice}`;
-
-    // Gerar PDF
-    document.getElementById('generate-pdf').addEventListener('click', () => {
+    document.getElementById('generate-pdf').addEventListener('click', async () => {
       const name = document.getElementById('name').value;
       const cpf = document.getElementById('cpf').value;
       const contact = document.getElementById('contact').value;
 
       if (!name || !cpf || !contact) {
-        alert('Por favor, preencha todos os campos.');
+        alert("Preencha todos os campos");
         return;
       }
 
       const pdf = new jspdf.jsPDF();
-      pdf.setFontSize(16);
-      pdf.text('Contrato de Viagem', 105, 20, { align: 'center' });
+      pdf.text(`Contrato de Viagem\n\nNome: ${name}\nCPF: ${cpf}\nContato: ${contact}`, 10, 10);
 
-      pdf.setFontSize(12);
-      pdf.text(`Nome: ${name}`, 10, 40);
-      pdf.text(`CPF: ${cpf}`, 10, 50);
-      pdf.text(`Contato: ${contact}`, 10, 60);
-      pdf.text(`Excursão: ${excursionName}`, 10, 70);
-      pdf.text(`Data: ${excursionDate}`, 10, 80);
-      pdf.text(`Valor: R$ ${excursionPrice}`, 10, 90);
+      const signatureImage = canvas.toDataURL("image/png");
+      pdf.addImage(signatureImage, "PNG", 10, 50, 80, 40);
 
-      const signatureImage = canvas.toDataURL('image/png');
-      pdf.text('Assinatura:', 10, 100);
-      pdf.addImage(signatureImage, 'PNG', 10, 110, 80, 40);
+      pdfBlob = pdf.output('blob');
 
-      pdf.save('contrato_de_viagem.pdf');
+      const fileRef = ref(storage, `contracts/${Date.now()}_contrato.pdf`);
+      try {
+        await uploadBytes(fileRef, pdfBlob);
+        const downloadURL = await getDownloadURL(fileRef);
+
+        document.querySelector('.contract-form').style.display = 'none';
+        document.querySelector('#pdf-container').style.display = 'block';
+
+        const pdfViewer = document.getElementById('pdf-viewer');
+        pdfViewer.src = URL.createObjectURL(pdfBlob);
+
+        // Exibir o botão flutuante
+        const sendButton = document.querySelector('.floating-whatsapp');
+        sendButton.style.display = 'flex';
+
+        sendButton.addEventListener('click', () => {
+          window.open(`https://wa.me/5532998409798?text=${encodeURIComponent("Aqui está o contrato: " + downloadURL)}`);
+        });
+
+      } catch (error) {
+        console.error("Erro ao salvar o PDF no Firebase:", error);
+        alert("Erro ao salvar o contrato no Firebase.");
+      }
     });
   </script>
 </body>
