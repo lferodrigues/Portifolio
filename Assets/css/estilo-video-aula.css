@@ -173,7 +173,7 @@ footer {
 }
 
 .social-icons a {
-    font-size: 24px; /* Tamanho dos ícones */
+    font-size: 20px; /* Tamanho dos ícones */
     color: #ffffff; /* Cor branca */
     transition: color 0.3s ease, transform 0.3s ease; /* Efeito suave no hover */
     text-decoration: none; /* Remove sublinhado */
