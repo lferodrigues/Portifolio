@@ -87,6 +87,10 @@ header img {
 .video-list li:hover {
     background-color: #555;
 }
+.video-list li.selected {
+    background-color: #00c0ff; /* Cor azul para o item selecionado */
+    color: #fff; /* Texto branco no item selecionado */
+}
 
 .comment-section {
     display: flex;
