@@ -163,7 +163,6 @@ footer {
         margin-bottom: 20px;
     }
 }
-
 /* Estilo para ícones sociais */
 .social-icons {
     display: flex;
@@ -174,7 +173,7 @@ footer {
 }
 
 .social-icons a {
-    font-size: 20px; /* Tamanho dos ícones */
+    font-size: 24px; /* Tamanho dos ícones */
     color: #ffffff; /* Cor branca */
     transition: color 0.3s ease, transform 0.3s ease; /* Efeito suave no hover */
     text-decoration: none; /* Remove sublinhado */
@@ -184,7 +183,4 @@ footer {
     color: #00c0ff; /* Cor azul ao passar o mouse */
     transform: scale(1.2); /* Efeito de zoom */
 }
- transform: scale(1.2); /* Efeito de zoom */
-}
-
 
