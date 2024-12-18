@@ -162,7 +162,7 @@ footer {
         margin-right: 0;
         margin-bottom: 20px;
     }
-}
+
 /* Estilo para ícones sociais */
 .social-icons {
     display: flex;
@@ -184,5 +184,6 @@ footer {
     transform: scale(1.2); /* Efeito de zoom */
 }
  transform: scale(1.2); /* Efeito de zoom */
+}
 }
 
