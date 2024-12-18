@@ -1,52 +1,66 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="./Assets/img/icone.png" type="image/png">
-    <link rel="stylesheet" type="text/css" href="./Assets/css/estilo-temp.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <meta http-equiv="refresh" content="2; url=https://drive.google.com/drive/folders/1z0EYm9VFI6Y6ZcB-bkvtb6fT1mP_1ZTU?usp=drive_link">
-    <title>Felipe Rodrigues |Inteligencia Artificial</title>
+    <link rel="icon" href="Assets/img/logo.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="Assets/img/logo.ico" type="image/x-icon" />
+    <title>Felipe Rodrigues | Video Aula </title>
+    <link rel="stylesheet" href="./Assets/css/estilo-video-aula.css">
 </head>
-
 <body>
-    <img class="pre-nav-image" src="./Assets/img/banner04.png" alt="Logo">
-    <!--Efeito das engrenagem-->
-	<p> Redirencionando para o curso </p>
-    <div class="engrenagem"> </div>
-    <div class="content">
-        <div class="construction">
-            <span class="progress">0%</span>
+    <!-- Cabeçalho -->
+    <header>
+      <a href="https://feliperodrigues.net">
+          <img src="./Assets/img/banner04.png" alt="Logo Felipe Rodrigues" style="height: 60px;" />
+      </a>
+      Inteligência Artificial: Transformando o mercado de trabalho
+  </header>
+
+    <!-- Conteúdo principal -->
+    <div class="container">
+        <!-- Player principal -->
+        <div class="player">
+            <!-- Player do YouTube com parâmetros ajustados -->
+            <iframe 
+                src="https://www.youtube.com/embed/yfzH_pTE5Zg?si=A503kvOpE5BioBpF" 
+                title="YouTube video player" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                referrerpolicy="strict-origin-when-cross-origin" 
+                allowfullscreen>
+            </iframe>
+        </div>
+
+        <!-- Lista de vídeos -->
+        <div class="video-list">
+            <h3>Próximos Vídeos</h3>
+            <ul>
+                <li onclick="changeVideo('https://www.youtube.com/embed/yfzH_pTE5Zg?si=A503kvOpE5BioBpF')">Aula 00 - Introdução</li>
+                <li onclick="changeVideo('https://www.youtube.com/embed/i3rIrTdURB0?si=ym8ZeQ11K4Ohc7We')">Aula 01 - Estudo sobre Gemini e Copilot</li>
+                <li onclick="changeVideo('https://www.youtube.com/embed/N2xuEqn-2Gw?si=rWzFTBJqZImaTwil')">Aula 02 - Estudo sobre a Grok</li>
+                <li onclick="changeVideo('https://www.youtube.com/embed/IM84NeNd9Zg?si=i7XfJU7hysnuo7Jf')">Aula 03 - Estudo sobre o Manychat</li>
+                <li onclick="changeVideo('https://www.youtube.com/embed/jDzxT8cM1tg?si=vslX3dfGkLrpdfq9')">Aula 04 - Gerando personas com o CapCut</li>
+                
+                
+              </ul>
         </div>
     </div>
-    <div>
+    <div class="comment-section">
+        <img src="./Assets/img/perfil.png" alt="Foto de perfil" class="profile-pic">
+        <div class="comment-text">
+            <p><strong>Felipe Rodrigues:</strong><a href="https://drive.google.com/drive/folders/1z0EYm9VFI6Y6ZcB-bkvtb6fT1mP_1ZTU?usp=drive_link" target="_blank"> Clique aqui para baixar o material do curso</a>
+            
+            </p>
+            </a>
+        </div>
     </div>
-
+    
     <footer>
         <div class="footer-content">
-            <a href="https://feliperodrigues.net"><img
-                    src="./Assets/img/banner04.png" alt="Logo da Zapher Security"></a>
-            <p>© <span id="currentYear"></span> Todos os direitos reservados</p>
+            <a href="https://feliperodrigues.net"><img src="./assets/img/banner04.png" alt="Logo do Felipe"></a>
+            <p>© <span id="currentYear">2024</span> Todos os direitos reservados</p>
         </div>
-
     </footer>
-    <script>
-        // Atualiza o ano no rodapé
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
-        // Atualiza a numeração de 0% a 100% em 5 segundos
-        let progressSpan = document.querySelector('.progress');
-        let progress = 0;
-        let interval = setInterval(function () {
-            progress += 6; // Incremento de 1% a cada 100 milissegundos
-            if (progress > 100) {
-                clearInterval(interval);
-            } else {
-                progressSpan.textContent = progress + '%';
-            }
-        }, 50); // Intervalo de 50 milissegundos
-    </script>
+    <script src="./assets/js/funcao-video.js"></script>
 </body>
-
 </html>
