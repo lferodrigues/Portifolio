@@ -48,7 +48,7 @@ header img {
     justify-content: center;
     border-radius: 10px;
     margin-right: 20px;
-    margin-bottom: 30px; /* Espaço maior entre o vídeo e a seção de comentários */
+    margin-bottom: 6px; /* Espaço maior entre o vídeo e a seção de comentários */
     overflow: hidden;
 }
 
