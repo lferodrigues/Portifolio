@@ -90,11 +90,13 @@ header img {
 .video-list li:hover {
     background-color: #555;
 }
+
 .video-list li.selected {
     background-color: #00c0ff; /* Cor azul para o item selecionado */
     color: #fff; /* Texto branco no item selecionado */
 }
 
+/* Seção de comentários */
 .comment-section {
     display: flex;
     align-items: flex-start;
@@ -156,25 +158,6 @@ footer {
     margin-right: 10px;
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column; /* Alinha os elementos em uma coluna */
-    }
-
-    .player, 
-    .video-list {
-        width: 100%; /* Garante que ambos ocupem a largura total no mobile */
-        margin-right: 0; /* Remove a margem direita do player */
-        margin-bottom: 20px; /* Espaço entre o player e a lista de vídeos */
-    }
-
-    .player iframe {
-        width: 100%; /* Mantém a largura do iframe ajustada ao contêiner */
-        height: auto; /* Ajusta a altura automaticamente */
-    }
-}
-
 /* Estilo para ícones sociais */
 .social-icons {
     display: flex;
@@ -194,4 +177,40 @@ footer {
 .social-icons a:hover {
     color: #00c0ff; /* Cor azul ao passar o mouse */
     transform: scale(1.2); /* Efeito de zoom */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Empilha os elementos em uma coluna */
+        align-items: center; /* Centraliza os elementos */
+    }
+
+    .player,
+    .video-list {
+        width: 90%; /* Ambos ocupam 90% da largura da tela */
+        margin: 0 auto; /* Centraliza horizontalmente */
+    }
+
+    .player {
+        position: relative; /* Necessário para posicionar o iframe dentro do contêiner */
+        padding-top: 56.25%; /* Proporção 16:9 para o vídeo */
+        margin-bottom: 20px; /* Espaço entre o player e a lista */
+        background-color: #000; /* Evita espaços visuais no contêiner */
+    }
+
+    .player iframe {
+        position: absolute; /* Posiciona o iframe dentro do contêiner proporcional */
+        top: 0;
+        left: 0;
+        width: 100%; /* Preenche completamente a largura do contêiner */
+        height: 100%; /* Preenche completamente a altura do contêiner */
+        border: none; /* Remove bordas */
+    }
+
+    .video-list {
+        margin-top: 20px; /* Espaço entre o player e a lista de vídeos */
+        max-height: 400px; /* Aumenta a altura da lista no mobile */
+        overflow-y: auto; /* Permite rolagem se o conteúdo exceder o limite */
+    }
 }
