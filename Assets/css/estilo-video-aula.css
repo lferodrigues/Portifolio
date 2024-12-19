@@ -183,18 +183,23 @@ footer {
 /* Versão Mobile: Ajustes da lista de vídeos */
 @media (max-width: 800px) {
     .container {
-        flex-direction: column; /* Empilha os elementos em uma coluna */
-        align-items: center; /* Centraliza os elementos */
+        flex-direction: column; /* Organiza os itens em coluna */
+        align-items: center; /* Centraliza os itens horizontalmente */
     }
 
-    .player {
-        width: 100%; /* Player ocupa toda a largura */
-        margin-bottom: 10px; /* Espaço entre o player e a lista */
+    .player, .video-list {
+        width: 90%; /* Define uma largura consistente e centraliza */
+        margin: 10px auto; /* Adiciona margens superior/inferior e centraliza */
     }
+
+    .player iframe {
+        width: 100%; /* Ajusta o vídeo para ocupar toda a largura do contêiner */
+    }
+}
 
     .video-list {
         width: 90%; /* Ajuste da largura da lista */
-        max-height: 200px; /* Altura fixa da lista para caber no layout */
+        max-height: 300px; /* Altura fixa da lista para caber no layout */
         overflow-y: auto; /* Permite rolagem vertical */
         margin: 0 auto; /* Centraliza horizontalmente */
         padding: 10px; /* Espaçamento interno */
@@ -228,4 +233,4 @@ footer {
         background-color: #00c0ff; /* Fundo azul para o selecionado */
         color: #fff; /* Texto branco no selecionado */
     }
-}
+
