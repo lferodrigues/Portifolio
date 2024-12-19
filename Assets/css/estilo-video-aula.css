@@ -41,13 +41,13 @@ header img {
 
 /* Player principal */
 .player {
-    flex: 3;
-    background-color: #000; /* Alterado para preto para evitar cinza */
+    flex: 3; /* Controla a proporção do player */
+    background-color: #000;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
+    border-radius: 14px;
     margin-right: 20px;
     margin-bottom: 6px; /* Espaço maior entre o vídeo e a seção de comentários */
     overflow: hidden;
@@ -58,16 +58,15 @@ header img {
     height: 100%; /* Ajusta altura para 100% do contêiner */
     aspect-ratio: 16/9; /* Mantém proporção 16:9 */
     border: none;
-    margin: 0; /* Remove possíveis margens */
-    padding: 0; /* Remove possíveis espaçamentos internos */
+    margin: 0; 
+    padding: 0; 
 }
 
 /* Lista de vídeos */
 .video-list {
-    flex: 1;
+    flex: 1; /* Agora tem o mesmo valor de flex do player */
     background-color: #333;
     border-radius: 10px;
-    max-height: 800px; /* Aumenta ainda mais a altura da lista de vídeos */
     overflow-y: auto; /* Permite rolagem */
 }
 
@@ -102,35 +101,35 @@ header img {
     display: flex;
     align-items: flex-start;
     margin-bottom: 10px; /* Espaço entre o comentário e o footer */
-    padding: 10px; /* Espaçamento interno */
-    border-radius: 8px; /* Bordas arredondadas */
-    border: 1px solid #444; /* Adiciona uma borda ao redor do comentário */
+    padding: 10px; 
+    border-radius: 8px; 
+    border: 1px solid #444; 
 }
 
 .profile-pic {
-    width: 40px; /* Tamanho da imagem */
+    width: 40px; 
     height: 40px;
     border-radius: 50%;
-    margin-right: 10px; /* Espaço entre a imagem e o texto */
-    border: 2px solid #444; /* Borda ao redor da imagem */
+    margin-right: 10px; 
+    border: 2px solid #444; 
 }
 
 .comment-text {
     color: #fff;
-    font-size: 0.9em; /* Reduz o tamanho da fonte */
-    line-height: 1.4; /* Ajusta o espaçamento entre linhas */
+    font-size: 0.9em; 
+    line-height: 1.4; 
 }
 
 .comment-text strong {
-    color: #fff; /* Mantém o nome em branco */
+    color: #fff; 
 }
 
 .comment-text a {
-    color: #00c0ff; /* Azul apenas para o link */
+    color: #00c0ff; 
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s;
-    font-size: 0.9em; /* Mantém a fonte do link consistente com o texto */
+    font-size: 0.9em; 
 }
 
 .comment-text a:hover {
@@ -144,7 +143,7 @@ footer {
     text-align: center;
     padding: 4px 0;
     flex-shrink: 0;
-    margin-top: 20px; /* Espaço antes do rodapé */
+    margin-top: 20px; 
 }
 
 .footer-content {
@@ -162,54 +161,54 @@ footer {
 /* Estilo para ícones sociais */
 .social-icons {
     display: flex;
-    flex-direction: row; /* Ícones em linha */
-    justify-content: flex-start; /* Alinhar ao canto esquerdo */
-    gap: 12px; /* Espaçamento entre ícones */
-    margin: 20px 0 20px 20px; /* Margem: cima, direita, baixo, esquerda */
+    flex-direction: row; 
+    justify-content: flex-start; 
+    gap: 12px; 
+    margin: 20px 0 20px 20px; 
 }
 
 .social-icons a {
-    font-size: 24px; /* Tamanho dos ícones */
-    color: #ffffff; /* Cor branca */
-    transition: color 0.3s ease, transform 0.3s ease; /* Efeito suave no hover */
-    text-decoration: none; /* Remove sublinhado */
+    font-size: 24px; 
+    color: #ffffff; 
+    transition: color 0.3s ease, transform 0.3s ease; 
+    text-decoration: none; 
 }
 
 .social-icons a:hover {
-    color: #00c0ff; /* Cor azul ao passar o mouse */
-    transform: scale(1.2); /* Efeito de zoom */
+    color: #00c0ff; 
+    transform: scale(1.2); 
 }
 
 /* Versão Mobile: Ajustes da lista de vídeos */
 @media (max-width: 800px) {
     .container {
-        flex-direction: column; /* Organiza os itens em coluna */
-        align-items: center; /* Centraliza os itens horizontalmente */
+        flex-direction: column; 
+        align-items: center; 
     }
 
-    .player, .video-list {
-        width: 90%; /* Define uma largura consistente e centraliza */
-        margin: 10px auto; /* Adiciona margens superior/inferior e centraliza */
+    .player, 
+    .video-list {
+        width: 90%; 
+        margin: 10px auto; 
     }
 
     .player iframe {
-        width: 100%; /* Ajusta o vídeo para ocupar toda a largura do contêiner */
+        width: 100%; 
     }
-}
 
     .video-list {
-        width: 90%; /* Ajuste da largura da lista */
-        max-height: 300px; /* Altura fixa da lista para caber no layout */
+        width: 90%; 
+        height: 50vh; /* Define a altura como 40% da altura da tela */
         overflow-y: auto; /* Permite rolagem vertical */
-        margin: 0 auto; /* Centraliza horizontalmente */
-        padding: 10px; /* Espaçamento interno */
-        border-radius: 10px; /* Bordas arredondadas */
-        background-color: #333; /* Fundo escuro */
+        margin: 0 auto; 
+        padding: 10px; 
+        border-radius: 10px; 
+        background-color: #333; 
     }
 
     .video-list h3 {
-        font-size: 1em; /* Reduz o tamanho do título */
-        margin-bottom: 5px; /* Espaço entre o título e os vídeos */
+        font-size: 1em; 
+        margin-bottom: 5px; 
     }
 
     .video-list ul {
@@ -219,18 +218,18 @@ footer {
     }
 
     .video-list li {
-        padding: 8px; /* Espaçamento interno dos itens */
-        font-size: 0.9em; /* Ajuste do tamanho da fonte */
-        border-bottom: 1px solid #444; /* Linha separadora */
+        padding: 8px; 
+        font-size: 0.9em; 
+        border-bottom: 1px solid #444; 
         transition: background-color 0.3s;
     }
 
     .video-list li:hover {
-        background-color: #555; /* Fundo ao passar o mouse */
+        background-color: #555; 
     }
 
     .video-list li.selected {
-        background-color: #00c0ff; /* Fundo azul para o selecionado */
-        color: #fff; /* Texto branco no selecionado */
+        background-color: #00c0ff; 
+        color: #fff; 
     }
-
+}
