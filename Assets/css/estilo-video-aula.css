@@ -66,8 +66,8 @@ header img {
     flex: 1;
     background-color: #333;
     border-radius: 10px;
-    max-height: 562.5px; /* Mesma altura do vídeo */
-    overflow-y: auto; /* Adiciona barra de rolagem vertical */
+    max-height: 800px; /* Aumenta ainda mais a altura da lista de vídeos */
+    overflow-y: auto; /* Permite rolagem */
 }
 
 .video-list h3 {
@@ -180,7 +180,7 @@ footer {
 }
 
 /* Responsividade */
-@media (max-width: 768px) {
+@media (max-width: 800px) {
     .container {
         flex-direction: column; /* Empilha os elementos em uma coluna */
         align-items: center; /* Centraliza os elementos */
@@ -210,7 +210,12 @@ footer {
 
     .video-list {
         margin-top: 20px; /* Espaço entre o player e a lista de vídeos */
-        max-height: 400px; /* Aumenta a altura da lista no mobile */
-        overflow-y: auto; /* Permite rolagem se o conteúdo exceder o limite */
+        max-height: 800px; /* Aumenta ainda mais a altura da lista de vídeos */
+        overflow-y: auto; /* Permite rolagem */
+    }
+
+    /* Mostra os 15 primeiros itens no mobile */
+    .video-list ul li:nth-child(-n+15) {
+        display: list-item;
     }
 }
