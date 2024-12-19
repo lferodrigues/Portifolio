@@ -5,6 +5,7 @@
     box-sizing: border-box;
 }
 
+/* Corpo */
 body {
     font-family: Arial, sans-serif;
     background-color: #1e1e1e;
@@ -179,43 +180,52 @@ footer {
     transform: scale(1.2); /* Efeito de zoom */
 }
 
-/* Responsividade */
+/* Versão Mobile: Ajustes da lista de vídeos */
 @media (max-width: 800px) {
     .container {
         flex-direction: column; /* Empilha os elementos em uma coluna */
         align-items: center; /* Centraliza os elementos */
     }
 
-    .player,
-    .video-list {
-        width: 90%; /* Ambos ocupam 90% da largura da tela */
-        margin: 0 auto; /* Centraliza horizontalmente */
-    }
-
     .player {
-        position: relative; /* Necessário para posicionar o iframe dentro do contêiner */
-        padding-top: 56.25%; /* Proporção 16:9 para o vídeo */
-        margin-bottom: 20px; /* Espaço entre o player e a lista */
-        background-color: #000; /* Evita espaços visuais no contêiner */
-    }
-
-    .player iframe {
-        position: absolute; /* Posiciona o iframe dentro do contêiner proporcional */
-        top: 0;
-        left: 0;
-        width: 100%; /* Preenche completamente a largura do contêiner */
-        height: 100%; /* Preenche completamente a altura do contêiner */
-        border: none; /* Remove bordas */
+        width: 100%; /* Player ocupa toda a largura */
+        margin-bottom: 10px; /* Espaço entre o player e a lista */
     }
 
     .video-list {
-        margin-top: 20px; /* Espaço entre o player e a lista de vídeos */
-        max-height: 800px; /* Aumenta ainda mais a altura da lista de vídeos */
-        overflow-y: auto; /* Permite rolagem */
+        width: 90%; /* Ajuste da largura da lista */
+        max-height: 200px; /* Altura fixa da lista para caber no layout */
+        overflow-y: auto; /* Permite rolagem vertical */
+        margin: 0 auto; /* Centraliza horizontalmente */
+        padding: 10px; /* Espaçamento interno */
+        border-radius: 10px; /* Bordas arredondadas */
+        background-color: #333; /* Fundo escuro */
     }
 
-    /* Mostra os 15 primeiros itens no mobile */
-    .video-list ul li:nth-child(-n+15) {
-        display: list-item;
+    .video-list h3 {
+        font-size: 1em; /* Reduz o tamanho do título */
+        margin-bottom: 5px; /* Espaço entre o título e os vídeos */
+    }
+
+    .video-list ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .video-list li {
+        padding: 8px; /* Espaçamento interno dos itens */
+        font-size: 0.9em; /* Ajuste do tamanho da fonte */
+        border-bottom: 1px solid #444; /* Linha separadora */
+        transition: background-color 0.3s;
+    }
+
+    .video-list li:hover {
+        background-color: #555; /* Fundo ao passar o mouse */
+    }
+
+    .video-list li.selected {
+        background-color: #00c0ff; /* Fundo azul para o selecionado */
+        color: #fff; /* Texto branco no selecionado */
     }
 }
