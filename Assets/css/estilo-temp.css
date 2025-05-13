@@ -1,3 +1,21 @@
+.engrenagem::before {
+    content: "\f085";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 80px;
+    color: #007BFF; /* Azul */
+    animation: girar 2s linear infinite;
+    display: inline-block;
+}
+
+@keyframes girar {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
 body {
     font-family: Arial, sans-serif;
     background-color: #000;
