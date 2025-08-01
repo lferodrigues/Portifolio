@@ -46,7 +46,7 @@ body {
   align-items: center;
   gap: 10px;
   width: 100%;
-  padding: 100px 10px 10px;
+  padding: 100px 10px 10px; /* compensar altura dos botões fixos */
 }
 
 .container {
@@ -127,7 +127,7 @@ svg {
 
 footer {
   background-color: #000;
-  padding: 5px 20px;
+  padding: 8px 20px;
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -140,6 +140,7 @@ footer {
   align-items: center;
   flex-wrap: wrap;
   text-align: center;
+  gap: 10px;
 }
 
 .footer-content img {
@@ -148,19 +149,32 @@ footer {
   max-width: 100%;
 }
 
+/* 🔧 MOBILE RESPONSIVO */
 @media (max-width: 500px) {
-  h1 {
-    font-size: 1.1rem;
-  }
-
   .top-buttons {
     top: 10px;
     left: 10px;
+    right: 10px;
+    gap: 8px;
   }
 
   .top-buttons button {
-    font-size: 0.8rem;
-    padding: 8px 12px;
+    font-size: 0.85rem;
+    padding: 10px 12px;
+  }
+
+  #containers-area {
+    padding-top: 200px; /* Mais espaço para os botões fixos */
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .container {
+    margin-top: 10px;
+  }
+
+  h1 {
+    font-size: 1.1rem;
   }
 
   .document-text {
@@ -172,11 +186,23 @@ footer {
     padding: 10px;
   }
 
+  .footer-content {
+    flex-direction: column;
+    gap: 6px;
+  }
+
   .footer-content img {
     width: 60px;
+    margin: 0 auto;
+  }
+
+  .footer-content p {
+    font-size: 0.75rem;
+    margin: 0;
   }
 }
 
+/* IMPRESSÃO */
 @media print {
   body * {
     visibility: hidden;
