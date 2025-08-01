@@ -1,65 +1,126 @@
- const input = document.getElementById('documento');
+function mascararDocumento(input) {
+  let value = input.value.replace(/\D/g, '');
 
-    input.addEventListener('input', function () {
-      let value = this.value.replace(/\D/g, '');
+  if (value.length <= 11) {
+    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+  } else {
+    value = value.replace(/^(\d{2})(\d)/, '$1.$2');
+    value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+    value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
+    value = value.replace(/(\d{4})(\d)/, '$1-$2');
+  }
 
-      if (value.length <= 11) {
-        // CPF: 000.000.000-00
-        this.value = value
-          .replace(/(\d{3})(\d)/, '$1.$2')
-          .replace(/(\d{3})(\d)/, '$1.$2')
-          .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+  input.value = value;
+}
+function adicionarContainer() {
+  const area = document.getElementById("containers-area");
+  const existentes = area.querySelectorAll(".container");
+
+  const clone = existentes[0].cloneNode(true);
+
+  const input = clone.querySelector("input");
+  const svg = clone.querySelector("svg");
+  const docText = clone.querySelector(".document-text");
+
+  if (input) input.value = "";
+  if (svg) svg.innerHTML = "";
+  if (docText) docText.textContent = "";
+
+  // Remove botão antigo (se houver) para evitar duplicação
+  const botaoRemoverExistente = clone.querySelector(".remove-button");
+  if (botaoRemoverExistente) botaoRemoverExistente.remove();
+
+  // Adiciona botão de remover
+  const botaoRemover = document.createElement("button");
+  botaoRemover.textContent = "Remover";
+  botaoRemover.classList.add("remove-button");
+  botaoRemover.onclick = () => removerContainer(clone);
+  clone.appendChild(botaoRemover);
+
+  area.appendChild(clone);
+}
+
+function removerContainer(container) {
+  container.remove();
+}
+
+
+
+function gerarTodosCodigos() {
+  const containers = document.querySelectorAll('.container');
+  containers.forEach(container => {
+    const input = container.querySelector('input');
+    const svg = container.querySelector('svg');
+    const texto = container.querySelector('.document-text');
+
+    if (input && svg && texto) {
+      let doc = input.value.replace(/\D/g, '');
+      if (doc) {
+        JsBarcode(svg, doc, {
+          format: "CODE128",
+          width: 2,
+          height: 50,
+          displayValue: false,
+        });
+        texto.textContent = doc;
       } else {
-        // CNPJ: 00.000.000/0000-00
-        this.value = value
-          .replace(/^(\d{2})(\d)/, '$1.$2')
-          .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
-          .replace(/\.(\d{3})(\d)/, '.$1/$2')
-          .replace(/(\d{4})(\d{1,2})$/, '$1-$2');
+        svg.innerHTML = '';
+        texto.textContent = '';
       }
-    });
-
-    function gerarCodigo() {
-      const docInput = document.getElementById('documento').value;
-      const docNumeros = docInput.replace(/\D/g, '');
-
-      if (docNumeros.length !== 11 && docNumeros.length !== 14) {
-        alert('Documento inválido. Digite um CPF (11 dígitos) ou CNPJ (14 dígitos).');
-        return;
-      }
-
-      const svg = document.getElementById('barcode');
-      svg.innerHTML = '';
-
-      JsBarcode(svg, docNumeros, {
-        format: "CODE128",
-        lineColor: "#000",
-        width: 2,
-        height: 100,
-        displayValue: false
-      });
-
-      document.getElementById('docTexto').textContent = docNumeros;
     }
+  });
+}
+function gerarPDF() {
+  const containers = Array.from(document.querySelectorAll(".container"));
 
-    function gerarPDF() {
-      const svg = document.getElementById('barcode');
-      const docTexto = document.getElementById('docTexto').textContent;
+  if (containers.length === 0) {
+    alert("Nenhum código para imprimir.");
+    return;
+  }
 
-      if (!svg || svg.innerHTML.trim() === '' || docTexto.trim() === '') {
-        alert('Por favor, gere o código de barras antes de baixar o PDF.');
-        return;
-      }
+  const printArea = document.createElement("div");
+  printArea.classList.add("print-area");
 
-      const element = document.getElementById('print-area');
+  containers.forEach(container => {
+    const clone = container.cloneNode(true);
 
-      const opt = {
-        margin:       0.5,
-        filename:     'codigo-de-barras.pdf',
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2 },
-        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
-      };
+    // Remove input e título se existirem
+    const input = clone.querySelector("input");
+    const titulo = clone.querySelector("h1");
 
-      html2pdf().set(opt).from(element).save();
-    }
+    if (input) input.remove();
+    if (titulo) titulo.remove();
+
+    clone.classList.add("print-item");
+    printArea.appendChild(clone);
+  });
+
+  document.body.appendChild(printArea);
+
+  // Abre a janela de impressão
+  window.print();
+
+  // Remove a área temporária após impressão
+  setTimeout(() => {
+    printArea.remove();
+  }, 1000);
+}
+
+const clone = container.cloneNode(true);
+
+// Remove input (campo de texto)
+const input = clone.querySelector("input");
+if (input) input.remove();
+
+
+
+
+
+
+
+
+
+
+
