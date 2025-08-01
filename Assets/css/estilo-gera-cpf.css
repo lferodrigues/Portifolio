@@ -1,0 +1,114 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding-bottom: 120px; /* Espaço para o footer fixo */
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+/* Container principal */
+.container {
+  background: #ffffff10;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  max-width: 320px;
+  width: 100%;
+}
+
+h1 {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+}
+
+/* Campo de texto para CPF/CNPJ */
+input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  outline: none;
+}
+
+/* Botões */
+button {
+  padding: 12px 24px;
+  background-color: #00c9a7;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin: 10px 0;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #00a98f;
+}
+
+/* Código de barras SVG */
+svg {
+  margin-top: 20px;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  max-width: 100%; /* 🟢 Impede que estoure a div */
+  height: auto;
+}
+
+.barcode-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 30px;
+  width: 100%; /* 🟢 Garante que siga o tamanho da container */
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.document-text {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #000;
+  font-weight: bold;
+}
+
+/* Footer fixo na base */
+footer {
+  background-color: #000;
+  padding: 5px 20px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.footer-content img {
+  width: 80px;
+  margin-right: 10px;
+}
