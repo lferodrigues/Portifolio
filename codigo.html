@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="shortcut icon" href="Assets/img/logo.ico" type="image/x-icon" />
+  <title>Gerador de Código de Barras - CPF ou CNPJ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./Assets/css/estilo-gera-cpf.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Gerador de Código de Barras - CPF ou CNPJ</h1>
+    <input type="text" id="documento" placeholder="Digite CPF ou CNPJ" maxlength="18" />
+    <div>
+      <button onclick="gerarCodigo()">Gerar Código de Barras</button>
+      <button onclick="gerarPDF()">Imprimir</button>
+    </div>
+
+    <div class="barcode-container" id="print-area">
+      <svg id="barcode"></svg>
+      <div class="document-text" id="docTexto"></div>
+    </div>
+    
+  </div>
+
+  <footer>
+        <div class="footer-content">
+            <a href="https://feliperodrigues.net"><img src="./Assets/img/banner04.png" alt="Logo do Felipe"></a>
+            <p>© <span id="currentYear">2024</span> Todos os direitos reservados,60.525.135/0001-00 Rodrigues Empreendimentos</p>
+        </div>
+    </footer>
+
+  <!-- JsBarcode -->
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+  <!-- html2pdf -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+ <script src="./Assets/js/funcao-gera-cpf.js"></script>
+  <script src="./Assets/js/sec-gera-cpf.js"></script>
+  
+</body>
+</html>
