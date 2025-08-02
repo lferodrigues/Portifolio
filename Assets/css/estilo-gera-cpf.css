@@ -1,127 +1,301 @@
-function mascararDocumento(input) {
-  let valor = input.value.replace(/\D/g, '');
+* {
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
 
-  if (valor.length <= 11) {
-    // CPF
-    valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
-    valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
-    valor = valor.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-  } else {
-    // CNPJ
-    valor = valor.replace(/^(\d{2})(\d)/, '$1.$2');
-    valor = valor.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
-    valor = valor.replace(/\.(\d{3})(\d)/, '.$1/$2');
-    valor = valor.replace(/(\d{4})(\d)/, '$1-$2');
+body {
+  margin: 0;
+  padding-bottom: 120px;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.top-buttons {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 90vw;
+}
+
+.top-buttons button {
+  padding: 10px 16px;
+  background-color: #00c9a7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.top-buttons button:hover {
+  background-color: #00a98f;
+}
+
+#containers-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 100px 10px 10px;
+}
+
+.container {
+  background: #ffffff10;
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+  margin: 10px auto;
+}
+
+h1 {
+  font-size: 1.4rem;
+  margin-bottom: 16px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  outline: none;
+}
+
+button {
+  padding: 12px 24px;
+  background-color: #00c9a7;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin: 10px 0;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #00a98f;
+}
+
+/* === Cartão Fidelidade === */
+.barcode-container {
+  position: relative;
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
+}
+
+.card-background {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+}
+
+.barcode-container svg {
+  position: absolute;
+  top: 52%; /* sobe para alinhar com o CLIENTE ESPECIAL */
+  left: 18%; /* desloca para a direita */
+  transform: translate(-50%, -50%);
+  background: none;
+  padding: 0;
+  height: 28px; /* altura menor para caber no espaço */
+  width: 65%; /* largura reduzida para caber no espaço */
+}
+
+.document-text {
+  position: absolute;
+  top: 70%; /* mantém na parte inferior do cartão */
+  left: 15%; /* desloca para o canto esquerdo */
+  transform: none; /* remove centralização */
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff; /* branco */
+  text-align: left;
+  width: auto;
+}
+
+.page-break {
+  page-break-after: always;
+}
+
+footer {
+  background-color: #000;
+  padding: 8px 20px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  text-align: center;
+  gap: 10px;
+}
+
+.footer-content img {
+  width: 80px;
+  margin-right: 10px;
+  max-width: 100%;
+}
+
+/* 🔧 MOBILE RESPONSIVO */
+@media (max-width: 500px) {
+  .top-buttons {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    gap: 8px;
   }
 
-  input.value = valor;
-}
-
-// Adiciona um novo cartão (container)
-function adicionarContainer() {
-  const area = document.getElementById("containers-area");
-  const existentes = area.querySelectorAll(".container");
-  const clone = existentes[0].cloneNode(true);
-
-  const inputs = clone.querySelectorAll("input");
-  const svg = clone.querySelector("svg");
-  const docText = clone.querySelector(".document-text");
-
-  if (inputs.length > 0) inputs.forEach(input => input.value = "");
-  if (svg) svg.innerHTML = "";
-  if (docText) docText.textContent = "";
-
-  const botaoRemoverExistente = clone.querySelector(".remove-button");
-  if (botaoRemoverExistente) botaoRemoverExistente.remove();
-
-  const botaoRemover = document.createElement("button");
-  botaoRemover.textContent = "Remover";
-  botaoRemover.classList.add("remove-button");
-  botaoRemover.onclick = () => removerContainer(clone);
-  clone.appendChild(botaoRemover);
-
-  area.appendChild(clone);
-}
-
-// Remove um cartão individual
-function removerContainer(container) {
-  container.remove();
-}
-
-function gerarTodosCodigos() {
-  const containers = document.querySelectorAll(".container");
-
-  containers.forEach(container => {
-    const inputCPF = container.querySelector(".cpf-input");
-    const inputNome = container.querySelector(".nome-input");
-    const svg = container.querySelector("svg");
-    const docText = container.querySelector(".document-text");
-
-    if (!inputCPF || !inputNome || !svg || !docText) {
-      console.warn("Elementos não encontrados.");
-      return;
-    }
-
-    const valorComMascara = inputCPF.value.trim();
-    const valorSemMascara = valorComMascara.replace(/\D/g, '');
-    const nomeDigitado = inputNome.value.trim();
-
-    if (valorSemMascara.length < 11) {
-      alert("Digite um CPF ou CNPJ válido.");
-      return;
-    }
-
-    // Mostra no console o valor codificado
-    console.log(`Código de barras gerado para: ${valorSemMascara}`);
-
-    // Mostra o nome no cartão
-    docText.textContent = nomeDigitado || "Cliente Especial";
-
-    // Limpa o SVG
-    svg.innerHTML = '';
-
-    // Gera o código de barras
-    JsBarcode(svg, valorSemMascara, {
-        format: "CODE128",
-      displayValue: false,
-      width: 3,         // Aumenta a espessura das linhas
-      height: 60,       // Aumenta a altura do código de barras
-      margin: 0
-    });
-  });
-}
-
-
-
-// Gera a versão de impressão dos cartões
-function gerarPDF() {
-  const containers = Array.from(document.querySelectorAll(".container"));
-
-  if (containers.length === 0) {
-    alert("Nenhum código para imprimir.");
-    return;
+  .top-buttons button {
+    font-size: 0.85rem;
+    padding: 10px 12px;
   }
 
-  const printArea = document.createElement("div");
-  printArea.classList.add("print-area");
+  #containers-area {
+    padding-top: 200px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 
-  containers.forEach(container => {
-    const clone = container.cloneNode(true);
+  .container {
+    margin-top: 10px;
+  }
 
-    const inputs = clone.querySelectorAll("input");
-    const titulo = clone.querySelector("h1");
+  h1 {
+    font-size: 1.1rem;
+  }
 
-    if (inputs.length > 0) inputs.forEach(input => input.remove());
-    if (titulo) titulo.remove();
+  .document-text {
+    font-size: 12px;
+  }
 
-    clone.classList.add("print-item");
-    printArea.appendChild(clone);
-  });
+  footer {
+    font-size: 0.75rem;
+    padding: 10px;
+  }
 
-  document.body.appendChild(printArea);
-  window.print();
+  .footer-content {
+    flex-direction: column;
+    gap: 6px;
+  }
 
-  setTimeout(() => {
-    printArea.remove();
-  }, 1000);
+  .footer-content img {
+    width: 60px;
+    margin: 0 auto;
+  }
+
+  .footer-content p {
+    font-size: 0.75rem;
+    margin: 0;
+  }
 }
+
+/* ===== IMPRESSÃO - Exatamente como na tela ===== */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #containers-area, #containers-area * {
+    visibility: visible;
+  }
+
+  /* Área de impressão organizada em colunas */
+  #containers-area {
+    display: grid;
+    grid-template-columns: repeat(2, 85.6mm); /* 2 cartões por linha */
+    gap: 5mm 10mm; /* espaçamento vertical/horizontal */
+    justify-content: center;
+    padding: 10mm;
+  }
+
+  /* Cada cartão no tamanho real */
+  #containers-area .container {
+    background: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 85.6mm;   /* largura cartão de crédito */
+    height: 54mm;    /* altura cartão de crédito */
+    page-break-inside: avoid; /* evita quebrar o cartão */
+  }
+
+  .barcode-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .card-background {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+  }
+
+  /* Código de barras na posição exata */
+  svg {
+    height: 8mm !important;
+    width: 35mm !important;
+    position: absolute;
+    top: 62%;
+    left: 72%;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Nome em branco na posição correta */
+  .document-text {
+    font-size: 10pt !important;
+    font-weight: bold;
+    color: #fff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    position: absolute;
+    bottom: 7mm;
+    left: 8%;
+    text-align: left;
+  }
+
+  /* Oculta elementos que não devem aparecer na impressão */
+  h1, input, .remove-button, .top-buttons, footer {
+    display: none !important;
+  }
+}
+.remove-button {
+  background-color: #e74c3c !important; /* vermelho */
+  color: white !important;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  padding: 8px 12px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.remove-button:hover {
+  background-color: #c0392b !important; /* vermelho mais escuro */
+}
+
+
+
