@@ -1,26 +1,28 @@
-<!-- codigo.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gerador de Código de Barras - CPF ou CNPJ</title>
+  <link rel="icon" href="Assets/img/logo.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="Assets/img/logo.ico" type="image/x-icon" />
+  <title>Gerador de Cartão Fidelidade</title>
   <link rel="stylesheet" href="./Assets/css/estilo-gera-cpf.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 </head>
 <body>
   <div class="top-buttons">
-    <button onclick="adicionarContainer()">Adcionar Novo Campo</button>
+    <button onclick="adicionarContainer()">Adicionar Novo Campo</button>
     <button onclick="gerarTodosCodigos()">Gerar Código de Barras</button>
     <button onclick="gerarPDF()">Imprimir</button>
   </div>
-  
 
   <div id="containers-area">
     <div class="container">
-      <h1>Gerador de Código de Barras - CPF ou CNPJ</h1>
-      <input type="text" placeholder="Digite CPF ou CNPJ" maxlength="18" oninput="mascararDocumento(this)" />
+      <h1>Gerador de Cartão Fidelidade</h1>
+      <input type="text" placeholder="Digite o Nome Completo" class="nome-input" maxlength="80" />
+      <input type="text" placeholder="Digite CPF ou CNPJ" maxlength="18" oninput="mascararDocumento(this)" class="cpf-input" />
       <div class="barcode-container">
+        <img src="./Assets/img/Cartao-fidelidade.png" alt="Cartão Fidelidade" class="card-background">
         <svg></svg>
         <div class="document-text"></div>
       </div>
@@ -39,4 +41,3 @@
   <script src="./Assets/js/sec-gera-cpf.js"></script>
 </body>
 </html>
-
