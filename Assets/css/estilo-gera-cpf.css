@@ -224,7 +224,7 @@ footer {
   /* Área de impressão organizada em colunas */
   #containers-area {
     display: grid;
-    grid-template-columns: repeat(2, 85.6mm); /* 2 cartões por linha */
+    grid-template-columns: repeat(2, 90.0mm); /* 2 cartões por linha */
     gap: 5mm 10mm; /* espaçamento vertical/horizontal */
     justify-content: center;
     padding: 10mm;
@@ -236,8 +236,8 @@ footer {
     box-shadow: none !important;
     padding: 0 !important;
     margin: 0 !important;
-    width: 85.6mm;   /* largura cartão de crédito */
-    height: 54mm;    /* altura cartão de crédito */
+    width: 90.0mm;   /* largura cartão de crédito */
+    height: 65mm;    /* altura cartão de crédito */
     page-break-inside: avoid; /* evita quebrar o cartão */
   }
 
