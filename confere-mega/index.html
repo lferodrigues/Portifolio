@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Conferência Mega-Sena</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login" class="container">
+  <h2>Acesso Restrito</h2>
+  <input type="password" id="token" placeholder="Digite o token">
+  <button type="button" onclick="login()">Entrar</button>
+  <p id="loginError"></p>
+</div>
+
+<!-- APP -->
+<div id="app" class="container hidden">
+  <h2>Conferência de Jogos – Mega-Sena</h2>
+
+  <div class="top-controls">
+  <button class="toggle-dark" onclick="toggleDarkMode()">🌙 Modo Escuro</button>
+
+  <select id="filtroAcertos" onchange="aplicarFiltro()">
+    <option value="0">Todos os jogos</option>
+    <option value="4">Quadra (4+)</option>
+    <option value="5">Quina (5+)</option>
+    <option value="6">Sena (6)</option>
+  </select>
+</div>
+
+  <div class="sorteio">
+    <h3>Números Sorteados</h3>
+    <input type="text" id="numerosSorteados" placeholder="Ex: 05,12,23,34,45,60">
+    <button onclick="conferir()">Conferir Jogos</button>
+  </div>
+
+  <div id="resultado"></div>
+
+  <table>
+    <thead>
+  <tr>
+    <th>ID</th>
+    <th>Números do Jogo</th>
+    <th>Imagem</th>
+    <th>Acertos</th>
+  </tr>
+</thead>
+    <tbody id="tabelaJogos"></tbody>
+  </table>
+  <div class="pagination">
+    <button onclick="paginaAnterior()">⬅ Voltar</button>
+    <span id="paginaInfo"></span>
+    <button onclick="proximaPagina()">Avançar ➡</button>
+  </div>
+</div>
+
+
+
+
+<script src="script.js"></script>
+</body>
+</html>
