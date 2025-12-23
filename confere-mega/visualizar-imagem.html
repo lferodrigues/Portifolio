@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="../Assets/img/logo.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="../Assets/img/logo.ico" type="image/x-icon" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visualização Protegida</title>
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #000;
+  overflow: hidden;
+}
+
+/* IMAGEM */
+#imagem {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  margin: auto;
+}
+
+/* OVERLAY (JÁ VISÍVEL) */
+#bloqueio {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55); /* escurece levemente */
+  display: flex; /* VISÍVEL AO ABRIR */
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  pointer-events: none; /* não bloqueia visualização */
+}
+
+/* FAIXA */
+.faixa {
+  background: red;
+  padding: 18px 45px;
+  border: 6px solid yellow;
+  transform: rotate(-12deg);
+  box-shadow: 0 0 50px red;
+}
+
+.faixa span {
+  color: yellow;
+  font-size: 36px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+}
+
+/* BLOQUEIO DE IMPRESSÃO */
+@media print {
+  body {
+    display: none !important;
+  }
+}
+</style>
+
+<script>
+/* ============================
+   TOKEN
+============================ */
+if (!sessionStorage.getItem("autenticado")) {
+  window.location.href = "https://feliperodrigues.net/confere-mega";
+}
+
+/* ============================
+   OVERLAY PERMANENTE
+============================ */
+function manterOverlay() {
+  document.getElementById("bloqueio").style.display = "flex";
+}
+
+/* DESKTOP */
+document.addEventListener("keydown", e => {
+  if (
+    e.key === "PrintScreen" ||
+    (e.ctrlKey && e.key.toLowerCase() === "p")
+  ) {
+    e.preventDefault();
+    manterOverlay();
+  }
+});
+
+/* WEB + MOBILE */
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) manterOverlay();
+});
+
+window.addEventListener("blur", manterOverlay);
+
+/* MOBILE (long press) */
+let pressTimer;
+document.addEventListener("touchstart", () => {
+  pressTimer = setTimeout(manterOverlay, 500);
+});
+document.addEventListener("touchend", () => {
+  clearTimeout(pressTimer);
+});
+
+/* BLOQUEIOS GERAIS */
+document.addEventListener("contextmenu", e => e.preventDefault());
+</script>
+</head>
+
+<body>
+
+<!-- OVERLAY -->
+<div id="bloqueio">
+  <div class="faixa">
+    <span>IMAGEM APENAS PARA CONFERÊNCIA !</span>
+  </div>
+</div>
+
+<!-- IMAGEM -->
+<img id="imagem">
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const img = params.get("img");
+
+if (img) {
+  document.getElementById("imagem").src = img;
+}
+</script>
+
+</body>
+</html>

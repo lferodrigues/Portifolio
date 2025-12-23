@@ -248,17 +248,19 @@ function gerarNomeImagem(index) {
 }
 
 function verificarAcessoImagem(event, index) {
+  event.preventDefault();
+
   const autenticado = sessionStorage.getItem("autenticado");
 
   if (!autenticado) {
-    event.preventDefault();
-    alert("Acesso negado. Faça login para visualizar o jogo.");
-    location.reload(); // volta para a tela inicial
-    return false;
+    window.location.href = "https://feliperodrigues.net/confere-mega";
+    return;
   }
 
-  window.open(gerarNomeImagem(index), "_blank");
+  const img = gerarNomeImagem(index);
+  window.open(`visualizar-imagem.html?img=${img}`, "_blank");
 }
+
 
 /* =====================
    RENDERIZAÇÃO + PAGINAÇÃO
@@ -390,3 +392,42 @@ function paginaAnterior() {
 function toggleDarkMode() {
   document.body.classList.toggle("dark");
 }
+/* =========================
+   BLOQUEIO DE PRINT / CÓPIA
+========================= */
+
+// Bloquear tecla Print Screen
+document.addEventListener("keydown", function (e) {
+  if (e.key === "PrintScreen") {
+    e.preventDefault();
+    alert("Captura de tela não permitida.");
+    document.body.style.filter = "blur(10px)";
+    setTimeout(() => {
+      document.body.style.filter = "none";
+    }, 1500);
+  }
+
+  // Bloquear Ctrl + P
+  if (e.ctrlKey && e.key.toLowerCase() === "p") {
+    e.preventDefault();
+    alert("Impressão bloqueada.");
+  }
+
+  // Bloquear Ctrl + C / Ctrl + X
+  if (e.ctrlKey && ["c", "x"].includes(e.key.toLowerCase())) {
+    e.preventDefault();
+  }
+});
+
+// Bloquear menu do botão direito
+document.addEventListener("contextmenu", e => e.preventDefault());
+
+// Detectar perda de foco (possível captura)
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    document.body.style.filter = "blur(10px)";
+  } else {
+    document.body.style.filter = "none";
+  }
+});
+
