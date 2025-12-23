@@ -1,3 +1,34 @@
+document.addEventListener("touchstart", function (e) {
+  if (e.touches.length > 1) {
+    e.preventDefault();
+    bloquearTela();
+  }
+}, { passive: false });
+
+// Bloqueia o PrintScreen
+document.addEventListener("keydown", function (e) {
+  
+  if (e.key === "PrintScreen") {
+    e.preventDefault();
+    bloquearTela();
+  }
+});
+function bloquearTela() {
+  document.body.innerHTML = `
+    <div style="
+      height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#000;
+      color:#fff;
+      font-size:20px;
+      text-align:center;
+    ">
+      Conteúdo protegido.<br>Ação não permitida.
+    </div>
+  `;
+}
 // Bloquear botão direito do mouse
 document.addEventListener("contextmenu", (event) => {
     event.preventDefault();
