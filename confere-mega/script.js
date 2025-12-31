@@ -321,7 +321,7 @@ function renderizarTabela() {
 
 
    tr.innerHTML = `
-  <td>${item.index + 1}</td>
+  <td>${String(item.index).padStart(2, "0")}</td>
   <td>${item.jogo.join(", ")}</td>
   <td>
     <span 
@@ -459,4 +459,5 @@ document.addEventListener("visibilitychange", () => {
     document.body.style.filter = "none";
   }
 });
+
 
