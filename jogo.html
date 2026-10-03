@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aventura das Palavras - Jogo Educativo</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Fredoka & Nunito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        fredoka: ['Fredoka', 'sans-serif'],
+                        nunito: ['Nunito', 'sans-serif']
+                    },
+                    colors: {
+                        brand: {
+                            purple: '#6C5CE7',
+                            yellow: '#FDCB6E',
+                            pink: '#FD79A8',
+                            blue: '#0984E3',
+                            green: '#00B894',
+                            orange: '#E17055'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: linear-gradient(135deg, #a8c0ff 0%, #3f2b96 100%);
+            min-height: 100vh;
+            user-select: none;
+        }
+
+        .bounce-gentle {
+            animation: bounceGentle 2s infinite ease-in-out;
+        }
+
+        @keyframes bounceGentle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .pop-in {
+            animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.6); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .pulse-btn {
+            animation: pulseGlow 1.8s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(108, 92, 231, 0.6); }
+            70% { box-shadow: 0 0 0 15px rgba(108, 92, 231, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(108, 92, 231, 0); }
+        }
+
+        .btn-shadow {
+            box-shadow: 0 6px 0 0 rgba(0,0,0,0.2);
+        }
+        .btn-shadow:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(12px);
+        }
+
+        .age-card {
+            transition: all 0.2s ease;
+        }
+        .age-card:hover {
+            transform: translateY(-6px) scale(1.02);
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+        .animate-shake {
+            animation: shake 0.4s ease-in-out;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #6C5CE7;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-between p-3 md:p-6 min-h-screen text-slate-800">
+
+    <!-- Top Header & Stats -->
+    <header class="w-full max-w-4xl glass-card rounded-2xl p-4 mb-4 shadow-xl flex flex-wrap items-center justify-between gap-3 border-4 border-white">
+        <div class="flex items-center gap-3">
+            <div class="bg-amber-400 p-3 rounded-2xl text-2xl text-white shadow-inner flex items-center justify-center">
+                <i class="fa-solid fa-gamepad"></i>
+            </div>
+            <div>
+                <h1 class="text-xl md:text-2xl font-bold text-indigo-900 leading-tight">Aventura das Palavras</h1>
+                <p class="text-xs md:text-sm text-indigo-600 font-semibold" id="level-title">Seleção de Idade</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3 md:gap-4 flex-wrap">
+            <!-- Mode Badge -->
+            <div id="mode-badge" class="hidden bg-purple-100 text-purple-800 font-extrabold px-3 py-1.5 rounded-xl border-2 border-purple-300 text-xs md:text-sm">
+                <i class="fa-solid fa-child mr-1"></i> <span id="mode-badge-text">6 - 8 Anos</span>
+            </div>
+
+            <!-- Timer Display -->
+            <div class="flex items-center gap-2 bg-indigo-50 px-3 py-1.5 rounded-xl border-2 border-indigo-200">
+                <i class="fa-solid fa-clock text-indigo-500 text-lg"></i>
+                <span id="session-timer" class="font-bold text-indigo-800 text-base md:text-lg">40:00</span>
+            </div>
+
+            <!-- Stars Counter -->
+            <div class="flex items-center gap-2 bg-yellow-50 px-3 py-1.5 rounded-xl border-2 border-yellow-300">
+                <i class="fa-solid fa-star text-amber-500 text-xl animate-bounce"></i>
+                <span id="star-count" class="font-bold text-amber-800 text-xl">0</span>
+            </div>
+
+            <!-- Audio Controls -->
+            <button id="toggle-audio-btn" onclick="toggleAudio()" class="bg-indigo-100 hover:bg-indigo-200 text-indigo-700 p-2.5 rounded-xl transition font-bold flex items-center justify-center" title="Som">
+                <i id="audio-icon" class="fa-solid fa-volume-high text-lg"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Game Container -->
+    <main class="w-full max-w-4xl flex-1 flex flex-col items-center justify-center relative">
+        
+        <!-- STEP 1: Age Selection Modal Screen -->
+        <div id="age-select-screen" class="glass-card w-full max-w-xl rounded-3xl p-6 md:p-8 text-center border-4 border-white shadow-2xl relative z-20 pop-in">
+            <div class="text-6xl mb-3 bounce-gentle">🎨🎒🚀</div>
+            <h2 class="text-3xl font-extrabold text-indigo-900 mb-1">Qual é a sua Idade?</h2>
+            <p class="text-slate-600 mb-6 font-semibold">Escolha a sua faixa de idade para começar a aventura de 40 minutos!</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <!-- Option 1: Ages 6 to 8 -->
+                <button onclick="selectAgeGroup('6-8')" class="age-card bg-gradient-to-br from-amber-100 to-amber-200 border-4 border-amber-400 p-5 rounded-3xl flex flex-col items-center text-amber-950 text-center shadow-lg group hover:border-amber-500">
+                    <div class="bg-amber-400 text-white w-16 h-16 rounded-2xl flex items-center justify-center text-3xl font-black mb-3 shadow-md group-hover:scale-110 transition">
+                        6-8
+                    </div>
+                    <span class="text-xl font-extrabold mb-1">6 a 8 Anos</span>
+                    <span class="text-xs font-bold text-amber-800">Ouve o som da palavra e escolhe a imagem correta entre 3 opções!</span>
+                    <div class="mt-4 bg-amber-500 text-white font-extrabold px-4 py-1.5 rounded-full text-xs shadow">
+                        <i class="fa-solid fa-headphones mr-1"></i> Modo Ouvir & Achar
+                    </div>
+                </button>
+
+                <!-- Option 2: Ages 9 to 11 -->
+                <button onclick="selectAgeGroup('9-11')" class="age-card bg-gradient-to-br from-indigo-100 to-indigo-200 border-4 border-indigo-400 p-5 rounded-3xl flex flex-col items-center text-indigo-950 text-center shadow-lg group hover:border-indigo-500">
+                    <div class="bg-indigo-600 text-white w-16 h-16 rounded-2xl flex items-center justify-center text-3xl font-black mb-3 shadow-md group-hover:scale-110 transition">
+                        9-11
+                    </div>
+                    <span class="text-xl font-extrabold mb-1">9 a 11 Anos</span>
+                    <span class="text-xs font-bold text-indigo-800">Olha para a imagem e escreve o nome correto (sem se preocupar com acentos)!</span>
+                    <div class="mt-4 bg-indigo-600 text-white font-extrabold px-4 py-1.5 rounded-full text-xs shadow">
+                        <i class="fa-solid fa-keyboard mr-1"></i> Modo Escrever Palavras
+                    </div>
+                </button>
+            </div>
+
+            <div class="bg-blue-50 border-2 border-blue-200 rounded-2xl p-3 text-left flex items-center gap-3">
+                <i class="fa-solid fa-circle-info text-blue-500 text-xl flex-shrink-0"></i>
+                <p class="text-xs text-blue-900 font-bold">Dica: O jogo dura 40 minutos com várias fases divertidas. Você pode mudar o volume a qualquer momento no topo!</p>
+            </div>
+        </div>
+
+        <!-- Gameplay View (Hidden initially) -->
+        <div id="game-screen" class="w-full flex flex-col items-center hidden">
+            
+            <!-- Level Progress Bar -->
+            <div class="w-full bg-white/40 rounded-full h-4 mb-4 border-2 border-white/60 overflow-hidden shadow-inner">
+                <div id="progress-bar" class="bg-gradient-to-r from-emerald-400 to-teal-500 h-full w-0 transition-all duration-500 rounded-full"></div>
+            </div>
+
+            <!-- Card View -->
+            <div class="glass-card w-full rounded-3xl p-5 md:p-8 border-4 border-white shadow-2xl flex flex-col items-center relative">
+                
+                <!-- Category Badge -->
+                <div class="absolute -top-5 bg-indigo-600 text-white font-bold px-5 py-1.5 rounded-full text-sm shadow-md tracking-wide uppercase border-2 border-white flex items-center gap-2">
+                    <i class="fa-solid fa-layer-group"></i> <span id="category-badge">Animais</span>
+                </div>
+
+                <!-- MODE A: Ages 6-8 (Listen sound -> Select from 3 images) -->
+                <div id="mode-6-8-container" class="w-full flex flex-col items-center my-4 hidden">
+                    <div class="text-center mb-6">
+                        <h3 class="text-2xl font-extrabold text-indigo-900 mb-2">Ouça o som e toque na imagem certa!</h3>
+                        <p class="text-sm font-bold text-slate-500">Clique no botão grande para ouvir o nome da palavra quantas vezes quiser.</p>
+                    </div>
+
+                    <!-- Audio Speaker Box -->
+                    <button onclick="speakCurrentWord()" class="bg-amber-400 hover:bg-amber-500 text-amber-950 border-4 border-amber-300 font-extrabold px-8 py-5 rounded-3xl shadow-xl transition transform active:scale-95 flex items-center gap-4 text-2xl md:text-3xl pulse-btn mb-8">
+                        <i class="fa-solid fa-volume-high text-4xl animate-bounce"></i>
+                        <span>Ouvir Palavra</span>
+                    </button>
+
+                    <!-- 3 Image Options Grid -->
+                    <div id="image-options-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 w-full max-w-2xl">
+                        <!-- Populated dynamically with 3 image cards -->
+                    </div>
+                </div>
+
+                <!-- MODE B: Ages 9-11 (See image -> Write name) -->
+                <div id="mode-9-11-container" class="w-full flex flex-col items-center my-2 hidden">
+                    <div class="w-full flex flex-col md:flex-row items-center justify-center gap-6 mt-3 mb-4">
+                        
+                        <!-- SVG Image Display -->
+                        <div class="relative bg-gradient-to-b from-indigo-50 to-purple-50 border-4 border-indigo-100 rounded-2xl p-6 w-48 h-48 md:w-56 md:h-56 flex items-center justify-center shadow-inner group">
+                            <div id="image-display" class="w-full h-full flex items-center justify-center text-8xl md:text-9xl transition duration-300 transform group-hover:scale-110 select-none">
+                                🐶
+                            </div>
+
+                            <!-- Audio Button directly on Image -->
+                            <button onclick="speakCurrentWord()" class="absolute -bottom-4 bg-amber-400 hover:bg-amber-500 text-amber-950 font-bold px-4 py-2 rounded-full border-2 border-white shadow-lg transition flex items-center gap-2 text-xs md:text-sm pulse-btn">
+                                <i class="fa-solid fa-volume-high text-base"></i>
+                                <span>Ouvir Nome</span>
+                            </button>
+                        </div>
+
+                        <!-- Input Section -->
+                        <div class="flex-1 w-full flex flex-col items-center md:items-start gap-3">
+                            
+                            <!-- Hint / Letter Count -->
+                            <div class="w-full bg-slate-100 p-3 rounded-xl border border-slate-200 text-center md:text-left flex items-center justify-between">
+                                <span class="text-xs md:text-sm font-bold text-slate-500">Tamanho da palavra:</span>
+                                <span id="letter-count" class="font-black text-indigo-600 text-base">5 Letras</span>
+                            </div>
+
+                            <!-- Revealed Letters Grid -->
+                            <div id="word-slots" class="flex flex-wrap gap-2 justify-center md:justify-start my-1">
+                                <!-- Populated dynamically -->
+                            </div>
+
+                            <!-- Input Field -->
+                            <div class="w-full relative">
+                                <input type="text" id="word-input" autocomplete="off" spellcheck="false" placeholder="Digite o nome da imagem..."
+                                    class="w-full px-5 py-3.5 rounded-2xl border-4 border-indigo-200 focus:border-indigo-500 focus:outline-none text-xl md:text-2xl font-extrabold text-indigo-950 text-center md:text-left shadow-inner uppercase tracking-wider bg-white transition"
+                                    onkeypress="handleKeyPress(event)">
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="w-full flex items-center gap-3">
+                                <button onclick="checkAnswerText()" class="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-lg py-3 rounded-2xl btn-shadow transition flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-circle-check"></i> CONFERIR
+                                </button>
+
+                                <button onclick="getHint()" class="bg-amber-400 hover:bg-amber-500 text-amber-950 font-bold px-4 py-3 rounded-2xl btn-shadow transition flex items-center gap-1.5 text-sm" title="Pedir uma dica">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                    <span>Dica</span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Message / Feedback Box -->
+                <div id="feedback-message" class="w-full text-center py-2.5 px-4 rounded-xl text-base font-bold hidden transition-all mb-3">
+                </div>
+
+                <!-- Navigation between cards -->
+                <div class="w-full border-t border-slate-200 pt-3 flex items-center justify-between text-xs md:text-sm text-slate-500 font-bold">
+                    <span>Acertos na fase: <strong id="stage-score" class="text-indigo-600">0/10</strong></span>
+                    <button onclick="skipWord()" class="text-slate-400 hover:text-slate-600 underline flex items-center gap-1">
+                        Pular para a próxima <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Level Complete Modal -->
+        <div id="level-complete-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden p-4">
+            <div class="glass-card max-w-md w-full rounded-3xl p-6 text-center border-4 border-white shadow-2xl pop-in">
+                <div class="text-6xl mb-2 animate-bounce">🏆</div>
+                <h3 class="text-3xl font-extrabold text-indigo-900 mb-1">PARABÉNS!</h3>
+                <p class="text-slate-600 font-bold mb-4">Você completou esta fase muito bem!</p>
+                
+                <div class="bg-indigo-50 rounded-2xl p-4 mb-6 border border-indigo-100 flex justify-around">
+                    <div>
+                        <span class="block text-xs font-bold text-slate-400 uppercase">Estrelas</span>
+                        <span id="modal-stars" class="text-2xl font-black text-amber-500">0</span>
+                    </div>
+                    <div class="border-r border-indigo-200"></div>
+                    <div>
+                        <span class="block text-xs font-bold text-slate-400 uppercase">Aproveitamento</span>
+                        <span id="modal-accuracy" class="text-2xl font-black text-emerald-500">100%</span>
+                    </div>
+                </div>
+
+                <button onclick="nextLevel()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xl py-3.5 rounded-2xl btn-shadow transition">
+                    PRÓXIMA FASE <i class="fa-solid fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Game Certificate / Final Screen -->
+        <div id="certificate-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md flex items-center justify-center z-50 hidden p-4 overflow-y-auto">
+            <div class="bg-amber-50 max-w-2xl w-full rounded-3xl p-6 md:p-8 text-center border-8 border-amber-300 shadow-2xl relative pop-in my-8">
+                <div class="text-5xl mb-2">🎓🌟</div>
+                <h2 class="text-2xl md:text-4xl font-extrabold text-amber-900 uppercase tracking-wide">Certificado de Super Explorador</h2>
+                <p class="text-amber-800 text-sm md:text-base font-semibold my-2">Parabéns por concluir a sessão educativa de 40 minutos com sucesso!</p>
+                
+                <div class="my-5 p-5 bg-white rounded-2xl border-2 border-amber-200 shadow-inner flex flex-col items-center">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Resumo do Seu Desempenho</p>
+                    <div class="grid grid-cols-3 gap-3 w-full">
+                        <div class="bg-amber-50 p-3 rounded-xl border border-amber-100">
+                            <span class="block text-xl md:text-2xl font-black text-amber-600" id="final-total-words">0</span>
+                            <span class="text-xs font-bold text-slate-500">Palavras</span>
+                        </div>
+                        <div class="bg-amber-50 p-3 rounded-xl border border-amber-100">
+                            <span class="block text-xl md:text-2xl font-black text-amber-600" id="final-total-stars">0</span>
+                            <span class="text-xs font-bold text-slate-500">Estrelas</span>
+                        </div>
+                        <div class="bg-amber-50 p-3 rounded-xl border border-amber-100">
+                            <span class="block text-xl md:text-2xl font-black text-indigo-600" id="final-total-time">40:00</span>
+                            <span class="text-xs font-bold text-slate-500">Tempo Jogado</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                    <button onclick="restartGame()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-lg px-6 py-3.5 rounded-2xl btn-shadow transition flex-1">
+                        <i class="fa-solid fa-rotate-right mr-2"></i> Jogar Novamente
+                    </button>
+                    <button onclick="window.print()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-lg px-6 py-3.5 rounded-2xl btn-shadow transition flex-1">
+                        <i class="fa-solid fa-print mr-2"></i> Imprimir Certificado
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-4 text-center text-xs text-white/80 font-bold">
+        Jogo Educativo para Crianças • Desenvolvimento de Alfabetização e Vocabulário
+    </footer>
+
+    <script>
+        /* Word Database across categories with emojis & accents */
+        const gameLevels = [
+            {
+                id: 1,
+                title: "Fase 1: Animais Divertidos",
+                category: "Animais",
+                words: [
+                    { display: "Gato", answer: "gato", icon: "🐱" },
+                    { display: "Cão", answer: "cao", icon: "🐶" },
+                    { display: "Pato", answer: "pato", icon: "🦆" },
+                    { display: "Vaca", answer: "vaca", icon: "🐮" },
+                    { display: "Leão", answer: "leao", icon: "🦁" },
+                    { display: "Peixe", answer: "peixe", icon: "🐟" },
+                    { display: "Zebra", answer: "zebra", icon: "🦓" },
+                    { display: "Cobra", answer: "cobra", icon: "🐍" },
+                    { display: "Urso", answer: "urso", icon: "🐻" },
+                    { display: "Tigre", answer: "tigre", icon: "🐯" }
+                ]
+            },
+            {
+                id: 2,
+                title: "Fase 2: Frutas e Alimentos",
+                category: "Comida",
+                words: [
+                    { display: "Maçã", answer: "maca", icon: "🍎" },
+                    { display: "Uva", answer: "uva", icon: "🍇" },
+                    { display: "Pão", answer: "pao", icon: "🍞" },
+                    { display: "Banana", answer: "banana", icon: "🍌" },
+                    { display: "Laranja", answer: "laranja", icon: "🍊" },
+                    { display: "Queijo", answer: "queijo", icon: "🧀" },
+                    { display: "Pipoca", answer: "pipoca", icon: "🍿" },
+                    { display: "Leite", answer: "leite", icon: "🥛" },
+                    { display: "Morango", answer: "morango", icon: "🍓" },
+                    { display: "Cenoura", answer: "cenoura", icon: "🥕" }
+                ]
+            },
+            {
+                id: 3,
+                title: "Fase 3: Objetos do Dia a Dia",
+                category: "Objetos",
+                words: [
+                    { display: "Bola", answer: "bola", icon: "⚽" },
+                    { display: "Casa", answer: "casa", icon: "🏠" },
+                    { display: "Mesa", answer: "mesa", icon: "🪑" },
+                    { display: "Livro", answer: "livro", icon: "📖" },
+                    { display: "Lápis", answer: "lapis", icon: "✏️" },
+                    { display: "Relógio", answer: "relogio", icon: "⏰" },
+                    { display: "Cadeira", answer: "cadeira", icon: "🪑" },
+                    { display: "Tesoura", answer: "tesoura", icon: "✂️" },
+                    { display: "Mochila", answer: "mochila", icon: "🎒" },
+                    { display: "Caneta", answer: "caneta", icon: "🖊️" }
+                ]
+            },
+            {
+                id: 4,
+                title: "Fase 4: Meios de Transporte",
+                category: "Transportes",
+                words: [
+                    { display: "Carro", answer: "carro", icon: "🚗" },
+                    { display: "Trem", answer: "trem", icon: "🚂" },
+                    { display: "Avião", answer: "aviao", icon: "✈️" },
+                    { display: "Navio", answer: "navio", icon: "🚢" },
+                    { display: "Ônibus", answer: "onibus", icon: "🚌" },
+                    { display: "Foguete", answer: "foguete", icon: "🚀" },
+                    { display: "Bicicleta", answer: "bicicleta", icon: "🚲" },
+                    { display: "Moto", answer: "moto", icon: "🏍️" },
+                    { display: "Trator", answer: "trator", icon: "🚜" },
+                    { display: "Helicóptero", answer: "helicoptero", icon: "🚁" }
+                ]
+            },
+            {
+                id: 5,
+                title: "Fase 5: Natureza Fantástica",
+                category: "Natureza",
+                words: [
+                    { display: "Sol", answer: "sol", icon: "☀️" },
+                    { display: "Lua", answer: "lua", icon: "🌙" },
+                    { display: "Flor", answer: "flor", icon: "🌸" },
+                    { display: "Nuvem", answer: "nuvem", icon: "☁️" },
+                    { display: "Árvore", answer: "arvore", icon: "🌳" },
+                    { display: "Estrela", answer: "estrela", icon: "⭐" },
+                    { display: "Fogo", answer: "fogo", icon: "🔥" },
+                    { display: "Chuva", answer: "chuva", icon: "🌧️" },
+                    { display: "Arco-íris", answer: "arcoiris", icon: "🌈" },
+                    { display: "Vento", answer: "vento", icon: "💨" }
+                ]
+            }
+        ];
+
+        /* Game State Variables */
+        let ageGroup = '6-8'; // '6-8' or '9-11'
+        let currentLevelIdx = 0;
+        let currentWordIdx = 0;
+        let stars = 0;
+        let stageScore = 0;
+        let totalWordsCompleted = 0;
+        let audioEnabled = true;
+
+        // Session timer: 40 minutes (2400 seconds)
+        let totalTimeSeconds = 40 * 60;
+        let timerInterval = null;
+
+        // Revealed hints state for Mode 9-11
+        let revealedIndices = [];
+
+        /* Speech Synthesis for Portuguese Audio Pronunciation */
+        function speakWord(text) {
+            if (!audioEnabled) return;
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'pt-BR';
+                utterance.rate = 0.85; // Natural friendly pace
+                utterance.pitch = 1.1;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        /* Web Audio API Synthesizer for SFX */
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSoundEffect(type) {
+            if (!audioEnabled) return;
+            try {
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                const now = audioCtx.currentTime;
+
+                if (type === 'correct') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, now); // C5
+                    osc.frequency.setValueAtTime(659.25, now + 0.1); // E5
+                    osc.frequency.setValueAtTime(783.99, now + 0.2); // G5
+                    gain.gain.setValueAtTime(0.3, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+                    osc.start(now);
+                    osc.stop(now + 0.5);
+                } else if (type === 'wrong') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(180, now);
+                    osc.frequency.setValueAtTime(140, now + 0.15);
+                    gain.gain.setValueAtTime(0.3, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+                    osc.start(now);
+                    osc.stop(now + 0.4);
+                } else if (type === 'hint') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(880, now);
+                    osc.frequency.exponentialRampToValueAtTime(1760, now + 0.25);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                }
+            } catch (e) {
+                console.log("Audio FX error:", e);
+            }
+        }
+
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            const icon = document.getElementById('audio-icon');
+            if (audioEnabled) {
+                icon.className = "fa-solid fa-volume-high text-lg";
+            } else {
+                icon.className = "fa-solid fa-volume-xmark text-lg text-rose-500";
+            }
+        }
+
+        /* Normalize strings (removes accents, spaces, lowercases) */
+        function normalizeText(text) {
+            return text
+                .toLowerCase()
+                .trim()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replace(/[^a-z0-9]/g, "");
+        }
+
+        function selectAgeGroup(selectedGroup) {
+            ageGroup = selectedGroup;
+            
+            // Show Badge
+            const badgeEl = document.getElementById('mode-badge');
+            const badgeTextEl = document.getElementById('mode-badge-text');
+            badgeEl.classList.remove('hidden');
+            badgeTextEl.textContent = ageGroup === '6-8' ? '6 - 8 Anos' : '9 - 11 Anos';
+
+            // Switch Screen
+            document.getElementById('age-select-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+
+            // Start 40-minute Timer
+            startSessionTimer();
+
+            // Load Word Card
+            loadWord();
+        }
+
+        function startSessionTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+
+            timerInterval = setInterval(() => {
+                if (totalTimeSeconds > 0) {
+                    totalTimeSeconds--;
+                    updateTimerDisplay();
+                } else {
+                    clearInterval(timerInterval);
+                    showFinalCertificate();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(totalTimeSeconds / 60);
+            const seconds = totalTimeSeconds % 60;
+            const formatted = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById('session-timer').textContent = formatted;
+        }
+
+        function loadWord() {
+            const level = gameLevels[currentLevelIdx];
+            const wordData = level.words[currentWordIdx];
+
+            revealedIndices = [];
+
+            // UI Headers
+            document.getElementById('level-title').textContent = level.title;
+            document.getElementById('category-badge').textContent = level.category;
+            hideFeedback();
+
+            // Stage progress counters
+            document.getElementById('stage-score').textContent = `${stageScore}/${level.words.length}`;
+            const progressPercent = (currentWordIdx / level.words.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+
+            // Toggle containers based on age mode
+            const container68 = document.getElementById('mode-6-8-container');
+            const container911 = document.getElementById('mode-9-11-container');
+
+            if (ageGroup === '6-8') {
+                container68.classList.remove('hidden');
+                container911.classList.add('hidden');
+                setupMode68(wordData);
+            } else {
+                container68.classList.add('hidden');
+                container911.classList.remove('hidden');
+                setupMode911(wordData);
+            }
+
+            // Auto pronounce word on load
+            setTimeout(() => {
+                speakCurrentWord();
+            }, 300);
+        }
+
+        /* SETUP MODE 6-8: Listen sound -> Pick 1 of 3 images */
+        function setupMode68(targetWord) {
+            const grid = document.getElementById('image-options-grid');
+            grid.innerHTML = '';
+
+            // Collect 2 random distractors from other words in levels
+            const allWords = gameLevels.flatMap(l => l.words);
+            const otherWords = allWords.filter(w => w.answer !== targetWord.answer);
+            
+            // Shuffle and pick 2
+            const shuffledOthers = otherWords.sort(() => 0.5 - Math.random()).slice(0, 2);
+            const options = [targetWord, ...shuffledOthers].sort(() => 0.5 - Math.random());
+
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.onclick = () => checkAnswerChoice(opt, targetWord);
+                btn.className = "bg-white hover:bg-indigo-50 border-4 border-indigo-100 hover:border-indigo-400 p-6 rounded-3xl flex flex-col items-center justify-center gap-2 shadow-lg transition transform active:scale-95 group cursor-pointer";
+                
+                btn.innerHTML = `
+                    <div class="text-7xl md:text-8xl transition transform group-hover:scale-110">${opt.icon}</div>
+                `;
+                grid.appendChild(btn);
+            });
+        }
+
+        function checkAnswerChoice(selectedOpt, targetWord) {
+            if (selectedOpt.answer === targetWord.answer) {
+                // Correct!
+                playSoundEffect('correct');
+                stars += 10;
+                stageScore++;
+                totalWordsCompleted++;
+                document.getElementById('star-count').textContent = stars;
+
+                confetti({
+                    particleCount: 50,
+                    spread: 70,
+                    origin: { y: 0.7 }
+                });
+
+                showFeedback(`MUITO BEM! É "${targetWord.display.toUpperCase()}"! 🎉`, "emerald");
+                speakWord(`Muito bem! ${targetWord.display}`);
+
+                setTimeout(() => {
+                    advanceWord();
+                }, 1600);
+            } else {
+                // Wrong option
+                playSoundEffect('wrong');
+                showFeedback("Ops! Tente outra imagem ou ouça o som novamente.", "rose");
+            }
+        }
+
+        /* SETUP MODE 9-11: See image -> Type word name */
+        function setupMode911(wordData) {
+            document.getElementById('image-display').textContent = wordData.icon;
+            document.getElementById('letter-count').textContent = `${wordData.display.length} Letras`;
+
+            const inputEl = document.getElementById('word-input');
+            inputEl.value = '';
+            inputEl.focus();
+
+            renderWordSlots();
+        }
+
+        function renderWordSlots() {
+            const wordData = gameLevels[currentLevelIdx].words[currentWordIdx];
+            const cleanTarget = normalizeText(wordData.answer);
+            const slotsContainer = document.getElementById('word-slots');
+            slotsContainer.innerHTML = '';
+
+            for (let i = 0; i < cleanTarget.length; i++) {
+                const box = document.createElement('div');
+                box.className = 'w-9 h-11 md:w-11 md:h-13 border-2 border-indigo-200 bg-white rounded-xl flex items-center justify-center font-black text-lg md:text-2xl text-indigo-900 shadow-sm transition';
+
+                if (revealedIndices.includes(i)) {
+                    box.textContent = cleanTarget[i].toUpperCase();
+                    box.classList.add('bg-amber-100', 'border-amber-400');
+                } else {
+                    box.textContent = '_';
+                    box.classList.add('text-slate-300');
+                }
+                slotsContainer.appendChild(box);
+            }
+        }
+
+        function getHint() {
+            const wordData = gameLevels[currentLevelIdx].words[currentWordIdx];
+            const cleanTarget = normalizeText(wordData.answer);
+
+            const unrevealed = [];
+            for (let i = 0; i < cleanTarget.length; i++) {
+                if (!revealedIndices.includes(i)) unrevealed.push(i);
+            }
+
+            if (unrevealed.length > 0) {
+                const randomIndex = unrevealed[Math.floor(Math.random() * unrevealed.length)];
+                revealedIndices.push(randomIndex);
+                renderWordSlots();
+                playSoundEffect('hint');
+                showFeedback("Dica adicionada! As letras amarelas te ajudam.", "amber");
+            } else {
+                showFeedback("Todas as letras já foram reveladas!", "amber");
+            }
+        }
+
+        function checkAnswerText() {
+            const inputEl = document.getElementById('word-input');
+            const userAttempt = normalizeText(inputEl.value);
+            const wordData = gameLevels[currentLevelIdx].words[currentWordIdx];
+            const targetAnswer = normalizeText(wordData.answer);
+
+            if (!userAttempt) {
+                showFeedback("Digite algo na caixa antes de conferir!", "amber");
+                return;
+            }
+
+            if (userAttempt === targetAnswer) {
+                playSoundEffect('correct');
+                stars += 10;
+                stageScore++;
+                totalWordsCompleted++;
+                document.getElementById('star-count').textContent = stars;
+
+                confetti({
+                    particleCount: 50,
+                    spread: 70,
+                    origin: { y: 0.7 }
+                });
+
+                showFeedback(`EXCELENTE! Você acertou: "${wordData.display.toUpperCase()}"! 🎉`, "emerald");
+                speakWord(`Excelente! ${wordData.display}`);
+
+                setTimeout(() => {
+                    advanceWord();
+                }, 1600);
+            } else {
+                playSoundEffect('wrong');
+                showFeedback("Quase lá! Ouça o som ou peça uma dica para te ajudar.", "rose");
+                
+                inputEl.classList.add('border-rose-400', 'animate-shake');
+                setTimeout(() => {
+                    inputEl.classList.remove('border-rose-400', 'animate-shake');
+                }, 500);
+            }
+        }
+
+        function speakCurrentWord() {
+            const wordData = gameLevels[currentLevelIdx].words[currentWordIdx];
+            speakWord(wordData.display);
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && ageGroup === '9-11') {
+                checkAnswerText();
+            }
+        }
+
+        function skipWord() {
+            const word = gameLevels[currentLevelIdx].words[currentWordIdx];
+            showFeedback(`A resposta correta era "${word.display.toUpperCase()}". Vamos para a próxima!`, "indigo");
+            setTimeout(() => {
+                advanceWord();
+            }, 1500);
+        }
+
+        function advanceWord() {
+            const level = gameLevels[currentLevelIdx];
+            if (currentWordIdx < level.words.length - 1) {
+                currentWordIdx++;
+                loadWord();
+            } else {
+                showLevelCompleteModal();
+            }
+        }
+
+        function showFeedback(text, color) {
+            const msgEl = document.getElementById('feedback-message');
+            msgEl.textContent = text;
+            msgEl.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800', 'bg-rose-100', 'text-rose-800', 'bg-amber-100', 'text-amber-800', 'bg-indigo-100', 'text-indigo-800');
+
+            if (color === 'emerald') msgEl.classList.add('bg-emerald-100', 'text-emerald-800');
+            else if (color === 'rose') msgEl.classList.add('bg-rose-100', 'text-rose-800');
+            else if (color === 'amber') msgEl.classList.add('bg-amber-100', 'text-amber-800');
+            else msgEl.classList.add('bg-indigo-100', 'text-indigo-800');
+        }
+
+        function hideFeedback() {
+            const msgEl = document.getElementById('feedback-message');
+            msgEl.classList.add('hidden');
+        }
+
+        function showLevelCompleteModal() {
+            const modal = document.getElementById('level-complete-modal');
+            document.getElementById('modal-stars').textContent = stars;
+            
+            const levelTotal = gameLevels[currentLevelIdx].words.length;
+            const accuracy = Math.round((stageScore / levelTotal) * 100);
+            document.getElementById('modal-accuracy').textContent = `${accuracy}%`;
+
+            modal.classList.remove('hidden');
+
+            confetti({
+                particleCount: 100,
+                spread: 100,
+                origin: { y: 0.5 }
+            });
+        }
+
+        function nextLevel() {
+            document.getElementById('level-complete-modal').classList.add('hidden');
+            
+            if (currentLevelIdx < gameLevels.length - 1) {
+                currentLevelIdx++;
+                currentWordIdx = 0;
+                stageScore = 0;
+                loadWord();
+            } else {
+                // Completed all levels
+                showFinalCertificate();
+            }
+        }
+
+        function showFinalCertificate() {
+            if (timerInterval) clearInterval(timerInterval);
+
+            document.getElementById('final-total-words').textContent = totalWordsCompleted;
+            document.getElementById('final-total-stars').textContent = stars;
+
+            const elapsedSeconds = (40 * 60) - totalTimeSeconds;
+            const m = Math.floor(elapsedSeconds / 60);
+            const s = elapsedSeconds % 60;
+            document.getElementById('final-total-time').textContent = `${m}m ${s}s`;
+
+            document.getElementById('certificate-modal').classList.remove('hidden');
+
+            confetti({
+                particleCount: 200,
+                spread: 120,
+                origin: { y: 0.4 }
+            });
+        }
+
+        function restartGame() {
+            currentLevelIdx = 0;
+            currentWordIdx = 0;
+            stars = 0;
+            stageScore = 0;
+            totalWordsCompleted = 0;
+            totalTimeSeconds = 40 * 60;
+
+            document.getElementById('star-count').textContent = '0';
+            document.getElementById('certificate-modal').classList.add('hidden');
+            document.getElementById('age-select-screen').classList.remove('hidden');
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('mode-badge').classList.add('hidden');
+        }
+
+        /* Audio Context activation on user touch/click */
+        window.addEventListener('click', () => {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }, { once: true });
+    </script>
+</body>
+</html>
