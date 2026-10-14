@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Feliz Aniversário, Ester</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Caveat:wght@500;700&display=swap">
+<style>
+/* Layout: um diário de viagem — a carta corre no centro, as fotos-polaroid entram coladas ao lado de cada parágrafo, depois o mural com todas as aventuras */
+:root{
+  --paper:#fbeee9;      /* rosado de papel de carta */
+  --paper-2:#f6dfd7;
+  --ink:#4a1626;        /* vinho */
+  --ink-soft:#7a4452;
+  --rose:#c2405f;       /* destaque */
+  --sky:#2f7f9e;        /* mar das fotos */
+  --card:#fffaf7;
+  --shadow:rgba(74,22,38,.18);
+  --display:"Young Serif",Georgia,"Times New Roman",serif;
+  --body:"Newsreader",Georgia,"Times New Roman",serif;
+  --hand:"Caveat","Segoe Print","Bradley Hand",cursive;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#24111a;--paper-2:#2e1621;--ink:#f7e3e6;--ink-soft:#d3aab4;--rose:#f07b97;--sky:#7cc3dd;--card:#fbf3ef;--shadow:rgba(0,0,0,.45);color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#24111a;--paper-2:#2e1621;--ink:#f7e3e6;--ink-soft:#d3aab4;--rose:#f07b97;--sky:#7cc3dd;--card:#fbf3ef;--shadow:rgba(0,0,0,.45);color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:1.15rem;line-height:1.7;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));overflow-x:hidden}
+.wrap{max-width:1040px;margin:0 auto}
+
+/* Hero */
+.hero{padding-block:clamp(40px,8vw,90px) 30px;display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(24px,5vw,60px);align-items:center}
+.date{font-family:var(--hand);font-size:1.6rem;color:var(--sky);margin:0 0 6px}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(2.6rem,7vw,5.2rem);line-height:1.02;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1 em{font-style:normal;color:var(--rose);display:block;font-size:1.35em}
+.hero p.lead{font-size:1.3rem;font-style:italic;color:var(--ink-soft);max-width:30ch;margin:20px 0 0}
+.stack{position:relative;height:clamp(340px,44vw,470px)}
+.stack .pol{position:absolute;width:58%}
+.stack .pol:nth-child(1){left:0;top:6%;transform:rotate(-7deg)}
+.stack .pol:nth-child(2){right:0;top:0;transform:rotate(5deg)}
+.stack .pol:nth-child(3){left:22%;bottom:0;transform:rotate(-1deg);z-index:2}
+
+/* Polaroid */
+.pol{background:var(--card);padding:10px 10px 0;box-shadow:0 10px 28px var(--shadow),0 1px 3px var(--shadow);border-radius:2px;margin:0;transition:transform .35s ease;cursor:zoom-in}
+.pol img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:#ddd}
+.pol figcaption{font-family:var(--hand);font-size:1.45rem;color:#4a1626;text-align:center;padding:6px 4px 10px;line-height:1.2}
+.pol::before{content:"";position:absolute;top:-12px;left:50%;width:84px;height:24px;transform:translateX(-50%) rotate(-3deg);background:rgba(194,64,95,.28)}
+.pol{position:relative}
+.pol:hover{transform:rotate(0) scale(1.03)!important;z-index:5}
+
+/* Carta */
+.letter{padding-block:40px 20px}
+.row{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:clamp(24px,5vw,64px);align-items:center;padding-block:clamp(22px,4vw,40px)}
+.row.flip{grid-template-columns:300px minmax(0,1fr)}
+.row.flip .pol{order:-1}
+.row .pol{transform:rotate(3deg)}
+.row.flip .pol{transform:rotate(-3deg)}
+.row p{margin:0;max-width:62ch}
+.row p:first-child::first-letter{}
+.opening{font-family:var(--display);font-size:clamp(1.9rem,4vw,2.6rem);line-height:1.15;color:var(--rose);margin:0 0 10px;text-wrap:balance}
+.big{font-size:1.3rem}
+hr.heart{border:0;text-align:center;margin:20px 0;color:var(--rose);height:auto}
+hr.heart::after{content:"♥";font-size:1.4rem}
+
+/* Mural */
+.mural{padding-block:50px 30px}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(2rem,5vw,3rem);margin:0;text-wrap:balance}
+.mural .sub{font-family:var(--hand);font-size:1.6rem;color:var(--sky);margin:0 0 36px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:40px 28px}
+.grid .pol:nth-child(odd){transform:rotate(-2.5deg)}
+.grid .pol:nth-child(even){transform:rotate(2deg)}
+.grid .pol:nth-child(3n){transform:rotate(-.8deg)}
+
+/* Final */
+.final{text-align:center;padding-block:60px 90px}
+.final .love{font-family:var(--display);font-size:clamp(3rem,10vw,6.5rem);color:var(--rose);line-height:1;margin:0 0 14px}
+.final p{max-width:56ch;margin:0 auto 28px}
+.sign{font-family:var(--hand);font-size:2rem;color:var(--ink-soft)}
+button.heart-btn{font-family:var(--hand);font-size:1.6rem;background:var(--rose);color:#fff;border:0;border-radius:999px;padding:10px 28px 12px;cursor:pointer;box-shadow:0 8px 20px var(--shadow);transition:transform .2s}
+button.heart-btn:hover{transform:scale(1.06)}
+button:focus-visible,.pol:focus-visible{outline:3px solid var(--sky);outline-offset:4px}
+
+/* Corações */
+.h{position:fixed;pointer-events:none;color:var(--rose);z-index:50;animation:fly 2.6s ease-out forwards;will-change:transform,opacity}
+@keyframes fly{to{transform:translate(var(--dx),-80vh) rotate(var(--r));opacity:0}}
+
+/* Lightbox */
+.lb{position:fixed;inset:0;background:rgba(30,8,16,.88);display:flex;align-items:center;justify-content:center;z-index:60;padding:max(20px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(20px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));cursor:zoom-out}
+.lb img{max-height:86vh;max-width:100%;box-shadow:0 20px 60px rgba(0,0,0,.5);border:8px solid #fffaf7}
+.lb p{position:absolute;bottom:max(14px,env(safe-area-inset-bottom,0px));left:0;right:0;text-align:center;font-family:var(--hand);font-size:1.8rem;color:#fff;margin:0}
+
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr}
+  .stack{height:clamp(320px,90vw,420px);max-width:440px;width:100%;margin:10px auto 0}
+  .row,.row.flip{grid-template-columns:1fr}
+  .row .pol,.row.flip .pol{order:0;max-width:280px;margin:10px auto 0;width:100%}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 16px}
+  .pol figcaption{font-size:1.2rem}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <p class="date">14 de outubro · para a minha noiva</p>
+      <h1>Feliz aniversário, meu amor, <em>Ester!</em></h1>
+      <p class="lead">Hoje é o seu dia, mas quem ganha o presente sou eu por ter você ao meu lado, compartilhando a vida comigo.</p>
+    </div>
+    <div class="stack">
+      <figure class="pol" tabindex="0"><img src="fotos/5.jpg" alt="Nós dois nos beijando em frente a uma catedral iluminada à noite"><figcaption>a nossa noite favorita</figcaption></figure>
+      <figure class="pol" tabindex="0"><img src="fotos/6.jpg" alt="Nós dois abraçados olhando o mar do alto de uma falésia"><figcaption>olhando pro futuro</figcaption></figure>
+      <figure class="pol" tabindex="0"><img src="fotos/3.jpg" alt="Nós dois dançando numa praça à noite"><figcaption>dança comigo?</figcaption></figure>
+    </div>
+  </header>
+
+  <section class="letter">
+    <div class="row">
+      <p>Quando paro para pensar em tudo o que já vivemos juntos, meu coração se enche de alegria e gratidão. São tantas brincadeiras, risadas, implicâncias, viagens e momentos que ficam guardados na memória e que eu levaria comigo para qualquer lugar. Cada aventura ao seu lado se torna especial, e até as coisas mais simples ganham um significado diferente quando estou com você.</p>
+      <figure class="pol" tabindex="0"><img src="fotos/9.jpg" alt="Nós dois em cima de um buggy laranja nas dunas de Canoa Quebrada"><figcaption>de buggy em Canoa Quebrada</figcaption></figure>
+    </div>
+
+    <div class="row flip">
+      <p>E como esquecer todos os momentos felizes que passamos? Cada sorriso, cada abraço, cada passeio e cada lembrança que construímos juntos fazem parte da nossa história.</p>
+      <figure class="pol" tabindex="0"><img src="fotos/1.jpg" alt="Selfie nossa num festival, com uma roda-gigante ao fundo"><figcaption>festival, sol e você</figcaption></figure>
+    </div>
+
+    <div class="row">
+      <p>Mas o que mais admiro em nós é que o nosso relacionamento não é feito apenas de dias felizes. Também enfrentamos momentos de tristeza, dificuldades e desafios, e é justamente nessas horas que aprendemos a nos compreender melhor, a ter paciência um com o outro e a fortalecer ainda mais o nosso amor. Porque amar também é permanecer, apoiar, cuidar e escolher ficar juntos mesmo quando as coisas não são tão fáceis.</p>
+      <figure class="pol" tabindex="0"><img src="fotos/4.jpg" alt="Nós dois nos abraçando bem agasalhados num cenário frio"><figcaption>juntinhos no frio</figcaption></figure>
+    </div>
+
+    <div class="row flip">
+      <p>Ester, quero que você saiba o quanto é especial para mim. Você faz parte dos meus sonhos, dos meus planos e do futuro que desejo construir. Quero continuar vivendo novas aventuras com você, conhecendo lugares, dando muitas risadas, criando novas lembranças e, acima de tudo, caminhando ao seu lado em todas as fases da vida.</p>
+      <figure class="pol" tabindex="0"><img src="fotos/2.jpg" alt="Nós dois num mirante com coqueiros e o mar ao fundo"><figcaption>mais lugares pra conhecer</figcaption></figure>
+    </div>
+
+    <div class="row">
+      <p>Que Deus abençoe muito a sua vida, ilumine seus caminhos, realize seus sonhos e lhe dê muita saúde, paz, felicidade e amor. Que nunca nos faltem motivos para sorrir, força para superar as dificuldades e vontade de continuar escolhendo um ao outro todos os dias.</p>
+      <figure class="pol" tabindex="0"><img src="fotos/11.jpg" alt="Selfie nossa à noite com uma roda-gigante iluminada"><figcaption>mais uma roda-gigante!</figcaption></figure>
+    </div>
+
+    <div class="row flip">
+      <div>
+        <p class="opening">Feliz aniversário, minha noiva, minha companheira, minha parceira de brincadeiras e de viagens, meu amor!</p>
+        <p>Que esse seja mais um ano lindo da sua vida e que eu possa estar presente em muitos e muitos aniversários ao seu lado. Que nossa história continue sendo escrita com muito amor, cumplicidade e momentos inesquecíveis.</p>
+      </div>
+      <figure class="pol" tabindex="0"><img src="fotos/7.jpg" alt="Nós dois nos beijando numa rua à noite"><figcaption>muitos aniversários juntos</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="mural">
+    <h2>Nossas aventuras</h2>
+    <p class="sub">e que venham muitas outras…</p>
+    <div class="grid">
+      <figure class="pol" tabindex="0"><img src="fotos/8.jpg" alt="Selfie nossa com crachás de festival e uma roda-gigante vermelha ao fundo" loading="lazy"><figcaption>crachá no pescoço</figcaption></figure>
+      <figure class="pol" tabindex="0"><img src="fotos/12.jpg" alt="Selfie nossa com camisas do Flamengo no estádio" loading="lazy"><figcaption>dia de Mengão</figcaption></figure>
+      <figure class="pol" tabindex="0"><img src="fotos/10.jpg" alt="Selfie nossa de máscara segurando um ingresso em frente a uma pista de carrinhos gigante" loading="lazy"><figcaption>brincando de criança</figcaption></figure>
+      <figure class="pol" tabindex="0"><img src="fotos/5.jpg" alt="Nós dois nos beijando em frente a uma catedral iluminada à noite" loading="lazy"><figcaption>a nossa noite favorita</figcaption></figure>
+      <figure class="pol" tabindex="0"><img src="fotos/9.jpg" alt="Nós dois no buggy nas dunas" loading="lazy"><figcaption>Canoa Quebrada</figcaption></figure>
+      <figure class="pol" tabindex="0"><img src="fotos/3.jpg" alt="Nós dois dançando numa praça à noite" loading="lazy"><figcaption>dança comigo?</figcaption></figure>
+      <figure class="pol" tabindex="0"><img src="fotos/6.jpg" alt="Nós dois abraçados olhando o mar" loading="lazy"><figcaption>nós e o mar</figcaption></figure>
+      <figure class="pol" tabindex="0"><img src="fotos/1.jpg" alt="Selfie nossa num festival" loading="lazy"><figcaption>festival, sol e você</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="final">
+    <p class="love">Te amo, Ester!</p>
+    <p>E que venham muitas outras viagens, brincadeiras, conquistas e histórias para contarmos juntos. Você é uma parte muito especial da minha vida, e sou muito feliz por ter você comigo!</p>
+    <button class="heart-btn" id="hearts" type="button">♥ um beijo pra você</button>
+  </section>
+</div>
+
+<script>
+// Corações voando
+function burst(x,y,n){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  for(let i=0;i<n;i++){
+    const s=document.createElement('span');s.className='h';s.textContent='♥';
+    s.style.left=(x+(Math.random()-.5)*60)+'px';s.style.top=(y+(Math.random()-.5)*20)+'px';
+    s.style.fontSize=(14+Math.random()*26)+'px';
+    s.style.setProperty('--dx',((Math.random()-.5)*300)+'px');
+    s.style.setProperty('--r',((Math.random()-.5)*90)+'deg');
+    s.style.animationDelay=(Math.random()*.35)+'s';
+    document.body.appendChild(s);setTimeout(()=>s.remove(),3200);
+  }
+}
+document.getElementById('hearts').addEventListener('click',e=>{
+  const r=e.currentTarget.getBoundingClientRect();burst(r.left+r.width/2,r.top,36);
+});
+window.addEventListener('load',()=>setTimeout(()=>burst(innerWidth/2,innerHeight*.9,22),500));
+
+// Ampliar fotos
+document.querySelectorAll('.pol').forEach(f=>{
+  const open=()=>{
+    const lb=document.createElement('div');lb.className='lb';lb.setAttribute('role','dialog');
+    const img=f.querySelector('img');
+    lb.innerHTML='<img alt=""><p></p>';
+    lb.querySelector('img').src=img.src;lb.querySelector('img').alt=img.alt;
+    lb.querySelector('p').textContent=f.querySelector('figcaption').textContent;
+    const close=()=>{lb.remove();document.removeEventListener('keydown',esc);f.focus()};
+    const esc=e=>{if(e.key==='Escape')close()};
+    lb.addEventListener('click',close);document.addEventListener('keydown',esc);
+    document.body.appendChild(lb);
+  };
+  f.addEventListener('click',open);
+  f.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}});
+});
+</script>
+</body>
+</html>
