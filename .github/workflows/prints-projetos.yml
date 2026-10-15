@@ -45,7 +45,7 @@ jobs:
 
           async def main():
               async with async_playwright() as p:
-                  browser = await p.chromium.launch()
+                  browser = await p.chromium.launch(args=["--disable-blink-features=AutomationControlled"])
                   ctx = await browser.new_context(
                       viewport={"width": 1440, "height": 900},
                       device_scale_factor=1,
@@ -59,6 +59,7 @@ jobs:
                       except Exception as e:
                           print(f"[aviso] {url}: {e}")
                       # rola a página para disparar animações/lazy-load e volta ao topo
+                      await page.wait_for_timeout(6000)
                       for y in (400, 900, 1600, 0):
                           try:
                               await page.evaluate(f"window.scrollTo(0, {y})")
