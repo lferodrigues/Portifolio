@@ -1,0 +1,84 @@
+name: Atualizar prints dos projetos
+
+# Tira um print de cada site da seção "Projetos" e salva em Assets/img/projetos/.
+# Para atualizar os prints: GitHub > Actions > "Atualizar prints dos projetos" > Run workflow.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/prints-projetos.yml
+
+permissions:
+  contents: write
+
+jobs:
+  prints:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar Playwright
+        run: |
+          pip install playwright==1.47.0 pillow
+          python -m playwright install --with-deps chromium
+
+      - name: Capturar prints
+        run: |
+          mkdir -p Assets/img/projetos
+          cat > /tmp/prints.py <<'PY'
+          import asyncio, io
+          from PIL import Image
+          from playwright.async_api import async_playwright
+
+          SITES = {
+              "edsonjuniorjor": "https://edsonjuniorjor.com.br",
+              "professorfeliperodrigues": "https://professorfeliperodrigues.com.br",
+              "garbosaturismo": "https://garbosaturismo.com.br",
+              "mulheresmil": "https://mulheresmil.com.br",
+              "inspiralojaoficial": "https://inspiralojaoficial.com.br",
+          }
+
+          async def main():
+              async with async_playwright() as p:
+                  browser = await p.chromium.launch()
+                  ctx = await browser.new_context(
+                      viewport={"width": 1440, "height": 900},
+                      device_scale_factor=1,
+                      locale="pt-BR",
+                  )
+                  for slug, url in SITES.items():
+                      page = await ctx.new_page()
+                      try:
+                          await page.goto(url, wait_until="networkidle", timeout=60000)
+                      except Exception as e:
+                          print(f"[aviso] {url}: {e}")
+                      await page.wait_for_timeout(3000)
+                      png = await page.screenshot(type="png")
+                      im = Image.open(io.BytesIO(png)).convert("RGB")
+                      im.thumbnail((960, 600), Image.LANCZOS)
+                      im.save(f"Assets/img/projetos/{slug}.webp", "WEBP", quality=74, method=6)
+                      print(f"ok {slug}")
+                      await page.close()
+                  await browser.close()
+
+          asyncio.run(main())
+          PY
+          python /tmp/prints.py
+
+      - name: Salvar no repositório
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Assets/img/projetos
+          if git diff --cached --quiet; then
+            echo "Sem mudanças nos prints."
+          else
+            git commit -m "Atualiza prints dos projetos"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi

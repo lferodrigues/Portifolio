@@ -1,861 +1,395 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-<link rel="icon" href="Assets/img/logo.ico" type="image/x-icon" />
-<link rel="shortcut icon" href="Assets/img/logo.ico" type="image/x-icon" />
-<title>Felipe Rodrigues - Analista de sistemas e Segurança da Informação</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="Assets/css/Templates.css">
-<link rel="stylesheet" href="Assets/css/botoes_cards.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<title>Felipe Rodrigues — Analista de Sistemas e Segurança da Informação</title>
+<meta name="description" content="Felipe Rodrigues: desenvolvimento de sites, segurança da informação, LGPD e cursos de informática em São João Nepomuceno (MG). Veja projetos e certificações.">
+<meta name="theme-color" content="#0b0b0c">
+<link rel="canonical" href="https://feliperodrigues.net/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Felipe Rodrigues — Analista de Sistemas e Segurança da Informação">
+<meta property="og:description" content="Sites, segurança da informação, LGPD e treinamentos. Conheça meus projetos e certificações.">
+<meta property="og:url" content="https://feliperodrigues.net/">
+<meta property="og:image" content="https://feliperodrigues.net/Assets/img/og-image.jpg">
+<link rel="icon" href="Assets/img/logo.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="Assets/img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+<link rel="preload" as="image" href="Assets/img/felipe-hero.webp" fetchpriority="high">
+<link rel="stylesheet" href="Assets/css/portfolio.css">
 </head>
 <body>
 
-<!-- Navbar -->
-<div class="w3-top">
-  <div class="w3-bar w3-white w3-card" id="myNavbar">
-    <a href="https://feliperodrigues.net/" class="w3-bar-item w3-button w3-wide"><img class="w3-image w3-round-large" src="Assets/img/banner4.png" alt="Home" width="100" height="100" ></a></a>
-    <!-- Right-sided navbar links -->
-    <div class="w3-right w3-hide-small">
-       <a href="#about" class="w3-bar-item w3-button">Sobre</a>
-      <a href="#bio" class="w3-bar-item w3-button"><i class="fa fa-user"></i> Biografia</a>
-      <a href="#work" class="w3-bar-item w3-button"><i class="fa fa-th"></i> Certificações</a>
-      <a href="#contact" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> Contato</a>
-    </div>
+<!-- Ícones (SVG inline: sem dependência de bibliotecas externas) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-instagram" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><path d="M17.5 6.5h.01"/></g></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path fill="currentColor" d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.4l-5.8-7.59-6.64 7.59H.47l8.6-9.83L0 1.15h7.6l5.24 6.93 6.06-6.93Zm-1.29 19.5h2.04L6.49 3.24H4.3l13.31 17.4Z"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></symbol>
+  <symbol id="i-whatsapp" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-4.95A8.5 8.5 0 1 1 7.95 19.35Z"/><path d="M9 8.5c0 3.6 2.9 6.5 6.5 6.5l1-1.6-2.1-1-.9.8a4 4 0 0 1-2.2-2.2l.8-.9-1-2.1Z" stroke-width="1.4"/></g></symbol>
+  <symbol id="i-youtube" viewBox="0 0 24 24"><path fill="currentColor" d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81ZM9.55 15.57V8.43L15.82 12l-6.27 3.57Z"/></symbol>
+  <symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .3a12 12 0 0 0-3.8 23.38c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22v3.29c0 .32.21.69.82.57A12 12 0 0 0 12 .3"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></g></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></g></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></g></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></g></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></g></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></g></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></g></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></g></symbol>
+  <symbol id="i-gem" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M12 21 8 9l4-6 4 6-4 12"/></g></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></g></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></g></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></g></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></g></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></g></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/></g></symbol>
+  <symbol id="i-briefcase" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></g></symbol>
+</svg>
 
+<!-- Navegação -->
+<header class="nav" id="nav">
+  <div class="container">
+    <a href="#inicio" class="brand" aria-label="Felipe Rodrigues — início">
+      <img src="Assets/img/logo-mark.webp" alt="" width="40" height="40">
+      <span>Felipe<b>.</b></span>
+    </a>
+    <nav aria-label="Principal">
+      <ul class="nav-links" id="menu">
+        <li><a href="#inicio" class="active">Início</a></li>
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#projetos">Projetos</a></li>
+        <li><a href="#certificacoes">Certificações</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+    <a href="https://wa.me/5532998409798" class="btn btn-gold btn-sm nav-cta" target="_blank" rel="noopener">Contrate-me</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-controls="menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
-</div>
-
-<!-- Barra lateral em telas pequenas ao clicar no ícone do menu - Não utilizado na primeira versão -->
-<nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium " style="display:none" id="mySidebar">
-
-  </nav>
-
-<!-- Header with full-height image -->
- <div class="mySlides w3-display-container w3-center">
-    <img src="Assets/img/banner2.webp" style="width:100%">
-    <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
-
-
-
- <div class="w3-display-left w3-text-white" style="padding:48px">
- </div>
- </div>
-
- <div class="w3-display-bottomleft w3-text-grey w3-large" style="padding:24px 48px">
-  <a class="fa fa-instagram w3-hover-opacity" href="https://www.instagram.com/ferodrigues_si/"></a>
-  <a class="fa fa-twitter w3-hover-opacity" href="https://twitter.com/lferodrigues"></a>
-  <a class="fa fa-linkedin w3-hover-opacity" href="https://www.linkedin.com/in/felipe-rodrigues-12732b235"></a>
-  <a class="fa fa-whatsapp w3-hover-opacity" href="https://wa.me/5532998409798"></a>
-  <a class="fa fa-youtube w3-hover-opacity" href="https://www.youtube.com/@lferodrigues"></a>
-</div>
-
-   </div>
-  </div>
-
 </header>
 
+<main>
+<!-- Hero -->
+<section class="hero" id="inicio">
+  <div class="container">
+    <div class="hero-text">
+      <span class="tag">Olá, eu sou</span>
+      <h1>Felipe <span>Rodrigues</span></h1>
+      <p class="role">Analista de Sistemas e Segurança da Informação, professor de informática e mestrando em Ciência da Computação pela UFJF.</p>
+      <div class="hero-cta">
+        <a href="#projetos" class="btn btn-gold">Ver projetos <svg class="ico"><use href="#i-arrow"/></svg></a>
+        <a href="#sobre" class="btn btn-ghost">Sobre mim</a>
+      </div>
+      <div class="social" aria-label="Redes sociais">
+        <a href="https://www.instagram.com/ferodrigues_si/" target="_blank" rel="noopener" aria-label="Instagram"><svg class="ico"><use href="#i-instagram"/></svg></a>
+        <a href="https://www.linkedin.com/in/felipe-rodrigues-12732b235" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="ico"><use href="#i-linkedin"/></svg></a>
+        <a href="https://wa.me/5532998409798" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="ico"><use href="#i-whatsapp"/></svg></a>
+        <a href="https://www.youtube.com/@lferodrigues" target="_blank" rel="noopener" aria-label="YouTube"><svg class="ico"><use href="#i-youtube"/></svg></a>
+        <a href="https://twitter.com/lferodrigues" target="_blank" rel="noopener" aria-label="X (Twitter)"><svg class="ico"><use href="#i-x"/></svg></a>
+        <a href="https://github.com/lferodrigues" target="_blank" rel="noopener" aria-label="GitHub"><svg class="ico"><use href="#i-github"/></svg></a>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <div class="frame"><img src="Assets/img/felipe-hero.webp" alt="Felipe Rodrigues palestrando" width="500" height="667" fetchpriority="high"></div>
+      <svg class="lines" viewBox="0 0 440 600" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+        <path d="M20 120 L250 40 L420 210 L300 520 L60 430 Z"/>
+        <path d="M250 40 L300 520 M20 120 L420 210 M60 430 L420 210"/>
+        <circle cx="250" cy="40" r="6" fill="#0b0b0c"/><circle cx="420" cy="210" r="6" fill="#0b0b0c"/><circle cx="60" cy="430" r="6" fill="#0b0b0c"/><circle cx="20" cy="120" r="6" fill="#0b0b0c"/><circle cx="300" cy="520" r="6" fill="#0b0b0c"/>
+      </svg>
+    </div>
+  </div>
+  <a href="#servicos" class="scroll-cue" aria-label="Rolar para baixo"></a>
+</section>
+
+<!-- Números + Serviços -->
+<section class="section alt" id="servicos">
+  <div class="container">
+    <div class="stats reveal">
+      <div class="stat hl"><strong>60+</strong><span>Certificações</span></div>
+      <div class="stat"><strong>4</strong><span>Pós-graduações</span></div>
+      <div class="stat"><strong>UFJF</strong><span>Mestrado em Computação</span></div>
+      <div class="stat"><strong>TJMG</strong><span>Perito Judicial</span></div>
+    </div>
+
+    <div class="head reveal" style="margin-top:88px">
+      <span class="kicker">Serviços</span>
+      <h2>O que eu faço</h2>
+      <p>Coloco o seu negócio na internet e ajudo a proteger os seus dados contra ataques cibernéticos.</p>
+    </div>
+    <div class="services">
+      <article class="service reveal"><div class="i"><svg class="ico"><use href="#i-code"/></svg></div><h3>Desenvolvimento de Sites</h3><p>Sites institucionais, landing pages e lojas virtuais rápidas, responsivas e preparadas para o Google.</p></article>
+      <article class="service reveal"><div class="i"><svg class="ico"><use href="#i-shield"/></svg></div><h3>Segurança da Informação</h3><p>Análises de segurança e proteção dos seus dados contra ataques cibernéticos.</p></article>
+      <article class="service reveal"><div class="i"><svg class="ico"><use href="#i-lock"/></svg></div><h3>LGPD e Privacidade</h3><p>Adequação à Lei Geral de Proteção de Dados com diagnóstico, assessoria e implementação.</p></article>
+      <article class="service reveal"><div class="i"><svg class="ico"><use href="#i-book"/></svg></div><h3>Cursos e Treinamentos</h3><p>Pacote Office, Excel, Power BI, Canva e Inteligência Artificial para pessoas e empresas.</p></article>
+      <article class="service reveal"><div class="i"><svg class="ico"><use href="#i-zap"/></svg></div><h3>Automação</h3><p>Fluxos automatizados com n8n, Make e ManyChat para ganhar tempo no atendimento e na rotina.</p></article>
+      <article class="service reveal"><div class="i"><svg class="ico"><use href="#i-search"/></svg></div><h3>Perícia em Sistemas</h3><p>Perito Judicial em Análise de Sistemas condecorado pelo Tribunal de Justiça de Minas Gerais.</p></article>
+    </div>
+  </div>
+</section>
+
 <!-- Sobre -->
-<div class="w3-container" style="padding:128px 16px" id="about">
-  <h3 class="w3-center">Sobre</h3>
-  <div class="w3-row-padding w3-center" style="margin-top:64px">
-    <div class="w3-quarter">
-      <i class="fa fa-desktop w3-margin-bottom w3-jumbo w3-center"></i>
-      <p class="w3-large">Desenvolvimento de sites e Analises de segurança</p>
-      <p style="text-align: justify;">Colocamos o seu negócio na Internet,ajudamos você a protejer seus dados contra ataques ciberneticos  </p>
+<section class="section" id="sobre">
+  <div class="container about">
+    <div class="about-media reveal">
+      <div class="slide"><img id="slideshow" src="Assets/img/slides/01.webp" alt="Momentos da trajetória de Felipe Rodrigues" width="720" height="720" loading="lazy" decoding="async"></div>
+      <div class="badge"><strong>2012</strong><span>início da trajetória</span></div>
     </div>
-    <div class="w3-quarter">
-      <i class="fa fa-heart w3-margin-bottom w3-jumbo"></i>
-      <p class="w3-large">Missão</p>
-      <p style="text-align: justify;">Oferecer soluções de segurança da informação e T.I de excelência, adaptadas às necessidades individuais de cada cliente, garantindo a integridade e segurança de seus dados com compromisso e inovação.</p>
-    </div>
-    <div class="w3-quarter">
-      <i class="fa fa-eye w3-margin-bottom w3-jumbo"></i>
-      <p class="w3-large">Visão</p>
-      <p style="text-align: justify;"> Nossa visão buscamos liderar a proteção digital através de treinamentos, acessorias e implementação, tornando a segurança da informação acessível e eficaz para todas as empresas.</p>
-    </div>
-    <div class="w3-quarter">
-      <i class="fa fa-diamond w3-margin-bottom w3-jumbo"></i>
-      <p class="w3-large">Valores</p>
-      <p style="text-align: justify;">Tornar a segurança da informação e a conformidade com regulamentações como a LGPD acessíveis e eficazes para todas as organizações. Capacitando empresas a prosperar em um ambiente digital seguro.</p>
-    </div>
-  </div>
-</div>
-
-<!--Bioggrafia -->
-<div class="w3-container  w3-dark-grey" style="padding:128px 16px" id="bio">
-  <div class="w3-row-padding">
-    <div class="w3-col m6">
-      <center> <h3>Biografia</h3> </center>
-      <p style="text-align: justify;">Natural de São João Nepomuceno (MG),Catolico devoto de Nossa Senhora Aparecida,São Bento e do Arcanjo Miguel,apaixonado por parques de diversões,aviação,busologo,rock in roll,flamenguista e amante de Segurança cybernetica,programação e teologia.
-		  <br>Luis Felipe Rodrigues iniciou sua trajetória pública participando do projeto “Vereadores Mirins” da Câmara Municipal de São João Nepomuceno, no ano de 2012. Desde então, construiu uma carreira sólida nas áreas de Tecnologia da Informação, Segurança da Informação e Educação Profissional.
-<br>É Mestrando em Ciências da Computação pela Universidade Federal de Juiz de Fora (UFJF)Turma 2023.1.
-É Pós-Graduado em Engenharia de Segurança do Trabalho e em Privacidade, Proteção de Dados e LGPD pela Faculdade Alphaville (Turma 2024.01), além de Pós-Graduado em Segurança da Informação e em Engenharia de Redes e Segurança de Dados pela Faculdade Focus (Turma 2024.02).
-Graduou-se em Análise e Desenvolvimento de Sistemas pela Estácio de Sá (Turma 2017.1) e possui formações técnicas em Manutenção de Computadores e Celulares (Prepara Cursos – 2013.01), Análise de Sistemas (Prepara Cursos – 2015.02) e Informática para Internet (SESI/SENAI – 2022.01).
-
-<br>Felipe é membro dos comitês públicos do Instituto de Defesa Cibernética (IDECIBER) e da Associação Nacional dos Profissionais de Privacidade de Dados (APDADOS), além de possuir diversos cursos técnicos complementares nas áreas de Tecnologia da Informação e Segurança da Informação.
-<br>Atualmente, atua na Unimed São João Nepomuceno, é Professor dos cursos de Pacote Office,Excel Basico,Excel Intermediário e Avançado,Canva-Introdução ao designer Gráfico,Power BI e Inteligência Artificial - Transformando o mercado de trabalho na Agência de Desenvolvimento de São João Nepomuceno e Região, e exerce a função de Professor e  Supervisor do curso de Promotora de vendas e Operador de Computador no programa Mulheres Mil, do IF Sudeste MG – Campus São João Nepomuceno.
-Foi ainda condecorado como Perito Judicial em Análise de Sistemas pelo Tribunal de Justiça de Minas Gerais (TJMG).</p>
-    <div style="display: flex; gap: 10px; overflow-x: auto; white-space: nowrap; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none;">
-      <a href="http://lattes.cnpq.br/2122439276634834" class="w3-button w3-black" style="flex-shrink: 0; min-width: 150px;"><i class="fa fa-th"> </i> Curriculo Lattes</a>
-      <a href="https://professorfeliperodrigues.com.br/links" class="w3-button w3-black" style="flex-shrink: 0; min-width: 150px;"><i> </i> <img src="Assets/img/educacao.png" alt="Ícone" width="28" height="28"> Aprenda comigo</a>
-      <a href="https://linktr.ee/ferodriguessjn" class="w3-button w3-black" style="flex-shrink: 0; min-width: 120px;"><i class="fa fa-briefcase"> </i> Serviços</a>
-      <a href="https://github.com/lferodrigues" class="w3-button w3-black" style="flex-shrink: 0; min-width: 120px;"><i> </i> <img src="Assets/img/github.png" alt="Ícone" width="20" height="20"> Github</a>
-          </div>
-    </div>
-    <div class="w3-col m6">
-	<br>
-    <img class="w3-image w3-round-large" id="slideshow" src="Assets/img/felipe.jpg" alt="Felipe" width="700" height="394" onload="this.style.opacity=1">
-</div>
+    <div class="reveal">
+      <span class="tag">Biografia</span>
+      <h2>Tecnologia, segurança e <span>educação</span></h2>
+      <p>Natural de São João Nepomuceno (MG), Luis Felipe Rodrigues iniciou sua trajetória pública em 2012, no projeto “Vereadores Mirins” da Câmara Municipal. Desde então construiu uma carreira sólida em Tecnologia da Informação, Segurança da Informação e Educação Profissional.</p>
+      <details>
+        <summary>Ler biografia completa</summary>
+        <p>Católico devoto de Nossa Senhora Aparecida, São Bento e do Arcanjo Miguel, apaixonado por parques de diversões, aviação, ônibus (busólogo), rock and roll, flamenguista e amante de segurança cibernética, programação e teologia.</p>
+        <p>É mestrando em Ciência da Computação pela Universidade Federal de Juiz de Fora (UFJF), turma 2023.1. É pós-graduado em Engenharia de Segurança do Trabalho e em Privacidade, Proteção de Dados e LGPD pela Faculdade Alphaville (turma 2024.01), além de pós-graduado em Segurança da Informação e em Engenharia de Redes e Segurança de Dados pela Faculdade Focus (turma 2024.02). Graduou-se em Análise e Desenvolvimento de Sistemas pela Estácio de Sá (turma 2017.1) e possui formações técnicas em Manutenção de Computadores e Celulares (Prepara Cursos – 2013.01), Análise de Sistemas (Prepara Cursos – 2015.02) e Informática para Internet (SESI/SENAI – 2022.01).</p>
+        <p>Felipe é membro dos comitês públicos do Instituto de Defesa Cibernética (IDECIBER) e da Associação Nacional dos Profissionais de Privacidade de Dados (APDADOS), além de possuir diversos cursos técnicos complementares nas áreas de Tecnologia da Informação e Segurança da Informação.</p>
+        <p>Atualmente atua na Unimed São João Nepomuceno; é professor dos cursos de Pacote Office, Excel Básico, Intermediário e Avançado, Canva – Introdução ao Design Gráfico, Power BI e Inteligência Artificial – Transformando o mercado de trabalho na Agência de Desenvolvimento de São João Nepomuceno e Região; e exerce a função de professor e supervisor dos cursos de Promotora de Vendas e Operador de Computador no programa Mulheres Mil, do IF Sudeste MG – Campus São João Nepomuceno. Foi ainda condecorado como Perito Judicial em Análise de Sistemas pelo Tribunal de Justiça de Minas Gerais (TJMG).</p>
+      </details>
+      <ul class="edu">
+        <li><b>Mestrado em Ciência da Computação</b><small>UFJF · 2023 — em andamento</small></li>
+        <li><b>Pós em Segurança da Informação · Eng. de Redes e Segurança de Dados</b><small>Faculdade Focus · 2024</small></li>
+        <li><b>Pós em Privacidade, Proteção de Dados e LGPD · Eng. de Segurança do Trabalho</b><small>Faculdade Alphaville · 2024</small></li>
+        <li><b>Análise e Desenvolvimento de Sistemas</b><small>Estácio de Sá · 2017</small></li>
+      </ul>
+      <div class="links">
+        <a href="http://lattes.cnpq.br/2122439276634834" class="btn btn-gold btn-sm" target="_blank" rel="noopener"><svg class="ico"><use href="#i-file"/></svg> Currículo Lattes</a>
+        <a href="https://professorfeliperodrigues.com.br/links" class="btn btn-ghost btn-sm" target="_blank" rel="noopener"><svg class="ico"><use href="#i-book"/></svg> Aprenda comigo</a>
+        <a href="https://linktr.ee/ferodriguessjn" class="btn btn-ghost btn-sm" target="_blank" rel="noopener"><svg class="ico"><use href="#i-briefcase"/></svg> Serviços</a>
+        <a href="https://github.com/lferodrigues" class="btn btn-ghost btn-sm" target="_blank" rel="noopener"><svg class="ico"><use href="#i-github"/></svg> GitHub</a>
+      </div>
     </div>
   </div>
-</div>
+</section>
+
+<!-- Projetos -->
+<section class="section alt" id="projetos">
+  <div class="container">
+    <div class="head reveal">
+      <span class="kicker">Portfólio</span>
+      <h2>Projetos</h2>
+      <p>Sites que desenvolvi e que estão no ar.</p>
+    </div>
+    <div class="projects">
+      <article class="project reveal">
+        <a href="https://professorfeliperodrigues.com.br" target="_blank" rel="noopener" class="browser" aria-label="Abrir professorfeliperodrigues.com.br">
+          <div class="bar"><i></i><i></i><i></i><em>professorfeliperodrigues.com.br</em></div>
+          <div class="shot"><img src="Assets/img/projetos/professorfeliperodrigues.webp" alt="Print do site Professor Felipe Rodrigues" width="960" height="600" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noimg');this.remove()"><div class="ph">professorfeliperodrigues.com.br</div></div>
+        </a>
+        <div class="body"><span class="cat">Landing page · Educação</span><h3>Professor Felipe Rodrigues</h3><p>Página de vendas da mentoria online de informática: Excel, Word, PowerPoint, Power BI, Canva e IA, com certificado.</p><a class="more" href="https://professorfeliperodrigues.com.br" target="_blank" rel="noopener">Visitar site <svg class="ico"><use href="#i-arrow"/></svg></a></div>
+      </article>
+      <article class="project reveal">
+        <a href="https://garbosaturismo.com.br" target="_blank" rel="noopener" class="browser" aria-label="Abrir garbosaturismo.com.br">
+          <div class="bar"><i></i><i></i><i></i><em>garbosaturismo.com.br</em></div>
+          <div class="shot"><img src="Assets/img/projetos/garbosaturismo.webp" alt="Print do site Garbosa Turismo" width="960" height="600" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noimg');this.remove()"><div class="ph">garbosaturismo.com.br</div></div>
+        </a>
+        <div class="body"><span class="cat">Site institucional · Turismo</span><h3>Garbosa Turismo</h3><p>Agência de turismo digital de São João Nepomuceno, com excursões para parques, praias e cidades históricas.</p><a class="more" href="https://garbosaturismo.com.br" target="_blank" rel="noopener">Visitar site <svg class="ico"><use href="#i-arrow"/></svg></a></div>
+      </article>
+      <article class="project reveal">
+        <a href="https://inspiralojaoficial.com.br" target="_blank" rel="noopener" class="browser" aria-label="Abrir inspiralojaoficial.com.br">
+          <div class="bar"><i></i><i></i><i></i><em>inspiralojaoficial.com.br</em></div>
+          <div class="shot"><img src="Assets/img/projetos/inspiralojaoficial.webp" alt="Print do site Inspira Loja Oficial" width="960" height="600" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noimg');this.remove()"><div class="ph">inspiralojaoficial.com.br</div></div>
+        </a>
+        <div class="body"><span class="cat">Loja virtual · Moda</span><h3>INSPIRA</h3><p>Vitrine da marca de moda cristã com camisetas, moletons, bonés e canecas, integrada ao Mercado Livre.</p><a class="more" href="https://inspiralojaoficial.com.br" target="_blank" rel="noopener">Visitar site <svg class="ico"><use href="#i-arrow"/></svg></a></div>
+      </article>
+      <article class="project reveal">
+        <a href="https://mulheresmil.com.br" target="_blank" rel="noopener" class="browser" aria-label="Abrir mulheresmil.com.br">
+          <div class="bar"><i></i><i></i><i></i><em>mulheresmil.com.br</em></div>
+          <div class="shot"><img src="Assets/img/projetos/mulheresmil.webp" alt="Print do site Mulheres Mil" width="960" height="600" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noimg');this.remove()"><div class="ph">mulheresmil.com.br</div></div>
+        </a>
+        <div class="body"><span class="cat">Plataforma · Educação</span><h3>Mulheres Mil — IF Sudeste MG</h3><p>Portal com o material didático dos cursos do programa Mulheres Mil, com acesso das alunas por login.</p><a class="more" href="https://mulheresmil.com.br" target="_blank" rel="noopener">Visitar site <svg class="ico"><use href="#i-arrow"/></svg></a></div>
+      </article>
+      <article class="project reveal">
+        <a href="https://edsonjuniorjor.com.br" target="_blank" rel="noopener" class="browser" aria-label="Abrir edsonjuniorjor.com.br">
+          <div class="bar"><i></i><i></i><i></i><em>edsonjuniorjor.com.br</em></div>
+          <div class="shot"><img src="Assets/img/projetos/edsonjuniorjor.webp" alt="Print do site Edson Júnior" width="960" height="600" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('noimg');this.remove()"><div class="ph">edsonjuniorjor.com.br</div></div>
+        </a>
+        <div class="body"><span class="cat">Site profissional</span><h3>Edson Júnior</h3><p>Site profissional desenvolvido para apresentar o trabalho e facilitar o contato com o cliente.</p><a class="more" href="https://edsonjuniorjor.com.br" target="_blank" rel="noopener">Visitar site <svg class="ico"><use href="#i-arrow"/></svg></a></div>
+      </article>
+      <article class="project cta reveal">
+        <h3>Seu projeto pode ser o próximo</h3>
+        <p>Site novo, loja virtual ou landing page: me conte a sua ideia.</p>
+        <a href="https://wa.me/5532998409798" class="btn" target="_blank" rel="noopener"><svg class="ico"><use href="#i-whatsapp"/></svg> Pedir orçamento</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Missão, visão e valores -->
+<section class="section" id="missao">
+  <div class="container">
+    <div class="head reveal">
+      <span class="kicker">Propósito</span>
+      <h2>Missão, visão e valores</h2>
+    </div>
+    <div class="mvv">
+      <article class="reveal"><h3><svg class="ico"><use href="#i-target"/></svg> Missão</h3><p>Oferecer soluções de segurança da informação e T.I. de excelência, adaptadas às necessidades de cada cliente, garantindo a integridade e a segurança de seus dados com compromisso e inovação.</p></article>
+      <article class="reveal"><h3><svg class="ico"><use href="#i-eye"/></svg> Visão</h3><p>Liderar a proteção digital por meio de treinamentos, assessorias e implementação, tornando a segurança da informação acessível e eficaz para todas as empresas.</p></article>
+      <article class="reveal"><h3><svg class="ico"><use href="#i-gem"/></svg> Valores</h3><p>Tornar a segurança da informação e a conformidade com a LGPD acessíveis e eficazes, capacitando empresas a prosperar em um ambiente digital seguro.</p></article>
+    </div>
+  </div>
+</section>
 
 <!-- Certificações -->
-<div class="w3-container" style="padding:128px 16px" id="work">
-
-  <h3 class="w3-center">Certificações</h3>
-  <div class="w3-row-padding " style="margin-top:64px">
-
-<div class="w3-col l3 m6 w3-margin-bottom">
-	  <div class="w3-card">
-      <img src="Assets/img/cursos/0062.png" alt="" style="width:100%">
-      <div class="w3-container">
-        <p> <a href="https://drive.google.com/file/d/1q3ZWIonpqqWyPvudIc0Dhv0nW8j5n_bO/view?usp=drive_link" title="Graduação" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-
-        </div>
-      </div>
+<section class="section alt" id="certificacoes">
+  <div class="container">
+    <div class="head reveal">
+      <span class="kicker">Formação contínua</span>
+      <h2>Certificações</h2>
+      <p>Clique em um certificado para ver o documento original.</p>
     </div>
-
-  <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/65.jpg" alt="" style="width:100%">
-        <div class="w3-container">
-          <p> <a href="https://drive.google.com/file/d/1ALMh5zYMF-DDPCFqHdjuA-G0BsOUdp9-/view?usp=sharing" title="Engenharia de Redes" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-        </div>
-      </div>
+    <div class="certs collapsed" id="certs">
+      <a class="cert" href="https://drive.google.com/file/d/1Sge2uiKmJRDGi1fxNWwW7x2wdvK5auDG/view?usp=sharing" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/81.webp" alt="Certificado: LGPD" width="480" height="319" loading="lazy" decoding="async"></div><span>LGPD<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/15vSSCcNuW9Fh4PljXKlRlXpJxNndvvYB/view?usp=sharing" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/80.webp" alt="Certificado: Automação com n8n" width="480" height="347" loading="lazy" decoding="async"></div><span>Automação com n8n<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1QrQ8MNTqCkEveMqklVubgNzSgfSLe8G4/view?usp=sharing" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/79.webp" alt="Certificado: Conscientização no uso de IAs" width="480" height="340" loading="lazy" decoding="async"></div><span>Conscientização no uso de IAs<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1XpjmuidE4yMHa4heE38euMKW7x7KWXrz/view?usp=sharing" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/78.webp" alt="Certificado: Como se proteger de ataques" width="480" height="339" loading="lazy" decoding="async"></div><span>Como se proteger de ataques<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1UR16x4-7yiX97b3Uo-fqf4Z-0tYxwdeV/view?usp=sharing" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/75.webp" alt="Certificado: Front-end" width="480" height="360" loading="lazy" decoding="async"></div><span>Front-end<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1x3EPt2AfcwIQmAJfL5KwuTVo_OiN9QcN/view?usp=sharing" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/74.webp" alt="Certificado: Orientação a Objetos" width="480" height="360" loading="lazy" decoding="async"></div><span>Orientação a Objetos<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1CTNtiiAYi-EC_Aig0avdkiS4LBreg7TD/view?usp=sharing" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/73.webp" alt="Certificado: Fundamentos de Sistemas com Java" width="480" height="360" loading="lazy" decoding="async"></div><span>Fundamentos de Sistemas com Java<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1Bm1PVxJ5wf2-YIDUSKHIGn71MsVFqaiH/view?usp=sharing" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/72.webp" alt="Certificado: Configuração de Ambiente Java" width="480" height="360" loading="lazy" decoding="async"></div><span>Configuração de Ambiente Java<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1C9ApqtTxC8Y2Bnj03jMT4NT5BFi-oCDN/view?usp=sharing" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/71.webp" alt="Certificado: Java Full Stack" width="480" height="360" loading="lazy" decoding="async"></div><span>Java Full Stack<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1yIOhDz4dO8GFtWzztVilELAFZkS6_Aa_/view?usp=sharing" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/70.webp" alt="Certificado: Automação com Make" width="480" height="339" loading="lazy" decoding="async"></div><span>Automação com Make<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/18q8YkXtDCyXlsRlQjkt4m3CaYb455qWQ/view?usp=sharing" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/69.webp" alt="Certificado: Maratona IA" width="480" height="331" loading="lazy" decoding="async"></div><span>Maratona IA<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1RYwN0d4fTuhf-zFLJLOVNim0cAcmMuFB/view?usp=sharing" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/76.webp" alt="Certificado: API Date Time" width="480" height="360" loading="lazy" decoding="async"></div><span>API Date Time<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1H3GBRRb2Zr_V0QQIyau8_IGWCz9A88NE/view?usp=sharing" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/68.webp" alt="Certificado: WPSCAN" width="480" height="337" loading="lazy" decoding="async"></div><span>WPSCAN<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1fJhcM6v8rNIaV7gux_qGF1Zz99KODKbL/view?usp=sharing" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/67.webp" alt="Certificado: Segurança da Informação - LGPD" width="480" height="339" loading="lazy" decoding="async"></div><span>Segurança da Informação - LGPD<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1vcuhTbfI8Qpq4LYpcLuJe6qBhdjH41zS/view?usp=sharing" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/66.webp" alt="Certificado: LGPD" width="480" height="339" loading="lazy" decoding="async"></div><span>LGPD<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1MRfswNeaWfhiOP9pOPwXEsy92s-07O8B/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/09.webp" alt="Certificado: Cibersegurança" width="480" height="347" loading="lazy" decoding="async"></div><span>Cibersegurança<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1wiS-5X_hE7aW3bvjmp38iimxBubPgdZ7/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/37.webp" alt="Certificado: LGPD" width="480" height="335" loading="lazy" decoding="async"></div><span>LGPD<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/18et-BFoa854STN-105WptS58SXhtNbXc/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/36.webp" alt="Certificado: Lógica Fuzzy" width="480" height="372" loading="lazy" decoding="async"></div><span>Lógica Fuzzy<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/14DPIXcisbrlHlahT2UD6wS3GPZ24zMkp/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/35.webp" alt="Certificado: Machine Learning e Data Science" width="480" height="371" loading="lazy" decoding="async"></div><span>Machine Learning e Data Science<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1VCbkJq6b6aRolf-yeFH6cmN9aHODD7SD/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/30.webp" alt="Certificado: Mestrado — UFJF" width="480" height="339" loading="lazy" decoding="async"></div><span>Mestrado — UFJF<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1JNDqJ5r3wfGnjdpMqzgIbonXX4wjTU1U/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/34.webp" alt="Certificado: Atendimento ao Cliente" width="480" height="327" loading="lazy" decoding="async"></div><span>Atendimento ao Cliente<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/13-AM6jScQWTOgz1JEMH__ssr-ZniWHcg/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/32-j.webp" alt="Certificado: Hackers do Bem" width="480" height="339" loading="lazy" decoding="async"></div><span>Hackers do Bem<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1cbTRityuCH7Tepdb3a0LrCyX2Y3dhVBe/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/31-j.webp" alt="Certificado: Automação com ManyChat" width="480" height="345" loading="lazy" decoding="async"></div><span>Automação com ManyChat<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1YCqxafVAl8dkwZUzUokJk-EJUcg-cxkJ/view?usp=sharing" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/77.webp" alt="Certificado: Lógica de Programação com Java" width="480" height="360" loading="lazy" decoding="async"></div><span>Lógica de Programação com Java<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1NYoWRs9_sHP8sx7eQKd24hZfQAxPqRrY/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/29.webp" alt="Certificado: Programador de Sistemas de Informação" width="480" height="339" loading="lazy" decoding="async"></div><span>Programador de Sistemas de Informação<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/10bAa2EclOTuHWVz9_W02e1U4_sKAjK3Y/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/28.webp" alt="Certificado: Gestor de Informação" width="480" height="339" loading="lazy" decoding="async"></div><span>Gestor de Informação<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1t_kJORF-npPGXLx8Pj287JVftcBlrh3n/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/27.webp" alt="Certificado: Programador de Internet" width="480" height="339" loading="lazy" decoding="async"></div><span>Programador de Internet<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1yE3nhOqBnSZjWQACrO5xvMtzyu1VVy3L/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/26.webp" alt="Certificado: Analista de TI e Sistemas" width="340" height="480" loading="lazy" decoding="async"></div><span>Analista de TI e Sistemas<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/16xkaT23-q6s-Qmeij4DzPIj6hBUw04nx/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/25.webp" alt="Certificado: Informática para Internet" width="340" height="480" loading="lazy" decoding="async"></div><span>Informática para Internet<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1QxqADtPIUkDQ6zBfA8wtHvrE51AnFq18/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/23.webp" alt="Certificado: Excel Avançado" width="340" height="480" loading="lazy" decoding="async"></div><span>Excel Avançado<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1sbdAx_UrdY8BNqm0S6evQap5OrRysUuo/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/22.webp" alt="Certificado: Excel Intermediário" width="340" height="480" loading="lazy" decoding="async"></div><span>Excel Intermediário<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1FkPrAtQi_mS6XXrgyiecLyjgO9WxdABU/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/24.webp" alt="Certificado: Excel Básico" width="340" height="480" loading="lazy" decoding="async"></div><span>Excel Básico<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1Z4e1z_IWFdjFVk2Nb1C2jqgnHiZYjXjs/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/12.webp" alt="Certificado: Gestão de TI" width="480" height="316" loading="lazy" decoding="async"></div><span>Gestão de TI<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1pWCnxt2eCfbvVar0sx8AaegCvstflYZB/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/03.webp" alt="Certificado: Shodan" width="480" height="334" loading="lazy" decoding="async"></div><span>Shodan<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1nmBzI04YlR8hYiZIcf474BOoUXH2ybU1/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/10.webp" alt="Certificado: Sebrae — Marketing Digital" width="340" height="480" loading="lazy" decoding="async"></div><span>Sebrae — Marketing Digital<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1fEbHXhZWIYP0O7QLj-3ucj3KDi41XJ4Q/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/31.webp" alt="Certificado: Inteligência Artificial" width="480" height="328" loading="lazy" decoding="async"></div><span>Inteligência Artificial<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1UXrKOzlCCROf5VLsEBYQ9lSBXw8owMre/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/19.webp" alt="Certificado: Power BI" width="480" height="340" loading="lazy" decoding="async"></div><span>Power BI<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1SQt7kTpRzNst-vy-777geJIfZ6OJ-BBN/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/18.webp" alt="Certificado: Python Avançado" width="480" height="338" loading="lazy" decoding="async"></div><span>Python Avançado<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1oUPhmwqh1JEvZGg2BPvlrJQJGSrfAI08/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/17.webp" alt="Certificado: Python Básico" width="480" height="338" loading="lazy" decoding="async"></div><span>Python Básico<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1NfgEsgu18ln-6bHYfSbAjt65Vb-7mn7i/view?usp=sharing" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/20.webp" alt="Certificado: Armitage" width="480" height="341" loading="lazy" decoding="async"></div><span>Armitage<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1qbAOLF_PSqh-aGoK85HhqdFnM3jlRWEI/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/11.webp" alt="Certificado: Python" width="480" height="374" loading="lazy" decoding="async"></div><span>Python<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1oduuJoLjpKsd7VwgqxKvHgyEA1iWkeoW/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/07.webp" alt="Certificado: LGPD" width="480" height="335" loading="lazy" decoding="async"></div><span>LGPD<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1UUeVp2Qg8flCs6AIaRt93GO7evHoQouK/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/04.webp" alt="Certificado: ACWSH" width="480" height="344" loading="lazy" decoding="async"></div><span>ACWSH<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1yxQRla_T9hNx5JZqgoplzYVtVaT3boP-/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/06.webp" alt="Certificado: Crimes Cibernéticos" width="480" height="325" loading="lazy" decoding="async"></div><span>Crimes Cibernéticos<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/11Zo3aIaQPpVA8WydmQJ4JCjOngHH2zuh/view?usp=sharing" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/21.webp" alt="Certificado: WPSCAN" width="480" height="343" loading="lazy" decoding="async"></div><span>WPSCAN<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1x8rDL2w1w1uDGvUfZgDrYVJXWfUz1Nyf/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/15.webp" alt="Certificado: Segurança da Informação" width="480" height="398" loading="lazy" decoding="async"></div><span>Segurança da Informação<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1KeehGuve_8_juJqE700v8dIiBQwdI52s/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/14.webp" alt="Certificado: Hacker Ético" width="480" height="331" loading="lazy" decoding="async"></div><span>Hacker Ético<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1pZDWy3x2NI_rcG4g45F5PgOMN7bCSM6R/view?usp=sharing" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/13.webp" alt="Certificado: Cibersegurança" width="480" height="308" loading="lazy" decoding="async"></div><span>Cibersegurança<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1Bfzb1M1svmBIMqh-7d6WPseUlDah833u/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/05.webp" alt="Certificado: Omnistack" width="480" height="330" loading="lazy" decoding="async"></div><span>Omnistack<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1b6Tus6d6_v0toiLndJqqBmdfeweiVwHZ/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/08.webp" alt="Certificado: NDE" width="480" height="270" loading="lazy" decoding="async"></div><span>NDE<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1DrRW-fAqCdFHlDUMlpWBJ74KUQiHG3XR/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/02.webp" alt="Certificado: Hacker e Pentest" width="480" height="333" loading="lazy" decoding="async"></div><span>Hacker e Pentest<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1yC4DsRSwzopBiDuOOOy5LXWqNiIMZNe3/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/01.webp" alt="Certificado: Ciência de Dados" width="480" height="313" loading="lazy" decoding="async"></div><span>Ciência de Dados<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1QCKMIvf6hvtmD5HC1Z5lTAcCADWeVxi2/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/62.webp" alt="Certificado: React Native" width="480" height="299" loading="lazy" decoding="async"></div><span>React Native<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1me9KdfyiVhfcm2zhLZOTQWSDFOLgvxJk/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/64.webp" alt="Certificado: Firebase" width="480" height="299" loading="lazy" decoding="async"></div><span>Firebase<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1fkPzgKw6a1nlHO80fMzMhK1uBD-z1Tsm/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/63.webp" alt="Certificado: Git e GitHub" width="480" height="299" loading="lazy" decoding="async"></div><span>Git e GitHub<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/10RHwYjBgjUGGX8I9ypHXNqjCHim_uq_6/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/61.webp" alt="Certificado: JavaScript" width="480" height="299" loading="lazy" decoding="async"></div><span>JavaScript<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1vkMKcvRz3e9ao6JGSeeKtOAgm6sgqxeT/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/0063.webp" alt="Certificado: Engenharia de Segurança do Trabalho" width="480" height="335" loading="lazy" decoding="async"></div><span>Engenharia de Segurança do Trabalho<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1FjQkJD7jixXw9rGzY5HPvvGnD1veX2xI/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/0061.webp" alt="Certificado: LGPD" width="480" height="337" loading="lazy" decoding="async"></div><span>LGPD<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1ALMh5zYMF-DDPCFqHdjuA-G0BsOUdp9-/view?usp=sharing" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/65.webp" alt="Certificado: Engenharia de Redes e Segurança de Dados" width="480" height="339" loading="lazy" decoding="async"></div><span>Engenharia de Redes e Segurança de Dados<svg class="ico"><use href="#i-ext"/></svg></span></a>
+      <a class="cert" href="https://drive.google.com/file/d/1q3ZWIonpqqWyPvudIc0Dhv0nW8j5n_bO/view?usp=drive_link" target="_blank" rel="noopener"><div class="im"><img src="Assets/img/thumbs/0062.webp" alt="Certificado: Graduação em ADS" width="480" height="323" loading="lazy" decoding="async"></div><span>Graduação em ADS<svg class="ico"><use href="#i-ext"/></svg></span></a>
     </div>
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/0061.png" alt="calcula velociade de chute" style="width:100%">
-        <div class="w3-container">
-          <p> <a href="https://drive.google.com/file/d/1FjQkJD7jixXw9rGzY5HPvvGnD1veX2xI/view?usp=drive_link" title="LGPD" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-        </div>
-      </div>
-    </div>
-	<div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/0063.png" alt="" style="width:100%">
-        <div class="w3-container">
-         <p> <a href="https://drive.google.com/file/d/1vkMKcvRz3e9ao6JGSeeKtOAgm6sgqxeT/view?usp=drive_link" title="Segurança do trabalho" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-        </div>
-      </div>
-    </div>
-</div>
+    <div class="certs-more"><button class="btn btn-ghost" id="certsBtn" aria-controls="certs" aria-expanded="false">Ver todas as 60 certificações</button></div>
+  </div>
+</section>
 
-  <div class="w3-row-padding " style="margin-top:64px">
-<div class="w3-col l3 m6 w3-margin-bottom">
-	  <div class="w3-card">
-        <img src="Assets/img/cursos/61.jpg" alt="" style="width:100%">
-        <div class="w3-container">
-
-          <p> <a href="https://drive.google.com/file/d/10RHwYjBgjUGGX8I9ypHXNqjCHim_uq_6/view?usp=drive_link" title="JavaScript" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-
-        </div>
-      </div>
-    </div>
-
-  <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/63.jpg" alt="" style="width:100%">
-        <div class="w3-container">
-          <p> <a href="https://drive.google.com/file/d/1fkPzgKw6a1nlHO80fMzMhK1uBD-z1Tsm/view?usp=drive_link" title="Git e github" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-        </div>
-      </div>
-    </div>
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/64.jpg" alt="calcula velociade de chute" style="width:100%">
-        <div class="w3-container">
-          <p> <a href="https://drive.google.com/file/d/1me9KdfyiVhfcm2zhLZOTQWSDFOLgvxJk/view?usp=drive_link" title="Firebase" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-        </div>
-      </div>
-    </div>
-	<div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/62.jpg" alt="" style="width:100%">
-        <div class="w3-container">
-         <p> <a href="https://drive.google.com/file/d/1QCKMIvf6hvtmD5HC1Z5lTAcCADWeVxi2/view?usp=drive_link" title="React Native" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-        </div>
-      </div>
-    </div>
-</div>
-
-<!-- modificado em 310524 -->
-  <div class="w3-row-padding " style="margin-top:64px">
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/01.png" alt="" style="width:100%">
-        <div class="w3-container">
-
-          <p> <a href="https://drive.google.com/file/d/1yC4DsRSwzopBiDuOOOy5LXWqNiIMZNe3/view?usp=drive_link" title="Ciencia de dados" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-
-        </div>
-      </div>
-    </div>
-
-  <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/02.png" alt="" style="width:100%">
-        <div class="w3-container">
-          <p> <a href="https://drive.google.com/file/d/1DrRW-fAqCdFHlDUMlpWBJ74KUQiHG3XR/view?usp=drive_link" title="Hacker e Pentest" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-        </div>
-      </div>
-    </div>
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/08.jpg" alt="calcula velociade de chute" style="width:100%">
-        <div class="w3-container">
-          <p> <a href="https://drive.google.com/file/d/1b6Tus6d6_v0toiLndJqqBmdfeweiVwHZ/view?usp=drive_link" title="NDE" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-        </div>
-      </div>
-    </div>
-	<div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/05.png" alt="" style="width:100%">
-        <div class="w3-container">
-         <p> <a href=" https://drive.google.com/file/d/1Bfzb1M1svmBIMqh-7d6WPseUlDah833u/view?usp=drive_link" title="Omnistack" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-        </div>
-      </div>
-    </div>
-	</div>
-	<!-- Final do primeiro card -->
-
-  <div class="w3-row-padding " style="margin-top:64px">
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/13.png" alt="" style="width:100%">
-        <div class="w3-container">
-
-          <p> <a href="https://drive.google.com/file/d/1pZDWy3x2NI_rcG4g45F5PgOMN7bCSM6R/view?usp=sharing" title="Cibersegurança" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-
-        </div>
-      </div>
-    </div>
-
-  <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/14.png" alt="" style="width:100%">
-        <div class="w3-container">
-          <p> <a href="https://drive.google.com/file/d/1KeehGuve_8_juJqE700v8dIiBQwdI52s/view?usp=drive_link" title="Hacker Etico" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-        </div>
-      </div>
-    </div>
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/15.png" alt="calcula velociade de chute" style="width:100%">
-        <div class="w3-container">
-          <p> <a href="https://drive.google.com/file/d/1x8rDL2w1w1uDGvUfZgDrYVJXWfUz1Nyf/view?usp=drive_link" title="Segurança da Informação" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-        </div>
-      </div>
-    </div>
-	<div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/21.png" alt="" style="width:100%">
-        <div class="w3-container">
-         <p> <a href=" https://drive.google.com/file/d/11Zo3aIaQPpVA8WydmQJ4JCjOngHH2zuh/view?usp=sharing" title="WPSCAN" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-        </div>
-      </div>
-    </div>
-	</div>
-	<!-- Final do primeiro card -->
-	<div>
-	</div>
-
-
-	<div>
-	</div>
-	<div class="w3-row-padding " style="margin-top:64px">
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/06.png" alt="" style="width:100%">
-        <div class="w3-container">
-
-          <p> <a href="https://drive.google.com/file/d/1yxQRla_T9hNx5JZqgoplzYVtVaT3boP-/view?usp=drive_link" title="Crimes ciberneticos" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-
-        </div>
-      </div>
-    </div>
-
-  <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/04.png" alt="" style="width:100%">
-        <div class="w3-container">
-          <p> <a href="https://drive.google.com/file/d/1UUeVp2Qg8flCs6AIaRt93GO7evHoQouK/view?usp=drive_link" title="ACWSH" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-        </div>
-      </div>
-    </div>
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/07.png" alt="calcula velociade de chute" style="width:100%">
-        <div class="w3-container">
-          <p> <a href="https://drive.google.com/file/d/1oduuJoLjpKsd7VwgqxKvHgyEA1iWkeoW/view?usp=drive_link" title="LGPD" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-        </div>
-      </div>
-    </div>
-	<div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/11.png" alt="" style="width:100%">
-        <div class="w3-container">
-         <p> <a href=" https://drive.google.com/file/d/1qbAOLF_PSqh-aGoK85HhqdFnM3jlRWEI/view?usp=drive_link" title="Python " target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-        </div>
-      </div>
-    </div>
-	</div>
-	<div>
-
-    <div>
-    </div>
-
-
-    <div>
-    </div>
-    <div class="w3-row-padding " style="margin-top:64px">
-      <div class="w3-col l3 m6 w3-margin-bottom">
-        <div class="w3-card">
-          <img src="Assets/img/cursos/20.png" alt="" style="width:100%">
-          <div class="w3-container">
-
-            <p> <a href="https://drive.google.com/file/d/1NfgEsgu18ln-6bHYfSbAjt65Vb-7mn7i/view?usp=sharing" title="Armitage" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-
-          </div>
-        </div>
-      </div>
-
-    <div class="w3-col l3 m6 w3-margin-bottom">
-        <div class="w3-card">
-          <img src="Assets/img/cursos/17.png" alt="" style="width:100%">
-          <div class="w3-container">
-            <p> <a href="https://drive.google.com/file/d/1oUPhmwqh1JEvZGg2BPvlrJQJGSrfAI08/view?usp=drive_link" title="Python Basico" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-          </div>
-        </div>
-      </div>
-      <div class="w3-col l3 m6 w3-margin-bottom">
-        <div class="w3-card">
-          <img src="Assets/img/cursos/18.png" alt="calcula velociade de chute" style="width:100%">
-          <div class="w3-container">
-            <p> <a href="https://drive.google.com/file/d/1SQt7kTpRzNst-vy-777geJIfZ6OJ-BBN/view?usp=drive_link" title="Python Avançado" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-          </div>
-        </div>
-      </div>
-    <div class="w3-col l3 m6 w3-margin-bottom">
-        <div class="w3-card">
-          <img src="Assets/img/cursos/19.png" alt="" style="width:100%">
-          <div class="w3-container">
-           <p> <a href=" https://drive.google.com/file/d/1UXrKOzlCCROf5VLsEBYQ9lSBXw8owMre/view?usp=drive_link" title="Power BI" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-
-
-	<!-- final teceiro card card -->
-	<div class="w3-row-padding " style="margin-top:64px">
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/31.png" alt="" style="width:100%">
-        <div class="w3-container">
-
-          <p> <a href="https://drive.google.com/file/d/1fEbHXhZWIYP0O7QLj-3ucj3KDi41XJ4Q/view?usp=drive_link" title="IA" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-
-        </div>
-      </div>
-    </div>
-
-  <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/10.jpg" alt="" style="width:100%">
-        <div class="w3-container">
-          <p> <a href="https://drive.google.com/file/d/1nmBzI04YlR8hYiZIcf474BOoUXH2ybU1/view?usp=drive_link" title="Sebrae - MKT Digital" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-        </div>
-      </div>
-    </div>
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/03.png" alt="calcula velociade de chute" style="width:100%">
-        <div class="w3-container">
-          <p> <a href="https://drive.google.com/file/d/1pWCnxt2eCfbvVar0sx8AaegCvstflYZB/view?usp=drive_link" title="Shodan" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-        </div>
-      </div>
-    </div>
-	<div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/12.png" alt="" style="width:100%">
-        <div class="w3-container">
-         <p> <a href=" https://drive.google.com/file/d/1Z4e1z_IWFdjFVk2Nb1C2jqgnHiZYjXjs/view?usp=drive_link" title="Gestao de TI" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-        </div>
-      </div>
-    </div>
-</div>
-<div class="w3-row-padding " style="margin-top:64px">
-  <div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/24.jpg" alt="" style="width:100%">
-      <div class="w3-container">
-
-        <p> <a href="https://drive.google.com/file/d/1FkPrAtQi_mS6XXrgyiecLyjgO9WxdABU/view?usp=drive_link" title="Excel Basico" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-
-      </div>
+<!-- Chamada -->
+<section class="section" style="padding-bottom:40px">
+  <div class="container">
+    <div class="band reveal">
+      <div><h2>Disponível para <span>novos projetos</span></h2><p>Sites, segurança da informação, LGPD e treinamentos. Vamos conversar?</p></div>
+      <a href="https://wa.me/5532998409798" class="btn btn-gold" target="_blank" rel="noopener"><svg class="ico"><use href="#i-whatsapp"/></svg> Falar no WhatsApp</a>
     </div>
   </div>
-
-<div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/22.jpg" alt="" style="width:100%">
-      <div class="w3-container">
-        <p> <a href="https://drive.google.com/file/d/1sbdAx_UrdY8BNqm0S6evQap5OrRysUuo/view?usp=drive_link" title="Excel Intermediário" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-      </div>
-    </div>
-  </div>
-  <div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/23.jpg" alt="" style="width:100%">
-      <div class="w3-container">
-        <p> <a href="https://drive.google.com/file/d/1QxqADtPIUkDQ6zBfA8wtHvrE51AnFq18/view?usp=drive_link" title="Excel Avançado" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-      </div>
-    </div>
-  </div>
-<div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/25.jpg" alt="" style="width:100%">
-      <div class="w3-container">
-       <p> <a href=" https://drive.google.com/file/d/16xkaT23-q6s-Qmeij4DzPIj6hBUw04nx/view?usp=drive_link" title="Informatica para internet" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="w3-row-padding " style="margin-top:64px">
-  <div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/26.jpg" alt="" style="width:100%">
-      <div class="w3-container">
-
-        <p> <a href="https://drive.google.com/file/d/1yE3nhOqBnSZjWQACrO5xvMtzyu1VVy3L/view?usp=drive_link" title="Analista de Ti e Sistemas" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-
-      </div>
-    </div>
-  </div>
-
-<div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/27.png" alt="" style="width:100%">
-      <div class="w3-container">
-        <p> <a href="https://drive.google.com/file/d/1t_kJORF-npPGXLx8Pj287JVftcBlrh3n/view?usp=drive_link" title="PROGRAMADOR DE INTERNET" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-      </div>
-    </div>
-  </div>
-  <div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/28.png" alt="" style="width:100%">
-      <div class="w3-container">
-        <p> <a href="https://drive.google.com/file/d/10bAa2EclOTuHWVz9_W02e1U4_sKAjK3Y/view?usp=drive_link" title="GESTOR DE INFORMAÇÃO" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-      </div>
-    </div>
-  </div>
-<div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/29.png" alt="" style="width:100%">
-      <div class="w3-container">
-       <p> <a href="https://drive.google.com/file/d/1NYoWRs9_sHP8sx7eQKd24hZfQAxPqRrY/view?usp=drive_link" title="PROGRAMADOR DE SISTEMAS DE INFORMAÇÃO" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="w3-row-padding " style="margin-top:64px">
-  <div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/77.png" alt="" style="width:100%">
-      <div class="w3-container">
-
-        <p> <a href="https://drive.google.com/file/d/1YCqxafVAl8dkwZUzUokJk-EJUcg-cxkJ/view?usp=sharing" title="Logica de programação com java" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-
-      </div>
-    </div>
-  </div>
-
-<div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/31.jpg" alt="" style="width:100%">
-      <div class="w3-container">
-        <p> <a href="https://drive.google.com/file/d/1cbTRityuCH7Tepdb3a0LrCyX2Y3dhVBe/view?usp=drive_link" title="Automação com manychat" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-      </div>
-    </div>
-  </div>
-  <div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/32.jpg" alt="" style="width:100%">
-      <div class="w3-container">
-        <p> <a href="https://drive.google.com/file/d/13-AM6jScQWTOgz1JEMH__ssr-ZniWHcg/view?usp=drive_link" title="Hackers-do-bem" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-      </div>
-    </div>
-  </div>
-<div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/34.png" alt="" style="width:100%">
-      <div class="w3-container">
-       <p> <a href="https://drive.google.com/file/d/1JNDqJ5r3wfGnjdpMqzgIbonXX4wjTU1U/view?usp=drive_linkk" title="Atendimento" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-<div class="w3-row-padding " style="margin-top:60px">
-  <div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/30.png" alt="" style="width:100%">
-      <div class="w3-container">
-
-        <p> <a href="https://drive.google.com/file/d/1VCbkJq6b6aRolf-yeFH6cmN9aHODD7SD/view?usp=drive_link" title="UFJF" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-
-      </div>
-    </div>
-  </div>
-
-
-<div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/35.png" alt="" style="width:100%">
-      <div class="w3-container">
-        <p> <a href="https://drive.google.com/file/d/14DPIXcisbrlHlahT2UD6wS3GPZ24zMkp/view?usp=drive_link" title="Marchine Learning e Data Ciense" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-      </div>
-    </div>
-  </div>
-  <div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/36.png" alt="" style="width:100%">
-      <div class="w3-container">
-        <p> <a href="https://drive.google.com/file/d/18et-BFoa854STN-105WptS58SXhtNbXc/view?usp=drive_link" title="Logica Fuzzy" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-      </div>
-    </div>
-  </div>
-<div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/37.png" alt="" style="width:100%">
-      <div class="w3-container">
-       <p> <a href="https://drive.google.com/file/d/1wiS-5X_hE7aW3bvjmp38iimxBubPgdZ7/view?usp=drive_link" title="LGPD" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-      </div>
-    </div>
-  </div>
-
-</div>
-<!--inicio do ultimo card-->
-
-<div class="w3-row-padding " style="margin-top:60px">
-  <div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/09.jpg" alt="" style="width:100%">
-      <div class="w3-container">
-
-        <p> <a href="https://drive.google.com/file/d/1MRfswNeaWfhiOP9pOPwXEsy92s-07O8B/view?usp=drive_link" title="Cibersegurança" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-
-      </div>
-    </div>
-  </div>
-
-<div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/66.png" alt="" style="width:100%">
-      <div class="w3-container">
-        <p> <a href="https://drive.google.com/file/d/1vcuhTbfI8Qpq4LYpcLuJe6qBhdjH41zS/view?usp=sharing" title="LGPD" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-      </div>
-    </div>
-  </div>
-  <div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/67.png" alt="calcula velociade de chute" style="width:100%">
-      <div class="w3-container">
-        <p> <a href="https://drive.google.com/file/d/1fJhcM6v8rNIaV7gux_qGF1Zz99KODKbL/view?usp=sharing" title="Segurança da Informação - LGPD" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-      </div>
-    </div>
-  </div>
-<div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/68.jpg" alt="" style="width:100%">
-      <div class="w3-container">
-       <p> <a href=" https://drive.google.com/file/d/1H3GBRRb2Zr_V0QQIyau8_IGWCz9A88NE/view?usp=sharing" title="WPSCAN" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-      </div>
-    </div>
-  </div>
-  </div>
-
-
-
-  <div class="w3-row-padding " style="margin-top:64px">
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/76.png" alt="" style="width:100%">
-        <div class="w3-container">
-
-          <p> <a href="https://drive.google.com/file/d/1RYwN0d4fTuhf-zFLJLOVNim0cAcmMuFB/view?usp=sharing" title="API DATE TIME" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-
-        </div>
-      </div>
-    </div>
-
-  <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/69.jpeg" alt="" style="width:100%">
-        <div class="w3-container">
-          <p> <a href="https://drive.google.com/file/d/18q8YkXtDCyXlsRlQjkt4m3CaYb455qWQ/view?usp=sharing" title="Maratona IA" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-        </div>
-      </div>
-    </div>
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/70.png" alt="calcula velociade de chute" style="width:100%">
-        <div class="w3-container">
-          <p> <a href="https://drive.google.com/file/d/1yIOhDz4dO8GFtWzztVilELAFZkS6_Aa_/view?usp=sharing" title="Automação Usando Make" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-        </div>
-      </div>
-    </div>
-	<div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-card">
-        <img src="Assets/img/cursos/71.png" alt="" style="width:100%">
-        <div class="w3-container">
-         <p> <a href=" https://drive.google.com/file/d/1C9ApqtTxC8Y2Bnj03jMT4NT5BFi-oCDN/view?usp=sharing" title="Java Full Stack" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-        </div>
-      </div> 
-    </div>
-	</div>
-	</div>
-  <!--Atualização 02/10/2025 --> 
-  <div class="w3-row-padding " style="margin-top:60px">
-  <div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/72.png" alt="" style="width:100%">
-      <div class="w3-container">
-
-        <p> <a href="https://drive.google.com/file/d/1Bm1PVxJ5wf2-YIDUSKHIGn71MsVFqaiH/view?usp=sharing" title="Config Ambiente Java" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-
-      </div>
-    </div>
-  </div>
-
-
-<div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/73.png" alt="" style="width:100%">
-      <div class="w3-container">
-        <p> <a href="https://drive.google.com/file/d/1CTNtiiAYi-EC_Aig0avdkiS4LBreg7TD/view?usp=sharing" title="Fundamento de sistemas com java" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-      </div>
-    </div>
-  </div>
-  <div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/74.png" alt="" style="width:100%">
-      <div class="w3-container">
-        <p> <a href="https://drive.google.com/file/d/1x3EPt2AfcwIQmAJfL5KwuTVo_OiN9QcN/view?usp=sharing" title="Orientação com Objetos" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-      </div>
-    </div>
-  </div>
-<div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/75.png" alt="" style="width:100%">
-      <div class="w3-container">
-       <p> <a href="https://drive.google.com/file/d/1UR16x4-7yiX97b3Uo-fqf4Z-0tYxwdeV/view?usp=sharing" title="Front-end" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-      </div>
-    </div>
-  </div>
-  <!-- Ultima atualização 07/11/25 -->
-  
-  <div class="w3-row-padding " style="margin-top:60px">
-  <div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/78.png" alt="" style="width:100%">
-      <div class="w3-container">
-
-        <p> <a href="https://drive.google.com/file/d/1XpjmuidE4yMHa4heE38euMKW7x7KWXrz/view?usp=sharing" title="Como proteger de um ataque" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-
-      </div>
-    </div>
-  </div>
-  
-
-
-<div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/79.png" alt="" style="width:100%">
-      <div class="w3-container">
-        <p> <a href="https://drive.google.com/file/d/1QrQ8MNTqCkEveMqklVubgNzSgfSLe8G4/view?usp=sharing" title="Concientização do uso das IAs" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-      </div>
-    </div>
-  </div>
-	
-  <div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/80.jpg" alt="" style="width:100%">
-      <div class="w3-container">
-        <p> <a href="https://drive.google.com/file/d/15vSSCcNuW9Fh4PljXKlRlXpJxNndvvYB/view?usp=sharing" title="N8N" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-      </div>
-    </div>
-  </div>
-   
-<div class="w3-col l3 m6 w3-margin-bottom">
-    <div class="w3-card">
-      <img src="Assets/img/cursos/81.jpg" alt="" style="width:100%">
-      <div class="w3-container">
-       <p> <a href="https://drive.google.com/file/d/1Sge2uiKmJRDGi1fxNWwW7x2wdvK5auDG/view?usp=sharing" title="LGPD" target="_blank" class="w3-hover-text-green"> clique aqui e saiba mais </a> </p>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<!-- Ultima Atualização do Certificações 23/11/2025 -->
-  
-</div>
-</div>
-</div>
-</div>
-
-
+</section>
 
 <!-- Contato -->
-<div class="w3-container w3-dark-grey" style="padding:40px 16px" id="contact">
-  <h3 class="w3-center">Contato</h3>
-  <div class="w3-row-padding" style="margin-top:64px">
-    <div class="w3-half">
-      <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i> São João Nepomuceno,Minas Gerias, Brasil</p>
-      <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"> </i> Email:conato@feliperodrigues.net</p>
-      <br>
-      <a  <i <a class="fa fa-instagram w3-hover-opacity" href="https://www.instagram.com/ferodrigues_si/"></a></i>
-    <a  <i <a class="fa fa-twitter w3-hover-opacity" href="https://twitter.com/lferodrigues"></a></i>
-   <a  <i <a class="fa fa-linkedin w3-hover-opacity" href="https://www.linkedin.com/in/felipe-rodrigues-12732b235"></a></i>
-   <a class="fa fa-whatsapp w3-hover-opacity" href="https://wa.me/5532998409798"></a>
-   <a class="fa fa-youtube w3-hover-opacity" href="https://www.youtube.com/@lferodrigues"></a>
+<section class="section" id="contato" style="padding-top:56px">
+  <div class="container">
+    <div class="head reveal">
+      <span class="kicker">Contato</span>
+      <h2>Fale comigo</h2>
     </div>
-    <div class="w3-half">
-      <!-- Add Google Maps -->
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29689.930270140216!2d-43.03300060049041!3d-21.53741878638505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa2926ff693c449%3A0xbea7cafbfe71e1c7!2sS%C3%A3o+Jo%C3%A3o+Nepomuceno%2C+MG%2C+36680-000!5e0!3m2!1spt-BR!2sbr!4v1519424820272" width="320" height="240" frameborder="0" style="border:0" allowfullscreen></iframe>
-
-   <div id="googleMap" class="w3-greyscale-max" style=" width: 100%; height: 30%;"></div>
+    <div class="contact">
+      <div class="c-list reveal">
+        <a class="c-item" href="https://wa.me/5532998409798" target="_blank" rel="noopener"><div class="i"><svg class="ico"><use href="#i-whatsapp"/></svg></div><div><small>WhatsApp</small><b>(32) 99840-9798</b></div></a>
+        <a class="c-item" href="mailto:contato@feliperodrigues.net"><div class="i"><svg class="ico"><use href="#i-mail"/></svg></div><div><small>E-mail</small><b>contato@feliperodrigues.net</b></div></a>
+        <div class="c-item"><div class="i"><svg class="ico"><use href="#i-pin"/></svg></div><div><small>Localização</small><b>São João Nepomuceno, Minas Gerais — Brasil</b></div></div>
+        <div class="social" style="margin-top:6px">
+          <a href="https://www.instagram.com/ferodrigues_si/" target="_blank" rel="noopener" aria-label="Instagram"><svg class="ico"><use href="#i-instagram"/></svg></a>
+          <a href="https://www.linkedin.com/in/felipe-rodrigues-12732b235" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="ico"><use href="#i-linkedin"/></svg></a>
+          <a href="https://www.youtube.com/@lferodrigues" target="_blank" rel="noopener" aria-label="YouTube"><svg class="ico"><use href="#i-youtube"/></svg></a>
+          <a href="https://twitter.com/lferodrigues" target="_blank" rel="noopener" aria-label="X (Twitter)"><svg class="ico"><use href="#i-x"/></svg></a>
+          <a href="https://github.com/lferodrigues" target="_blank" rel="noopener" aria-label="GitHub"><svg class="ico"><use href="#i-github"/></svg></a>
+        </div>
+      </div>
+      <div class="map reveal">
+        <iframe title="Mapa de São João Nepomuceno - MG" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29689.930270140216!2d-43.03300060049041!3d-21.53741878638505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa2926ff693c449%3A0xbea7cafbfe71e1c7!2sS%C3%A3o+Jo%C3%A3o+Nepomuceno%2C+MG%2C+36680-000!5e0!3m2!1spt-BR!2sbr!4v1519424820272"></iframe>
+      </div>
     </div>
   </div>
-</div>
-</div>
+</section>
+</main>
 
-
-<!-- Footer -->
-<footer class= "w3-black w3-padding-16" >
-
-  <div class=" w3-section w3-center">
-  <a href="https://feliperodrigues.net/" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>Home</a>
+<footer class="footer">
+  <div class="container">
+    <a href="#inicio" class="brand"><img src="Assets/img/logo-mark.webp" alt="" width="40" height="40" loading="lazy"><span>Felipe Rodrigues</span></a>
+    <p style="margin:0">© <span id="currentYear">2026</span> Rodrigues Empreendimentos · CNPJ 60.525.135/0001-00</p>
   </div>
-
-  <p class="w3-section w3-right" >Template by:  <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></p>
-
-   <p class= "w3-section w3-center"  id="anoAtual"></p>
 </footer>
+<a href="#inicio" class="to-top" id="toTop" aria-label="Voltar ao topo"><svg class="ico"><use href="#i-up"/></svg></a>
+
 <script>
-var images = [
-			"Assets/img/ifet.jpeg",
-            "Assets/img/felipe.jpg",
-	   		 "Assets/img/merito.jpeg",
-	   		 "Assets/img/premio.jpg",
-            "Assets/img/office.jpeg",
-            "Assets/img/excel.jpeg",
-            "Assets/img/word.jpeg",
-            "Assets/img/CARD MODELO.png",
-            "Assets/img/senai.jpeg",
-	    "Assets/img/prepara.jpeg",
-	     "Assets/img/vando.jpeg",
-		"Assets/img/premio.jpeg",
+(function(){
+  var d=document, nav=d.getElementById('nav'), toTop=d.getElementById('toTop');
 
-        ];
-        var currentIndex = 0;
+  // Navbar ao rolar + botão voltar ao topo
+  function onScroll(){var y=window.scrollY>40;nav.classList.toggle('scrolled',y);toTop.classList.toggle('show',window.scrollY>700)}
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 
-        function changeImage() {
-            var img = document.getElementById("slideshow");
-            img.style.opacity = 0;
-            setTimeout(function() {
-                currentIndex = (currentIndex + 1) % images.length;
-                img.src = images[currentIndex];
-                img.style.opacity = 1;
-            }, 1000);
-        }
+  // Menu mobile
+  var tg=d.getElementById('navToggle');
+  tg.addEventListener('click',function(){var o=d.body.classList.toggle('nav-open');tg.setAttribute('aria-expanded',o)});
+  d.querySelectorAll('.nav-links a').forEach(function(a){a.addEventListener('click',function(){d.body.classList.remove('nav-open');tg.setAttribute('aria-expanded',false)})});
 
-        setInterval(changeImage, 5000);
+  if('IntersectionObserver' in window){
+    // Link ativo conforme a seção
+    var links={};d.querySelectorAll('.nav-links a').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+    var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&links[e.target.id]){for(var k in links)links[k].classList.remove('active');links[e.target.id].classList.add('active')}})},{rootMargin:'-45% 0px -50% 0px'});
+    d.querySelectorAll('section[id]').forEach(function(s){so.observe(s)});
+    // Animação de entrada
+    var ro=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
+    d.querySelectorAll('.reveal').forEach(function(el){ro.observe(el)});
+  } else d.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in')});
 
-        function exibirAnoAtual() {
-            // Obtém a data atual
-            const dataAtual = new Date();
+  // Certificações: mostrar todas
+  var certs=d.getElementById('certs'), cb=d.getElementById('certsBtn'), label=cb.textContent;
+  cb.addEventListener('click',function(){var c=certs.classList.toggle('collapsed');cb.textContent=c?label:'Mostrar menos';cb.setAttribute('aria-expanded',!c);if(c)certs.scrollIntoView({block:'start'})});
 
-            // Obtém o ano atual a partir da data atual
-            const anoAtual = dataAtual.getFullYear();
-
-            // Seleciona o elemento <h6> usando o seu ID
-            const elementoAnoAtual = document.getElementById("anoAtual");
-
-            // Define o texto dentro do elemento <h6> como o ano atual
-            elementoAnoAtual.textContent = `© ${anoAtual} Todos os direitos reservados, 60.525.135/0001-00 Rodrigues Empreendimentos`;
-        }
-
-        // Chama a função para exibir o ano atual
-        exibirAnoAtual();
-
-        // muda imagem
-
-    </script>
-<script>
-// Modal de Imagens
-function onClick(element) {
-  document.getElementById("img01").src = element.src;
-  document.getElementById("modal01").style.display = "block";
-  var captionText = document.getElementById("caption");
-  captionText.innerHTML = element.alt;
-}
-
-
-// Alternar entre mostrar e ocultar a barra lateral ao clicar no ícone do menu
-var mySidebar = document.getElementById("mySidebar");
-
-function w3_open() {
-  if (mySidebar.style.display === 'block') {
-    mySidebar.style.display = 'none';
-  } else {
-    mySidebar.style.display = 'block';
+  // Slideshow do "Sobre" (carrega uma imagem por vez)
+  var img=d.getElementById('slideshow'), n=12, i=1;
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    setInterval(function(){
+      if(d.hidden)return;
+      i=i%n+1;var src='Assets/img/slides/'+(i<10?'0':'')+i+'.webp', pre=new Image();
+      pre.onload=function(){img.style.opacity=0;setTimeout(function(){img.src=src;img.style.opacity=1},400)};
+      pre.src=src;
+    },5000);
   }
-}
-
-//Feche a barra lateral com o botão Fechar - Não utilizado na primeira versão
-function w3_close() {
-    mySidebar.style.display = "none";
-}
-
+})();
 </script>
-<script src="./Assets/js/funcao-video.js"></script>
+<script src="Assets/js/funcao-video.js" defer></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
