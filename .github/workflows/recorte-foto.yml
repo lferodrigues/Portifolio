@@ -1,0 +1,33 @@
+name: Recorte da foto (temporário)
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/recorte-foto.yml]
+permissions:
+  contents: write
+jobs:
+  recorte:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install "rembg[cpu]==2.0.59" pillow
+      - name: Recortar
+        run: |
+          python - <<'PY'
+          from rembg import remove, new_session
+          from PIL import Image
+          im = Image.open("Assets/img/if.jpeg").convert("RGB").crop((78, 0, 786, 1130))
+          out = remove(im, session=new_session("birefnet-portrait"), post_process_mask=True)
+          out.save("Assets/img/felipe-recorte.png")
+          print(out.size)
+          PY
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Assets/img/felipe-recorte.png
+          git commit -m "Recorte da foto do topo"
+          git pull --rebase origin main
+          git push origin HEAD:main
