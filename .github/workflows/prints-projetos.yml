@@ -60,8 +60,16 @@ jobs:
                           print(f"[aviso] {url}: {e}")
                       # rola a página para disparar animações/lazy-load e volta ao topo
                       for y in (400, 900, 1600, 0):
-                          await page.evaluate(f"window.scrollTo(0, {y})")
+                          try:
+                              await page.evaluate(f"window.scrollTo(0, {y})")
+                          except Exception as e:
+                              print(f"[aviso] {url} (scroll): {e}")
+                              try:
+                                  await page.wait_for_load_state("networkidle", timeout=30000)
+                              except Exception:
+                                  pass
                           await page.wait_for_timeout(1200)
+                      print(f"{slug}: url final = {page.url}")
                       png = await page.screenshot(type="png")
                       # se ainda saiu em branco, espera mais e tenta de novo
                       for _ in range(3):
@@ -69,6 +77,11 @@ jobs:
                               break
                           await page.wait_for_timeout(5000)
                           png = await page.screenshot(type="png")
+                      lo, hi = Image.open(io.BytesIO(png)).convert("L").getextrema()
+                      if hi - lo <= 30:
+                          print(f"[aviso] {slug}: print continua em branco, mantendo o anterior")
+                          await page.close()
+                          continue
                       im = Image.open(io.BytesIO(png)).convert("RGB")
                       im.thumbnail((960, 600), Image.LANCZOS)
                       im.save(f"Assets/img/projetos/{slug}.webp", "WEBP", quality=74, method=6)
