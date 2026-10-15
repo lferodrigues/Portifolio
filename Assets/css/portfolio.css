@@ -66,10 +66,8 @@ p{margin:0 0 1em}
 .social a{width:40px;height:40px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;color:var(--muted);font-size:1.05rem;transition:all .2s}
 .social a:hover{color:#111;background:var(--gold);border-color:var(--gold)}
 .hero-photo{position:relative;justify-self:center;width:min(440px,100%)}
-.hero-photo .frame{position:relative;aspect-ratio:3/4;overflow:hidden;border-radius:4px}
-.hero-photo .frame img{width:100%;height:100%;object-fit:cover;object-position:50% 20%}
-.hero-photo .frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,11,12,.35) 0%,transparent 30%,transparent 60%,var(--bg) 100%),linear-gradient(90deg,var(--bg) 0%,transparent 22%,transparent 78%,var(--bg) 100%)}
-.hero-photo .lines{position:absolute;inset:-6% -10%;width:120%;height:112%;pointer-events:none;color:var(--gold);opacity:.75}
+.hero-photo .frame{position:relative;aspect-ratio:3/4;overflow:hidden;border-radius:10px;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.hero-photo .frame img{width:100%;height:100%;object-fit:cover;object-position:50% 0}
 .scroll-cue{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);width:24px;height:38px;border:2px solid var(--gold);border-radius:14px;z-index:2}
 .scroll-cue::after{content:"";position:absolute;left:50%;top:7px;width:4px;height:8px;margin-left:-2px;background:var(--gold);border-radius:2px;animation:cue 1.6s infinite}
 @keyframes cue{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(12px)}}
