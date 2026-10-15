@@ -36,7 +36,9 @@ jobs:
           from playwright.async_api import async_playwright
 
           SITES = {
-              "edsonjuniorjor": "https://edsonjuniorjor.com.br",
+              "edsonjunior": "https://lferodrigues.github.io/edson-junior/",
+              "consultoriafl": "https://lferodrigues.github.io/consultoria-fl/",
+              "deborahia": "https://lferodrigues.github.io/deborahia/",
               "professorfeliperodrigues": "https://professorfeliperodrigues.com.br",
               "garbosaturismo": "https://garbosaturismo.com.br",
               "mulheresmil": "https://mulheresmil.com.br",
