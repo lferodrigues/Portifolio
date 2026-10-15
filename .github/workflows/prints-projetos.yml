@@ -50,6 +50,7 @@ jobs:
                       viewport={"width": 1440, "height": 900},
                       device_scale_factor=1,
                       locale="pt-BR",
+                      user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36",
                   )
                   for slug, url in SITES.items():
                       page = await ctx.new_page()
@@ -57,8 +58,17 @@ jobs:
                           await page.goto(url, wait_until="networkidle", timeout=60000)
                       except Exception as e:
                           print(f"[aviso] {url}: {e}")
-                      await page.wait_for_timeout(3000)
+                      # rola a página para disparar animações/lazy-load e volta ao topo
+                      for y in (400, 900, 1600, 0):
+                          await page.evaluate(f"window.scrollTo(0, {y})")
+                          await page.wait_for_timeout(1200)
                       png = await page.screenshot(type="png")
+                      # se ainda saiu em branco, espera mais e tenta de novo
+                      for _ in range(3):
+                          if Image.open(io.BytesIO(png)).convert("L").getextrema()[1] - Image.open(io.BytesIO(png)).convert("L").getextrema()[0] > 30:
+                              break
+                          await page.wait_for_timeout(5000)
+                          png = await page.screenshot(type="png")
                       im = Image.open(io.BytesIO(png)).convert("RGB")
                       im.thumbnail((960, 600), Image.LANCZOS)
                       im.save(f"Assets/img/projetos/{slug}.webp", "WEBP", quality=74, method=6)
