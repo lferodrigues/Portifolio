@@ -46,6 +46,7 @@
   <symbol id="i-ext" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></g></symbol>
   <symbol id="i-file" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/></g></symbol>
   <symbol id="i-briefcase" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></g></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></g></symbol>
 </svg>
 
 <!-- Navegação -->
@@ -61,6 +62,7 @@
         <li><a href="#servicos">Serviços</a></li>
         <li><a href="#sobre">Sobre</a></li>
         <li><a href="#projetos">Projetos</a></li>
+        <li><a href="#artigos">Artigos</a></li>
         <li><a href="#certificacoes">Certificações</a></li>
         <li><a href="#contato">Contato</a></li>
       </ul>
@@ -232,8 +234,46 @@
   </div>
 </section>
 
+<!-- Artigos -->
+<section class="section" id="artigos">
+  <div class="container">
+    <div class="head reveal">
+      <span class="kicker">Produção acadêmica</span>
+      <h2>Artigos</h2>
+      <p>Relatos e pesquisas sobre tecnologia, educação profissional e inclusão.</p>
+    </div>
+    <div class="papers">
+      <article class="paper reveal">
+        <a class="paper-cover" href="Assets/artigos/da-lousa-ao-celular-mulheres-mil.pdf" target="_blank" rel="noopener" aria-label="Abrir o artigo em PDF">
+          <img src="Assets/artigos/da-lousa-ao-celular-capa.webp" alt="Primeira página do artigo Da lousa ao celular" width="520" height="735" loading="lazy" decoding="async">
+          <span class="pages"><svg class="ico"><use href="#i-file"/></svg> PDF · 13 páginas</span>
+        </a>
+        <div class="paper-body">
+          <div class="paper-meta"><span class="cat">Relato de experiência · 2026</span><span class="status">Em avaliação</span></div>
+          <h3>Da lousa ao celular: relato do desenvolvimento de uma plataforma web de apoio pedagógico e de gestão para o Programa Mulheres Mil em um Instituto Federal</h3>
+          <p>Como uma demanda simples de sala de aula — usar a lousa digital sem depender de notebook e pendrive — virou, entre agosto e outubro de 2026, uma plataforma que reúne materiais, inscrições, turmas, frequência, painel do professor, Biblioteca Itinerante e uma Área da Estudante pensada para o celular. O texto discute escolhas voltadas à permanência das alunas, como o alerta de faltas com mensagem de acolhimento, à acessibilidade em dispositivos móveis e à proteção de dados conforme a LGPD.</p>
+          <ul class="paper-facts" aria-label="Números do projeto">
+            <li><b>513</b><span>versões publicadas</span></li>
+            <li><b>39</b><span>páginas</span></li>
+            <li><b>54</b><span>módulos de código</span></li>
+            <li><b>3</b><span>cursos FIC atendidos</span></li>
+          </ul>
+          <ul class="kw" aria-label="Palavras-chave">
+            <li>Programa Mulheres Mil</li><li>Tecnologias digitais</li><li>Educação profissional</li><li>Aprendizagem móvel</li><li>Permanência estudantil</li>
+          </ul>
+          <div class="links">
+            <a href="Assets/artigos/da-lousa-ao-celular-mulheres-mil.pdf" class="btn btn-gold btn-sm" target="_blank" rel="noopener"><svg class="ico"><use href="#i-book"/></svg> Ler o artigo</a>
+            <a href="Assets/artigos/da-lousa-ao-celular-mulheres-mil.pdf" class="btn btn-ghost btn-sm" download><svg class="ico"><use href="#i-download"/></svg> Baixar PDF</a>
+            <a href="https://mulheresmil.com.br" class="btn btn-ghost btn-sm" target="_blank" rel="noopener"><svg class="ico"><use href="#i-ext"/></svg> Ver a plataforma</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
 <!-- Missão, visão e valores -->
-<section class="section" id="missao">
+<section class="section alt" id="missao">
   <div class="container">
     <div class="head reveal">
       <span class="kicker">Propósito</span>
@@ -248,7 +288,7 @@
 </section>
 
 <!-- Certificações -->
-<section class="section alt" id="certificacoes">
+<section class="section" id="certificacoes">
   <div class="container">
     <div class="head reveal">
       <span class="kicker">Formação contínua</span>
