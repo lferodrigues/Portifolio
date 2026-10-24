@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>O Computador Mágico! 🤖 - Guia Divertido</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;700;900&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            fredoka: ['Fredoka', 'sans-serif'],
+            nunito: ['Nunito', 'sans-serif'],
+          },
+          colors: {
+            kidsBlue: '#3B82F6',
+            kidsPurple: '#8B5CF6',
+            kidsPink: '#EC4899',
+            kidsYellow: '#F59E0B',
+            kidsGreen: '#10B981',
+            kidsOrange: '#F97316',
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    * {
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(180deg, #4F46E5 0%, #7C3AED 50%, #C026D3 100%);
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+    }
+    html {
+      height: -webkit-fill-available;
+    }
+    .font-heading {
+      font-family: 'Fredoka', sans-serif;
+    }
+    .bounce-gentle {
+      animation: bounce 2s infinite;
+    }
+    .float-item {
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(2deg); }
+    }
+    /* Suporte a transição suave de conteúdo */
+    .slide-enter {
+      animation: fadeInScale 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(0.95) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+  </style>
+</head>
+<body class="flex flex-col justify-between items-center min-h-screen p-3 sm:p-5 text-slate-800">
+
+  <!-- Header Superior Mobile -->
+  <header class="w-full max-w-md bg-white/95 backdrop-blur-md px-4 py-3 rounded-3xl shadow-xl border-4 border-yellow-300 flex items-center justify-between gap-2 shrink-0">
+    <div class="flex items-center gap-2.5">
+      <div class="bg-yellow-400 text-slate-900 w-10 h-10 rounded-2xl flex items-center justify-center text-xl shadow-md float-item">
+        <i class="fa-solid fa-robot"></i>
+      </div>
+      <div>
+        <h1 class="font-heading font-bold text-base sm:text-lg text-indigo-950 leading-tight">O Robô Computador!</h1>
+        <p class="text-xs font-bold text-indigo-500">Aprenda brincando 🚀</p>
+      </div>
+    </div>
+    
+    <!-- Badges de Contagem de Slide -->
+    <div class="bg-amber-100 text-amber-900 font-heading font-extrabold text-xs px-3 py-1.5 rounded-full border-2 border-amber-300 flex items-center gap-1 shadow-inner">
+      <span>Slide</span>
+      <span id="slide-num-badge" class="text-amber-600 text-sm">1</span>
+      <span>/ 8</span>
+    </div>
+  </header>
+
+  <!-- Container Principal do Card de Slide (Otimizado para Touch e Telas Pequenas) -->
+  <main class="w-full max-w-md my-auto py-2 flex-grow flex items-center justify-center">
+    <div id="card-container" class="w-full bg-white rounded-3xl p-4 sm:p-6 shadow-2xl border-4 border-indigo-200 slide-enter flex flex-col justify-between relative overflow-hidden">
+      <!-- O conteúdo interativo é renderizado aqui via JS -->
+    </div>
+  </main>
+
+  <!-- Rodapé Fixado com Controles para o Polegar -->
+  <footer class="w-full max-w-md bg-white/95 backdrop-blur-md p-3 rounded-3xl shadow-xl border-4 border-indigo-200 shrink-0 flex flex-col gap-2.5">
+    
+    <!-- Barra de Progresso com Indicadores Redondos -->
+    <div id="dots-wrapper" class="flex justify-center items-center gap-1.5 px-2">
+      <!-- Pontinhos gerados pelo JavaScript -->
+    </div>
+
+    <!-- Botões de Ação Ampliados para Celular -->
+    <div class="flex items-center justify-between gap-3">
+      <button id="btn-prev" onclick="goToPrev()" class="flex-1 bg-pink-500 active:bg-pink-600 text-white font-heading font-bold py-3 px-4 rounded-2xl transition shadow-md flex items-center justify-center gap-2 active:scale-95 disabled:opacity-30 disabled:pointer-events-none">
+        <i class="fa-solid fa-arrow-left text-lg"></i>
+        <span>Voltar</span>
+      </button>
+
+      <button id="btn-next" onclick="goToNext()" class="flex-1 bg-emerald-500 active:bg-emerald-600 text-white font-heading font-bold py-3 px-4 rounded-2xl transition shadow-md flex items-center justify-center gap-2 active:scale-95 disabled:opacity-30 disabled:pointer-events-none">
+        <span>Avançar</span>
+        <i class="fa-solid fa-arrow-right text-lg"></i>
+      </button>
+    </div>
+  </footer>
+
+  <script>
+    // Estrutura de dados educativa com linguagem simples para crianças e fotos das peças reais
+    const slidesData = [
+      {
+        id: 1,
+        title: "Placa-Mãe",
+        subtitle: "A Grande Cidade dos Circuitos! 🏙️",
+        icon: "fa-microchip",
+        badgeBg: "bg-blue-500",
+        accentText: "text-blue-600",
+        boxBg: "bg-blue-50 border-blue-300",
+        analogy: "É como a planta de uma cidade cheia de ruazinhas elétricas!",
+        description: "Ela conecta todas as pecinhas do computador para que elas consigam conversar umas com as outras.",
+        funFact: "💡 Ela se chama 'mãe' porque segura todas as outras peças com carinho!",
+        image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80",
+        alt: "Placa-mãe de computador"
+      },
+      {
+        id: 2,
+        title: "Processador (CPU)",
+        subtitle: "O Cérebro Super Esperto! 🧠",
+        icon: "fa-brain",
+        badgeBg: "bg-purple-500",
+        accentText: "text-purple-600",
+        boxBg: "bg-purple-50 border-purple-300",
+        analogy: "É o cérebro super rápido do nosso amigo computador!",
+        description: "Ele faz contas muito difíceis e pensa bem rápido para abrir seus vídeos e jogos favoritos num piscar de olhos!",
+        funFact: "⚡ Ele faz bilhões de continhas de matemática em só 1 segundo!",
+        image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&w=800&q=80",
+        alt: "Processador de computador CPU"
+      },
+      {
+        id: 3,
+        title: "Memória RAM",
+        subtitle: "A Mesa de Desenho Rápida! 🎨",
+        icon: "fa-memory",
+        badgeBg: "bg-pink-500",
+        accentText: "text-pink-600",
+        boxBg: "bg-pink-50 border-pink-300",
+        analogy: "É como a sua mesa de tarefas da escola!",
+        description: "Ela guarda rapidinho os brinquedos e tintas que você está usando AGORA. Quando desliga o PC, ela fica limpinha de novo!",
+        funFact: "🧹 Se você abrir muitos jogos ao mesmo tempo, precisa de uma mesa maior!",
+        image: "https://images.unsplash.com/photo-1562976540-1502c2145186?auto=format&fit=crop&w=800&q=80",
+        alt: "Pente de Memória RAM"
+      },
+      {
+        id: 4,
+        title: "HD ou SSD",
+        subtitle: "O Baú de Tesouros! 🏴‍☠️",
+        icon: "fa-box-archive",
+        badgeBg: "bg-amber-500",
+        accentText: "text-amber-600",
+        boxBg: "bg-amber-50 border-amber-300",
+        analogy: "Um baú mágico que nunca esquece o que guardou!",
+        description: "Aqui ficam salvas todas as suas fotos, desenhos e jogos. Mesmo se você desligar a tomada, nada se perde!",
+        funFact: "🚀 O SSD é o baú moderno: ele abre bem mais rápido que o HD antigo!",
+        image: "https://images.unsplash.com/photo-1544652478-6653e09f18a2?auto=format&fit=crop&w=800&q=80",
+        alt: "Disco rígido HD / SSD interno"
+      },
+      {
+        id: 5,
+        title: "Fonte de Energia",
+        subtitle: "O Coração do Computador! ⚡",
+        icon: "fa-plug-circle-bolt",
+        badgeBg: "bg-red-500",
+        accentText: "text-red-600",
+        boxBg: "bg-red-50 border-red-300",
+        analogy: "É o coração que manda 'comidinha' para as peças!",
+        description: "Ela pega a energia do fio da tomada e transforma no formato certinho para o computador funcionar sem queimar nada.",
+        funFact: "🍎 Assim como você precisa comer frutas, o PC precisa da fonte para ter força!",
+        image: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=800&q=80",
+        alt: "Fonte de alimentação de computador"
+      },
+      {
+        id: 6,
+        title: "Placa de Vídeo (GPU)",
+        subtitle: "O Pintor de Jogos! 🎮",
+        icon: "fa-gamepad",
+        badgeBg: "bg-emerald-500",
+        accentText: "text-emerald-600",
+        boxBg: "bg-emerald-50 border-emerald-300",
+        analogy: "Um artista super rápido que desenha na tela!",
+        description: "Ela desenha todas as imagens coloridas, os cenários em 3D e os personagens dos jogos que você mais gosta!",
+        funFact: "🌟 Quanto mais forte for a placa, mais bonitos e reais ficam os gráficos!",
+        image: "https://images.unsplash.com/photo-1587202372634-32705e3bf49c?auto=format&fit=crop&w=800&q=80",
+        alt: "Placa de vídeo GPU moderna"
+      },
+      {
+        id: 7,
+        title: "Cooler (Ventoinha)",
+        subtitle: "O Ar-Condicionado Gelado! ❄️",
+        icon: "fa-fan",
+        badgeBg: "bg-cyan-500",
+        accentText: "text-cyan-600",
+        boxBg: "bg-cyan-50 border-cyan-300",
+        analogy: "É um ventiladorzinho para refrescar as peças!",
+        description: "Quando o computador trabalha muito, ele esquenta. O Cooler sopra um vento bem frio para não deixar nada esquentar demais!",
+        funFact: "🌬️ Existem coolers mágicos que usam até água geladinha por dentro!",
+        image: "https://images.unsplash.com/photo-1587202372583-49330a15584d?auto=format&fit=crop&w=800&q=80",
+        alt: "Cooler ventilador do processador"
+      },
+      {
+        id: 8,
+        title: "Gabinete",
+        subtitle: "A Armadura do Super-Herói! 🛡️",
+        icon: "fa-shield-cat",
+        badgeBg: "bg-orange-500",
+        accentText: "text-orange-600",
+        boxBg: "bg-orange-50 border-orange-300",
+        analogy: "A caixinha fortona que protege o computador!",
+        description: "Ele guarda todas as peças sensíveis protegendo contra poeira e quedas. E ainda pode ter luzes pisca-pisca bem legais!",
+        funFact: "🌈 Muitos gabinetes têm vidros transparentes para ver as peças brilhando!",
+        image: "https://images.unsplash.com/photo-1587202372616-b43bfa051433?auto=format&fit=crop&w=800&q=80",
+        alt: "Gabinete de computador com iluminação"
+      }
+    ];
+
+    let currentIndex = 0;
+
+    // Renderiza o slide atual
+    function renderSlide() {
+      const slide = slidesData[currentIndex];
+      const container = document.getElementById('card-container');
+      const badgeNum = document.getElementById('slide-num-badge');
+
+      badgeNum.textContent = slide.id;
+
+      // Reinicia a animação de entrada
+      container.classList.remove('slide-enter');
+      void container.offsetWidth; // Trigger reflow
+      container.classList.add('slide-enter');
+
+      container.innerHTML = `
+        <!-- Cabeçalho do Card com Badge e Ícone -->
+        <div class="flex items-center justify-between gap-2 mb-2">
+          <span class="${slide.badgeBg} text-white font-heading font-semibold text-xs px-3 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
+            <i class="fa-solid ${slide.icon}"></i> Peça #${slide.id}
+          </span>
+          <div class="${slide.accentText} text-2xl font-bold bounce-gentle">
+            <i class="fa-solid ${slide.icon}"></i>
+          </div>
+        </div>
+
+        <!-- Título e Subtítulo -->
+        <div class="mb-3">
+          <h2 class="font-heading font-bold text-2xl text-slate-800 leading-tight">
+            ${slide.title}
+          </h2>
+          <p class="font-heading font-bold text-sm ${slide.accentText} mt-0.5">
+            ${slide.subtitle}
+          </p>
+        </div>
+
+        <!-- Imagem Real da Peça -->
+        <div class="relative w-full h-40 sm:h-48 rounded-2xl overflow-hidden shadow-md border-2 border-slate-100 mb-3 bg-slate-900 flex items-center justify-center">
+          <img 
+            src="${slide.image}" 
+            alt="${slide.alt}" 
+            class="w-full h-full object-cover"
+            onerror="this.onerror=null; this.src='https://placehold.co/600x400/3B82F6/ffffff?text=${encodeURIComponent(slide.title)}';"
+          >
+          <div class="absolute bottom-2 right-2 bg-slate-900/80 backdrop-blur-sm text-white text-[10px] px-2 py-0.5 rounded-md font-bold">
+            Foto Real 📸
+          </div>
+        </div>
+
+        <!-- Caixa de Analogia Simples -->
+        <div class="${slide.boxBg} border-2 p-2.5 rounded-2xl mb-2.5 shadow-sm">
+          <p class="text-xs font-bold text-slate-800 mb-0.5 flex items-center gap-1">
+            <i class="fa-solid fa-lightbulb text-amber-500"></i> Como entender fácil:
+          </p>
+          <p class="text-xs sm:text-sm font-semibold text-slate-700 leading-snug">
+            "${slide.analogy}"
+          </p>
+        </div>
+
+        <!-- Explicação Curta -->
+        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed mb-3">
+          ${slide.description}
+        </p>
+
+        <!-- Curiosidade para Crianças -->
+        <div class="bg-amber-50 border border-amber-200 p-2.5 rounded-xl text-amber-900 text-xs font-semibold">
+          ${slide.funFact}
+        </div>
+      `;
+
+      updateControls();
+    }
+
+    // Atualiza estados dos botões e bolinhas do rodapé
+    function updateControls() {
+      const btnPrev = document.getElementById('btn-prev');
+      const btnNext = document.getElementById('btn-next');
+      const dotsWrapper = document.getElementById('dots-wrapper');
+
+      btnPrev.disabled = currentIndex === 0;
+      btnNext.disabled = currentIndex === slidesData.length - 1;
+
+      dotsWrapper.innerHTML = '';
+      slidesData.forEach((_, idx) => {
+        const dot = document.createElement('button');
+        dot.className = `h-2.5 rounded-full transition-all duration-300 ${
+          idx === currentIndex ? 'w-7 bg-amber-400' : 'w-2.5 bg-slate-200 active:bg-slate-300'
+        }`;
+        dot.onclick = () => {
+          currentIndex = idx;
+          renderSlide();
+        };
+        dotsWrapper.appendChild(dot);
+      });
+    }
+
+    function goToNext() {
+      if (currentIndex < slidesData.length - 1) {
+        currentIndex++;
+        renderSlide();
+      }
+    }
+
+    function goToPrev() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        renderSlide();
+      }
+    }
+
+    // Suporte para Gestos Touch Swiping (Deslizar o dedo no celular)
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, false);
+
+    document.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, false);
+
+    function handleSwipe() {
+      const swipeDistance = touchEndX - touchStartX;
+      if (swipeDistance < -40) {
+        goToNext(); // Deslizou para a esquerda
+      } else if (swipeDistance > 40) {
+        goToPrev(); // Deslizou para a direita
+      }
+    }
+
+    // Suporte adicional para teclado
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') goToNext();
+      if (e.key === 'ArrowLeft') goToPrev();
+    });
+
+    // Inicialização ao carregar a janela
+    window.onload = function() {
+      renderSlide();
+    };
+  </script>
+</body>
+</html>
