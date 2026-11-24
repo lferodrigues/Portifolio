@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CPU × Rede Neural</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE: didático, noturno, curioso — uma aula vista por dentro da máquina
+   IDEA: bancada de laboratório com dois instrumentos lado a lado: a ULA da CPU e a rede neural
+   PICTURE: à esquerda a grade de bits da ULA calculando coluna por coluna; à direita a rede em canvas com pulsos
+   COLOUR and TYPE: azul-noite; CPU em azul/rosa/verde, rede em ciano/lilás/verde; Manrope
+   LAYOUT: dois painéis no topo, conta e resultado abaixo, depois as etapas de cada lado e a comparação; empilha no celular */
+:root{color-scheme:dark;--bg:#0d1828;--panel:#13223a;--deep:#0b1524;--line:#24385a;--ink:#e6edf7;--soft:#93a4bf;--cyan:#22d3ee;--lilac:#a78bfa;--green:#34d399;--blue:#60a5fa;--pink:#f472b6;--warn:#fb7185}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Manrope,system-ui,sans-serif;overflow-x:clip}
+.wrap{max-width:1240px;margin:0 auto;padding:clamp(16px,3vw,32px) max(4vw,14px)}
+h1{font-size:clamp(26px,4vw,40px);line-height:1.05;margin:0 0 6px;font-weight:800;text-wrap:balance}
+h2{font-size:18px;margin:0;line-height:1.2}
+.sub{color:var(--soft);margin:0 0 18px;max-width:66ch}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.pane{background:radial-gradient(ellipse at 50% 30%,#16294a 0%,#0f1d33 60%,#0b1524 100%);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;min-height:clamp(320px,46vh,440px)}
+.ph{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.ph span{font-size:13px;color:var(--soft)}
+.tag{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:1px}
+.net{position:relative;flex:1;min-height:260px}
+.net canvas{position:absolute;inset:0;width:100%;height:100%}
+.cpu{flex:1;display:flex;flex-direction:column;justify-content:center;gap:12px}
+.alu{display:grid;grid-template-columns:minmax(52px,80px) repeat(var(--n),minmax(0,1fr));gap:3px;align-items:center;width:100%;max-width:calc(80px + var(--n)*32px);margin:0 auto}
+.alu.f32{gap:1px;max-width:none}
+.lab{font-size:12px;line-height:1.15;padding-right:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lab b{display:block;font-size:13px}.lab small{color:var(--soft)}
+.alu i{font-style:normal;aspect-ratio:1;display:grid;place-items:center;font:700 clamp(9px,1.3vw,13px) Manrope,sans-serif;border-radius:4px;border:1px solid #2b4166;color:#5b6f8f;transition:background .2s,border-color .2s}
+.f32 i{border-radius:2px;font-size:clamp(7px,1vw,10px)}
+.alu i.nil{border-style:dashed;border-color:#1f3150}
+.alu i.on{color:#0b1524}
+.k-a.on{background:var(--blue);border-color:var(--blue)}
+.k-b.on{background:var(--pink);border-color:var(--pink)}
+.k-r.on{background:var(--green);border-color:var(--green)}
+.k-p.on{background:#94a3b8;border-color:#94a3b8}
+.alu i.k-c{border:0;color:var(--pink);font-size:11px;align-self:end}
+.alu i.k-c.on{background:none;color:var(--pink)}
+.f32 i.s{box-shadow:inset 0 -3px 0 #fbcfe8}.f32 i.e{box-shadow:inset 0 -3px 0 #c4b5fd}
+.alu i.hi{outline:2px solid #fff;outline-offset:1px}
+.rule{grid-column:1/-1;height:2px;background:#3a5079;margin:3px 0;border-radius:2px}
+.legend{font-size:13px;color:var(--soft);text-align:center;min-height:20px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:clamp(16px,2.4vw,24px)}
+.calc{margin:16px 0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:center}
+label{font-weight:600;display:block;margin-bottom:8px}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+input{flex:1 1 180px;font:600 20px/1 Manrope,sans-serif;color:var(--ink);background:var(--deep);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;min-height:50px}
+input:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px #22d3ee40}
+button{font:700 16px Manrope,sans-serif;border-radius:12px;min-height:46px;cursor:pointer;border:0}
+.go{background:var(--cyan);color:#06222b;padding:0 22px}
+.go:hover{filter:brightness(1.1)}
+button:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.chips button{background:var(--deep);color:var(--soft);border:1px solid var(--line);padding:0 14px;min-height:40px;font-weight:600}
+.chips button:hover{color:var(--ink);border-color:var(--lilac)}
+.hint{font-size:13px;color:var(--soft);margin:10px 0 0}
+.eq{font-size:clamp(30px,5vw,50px);font-weight:800;line-height:1.05;white-space:nowrap;overflow-x:auto}
+.eq b{color:var(--green)}
+.eq.err{color:var(--warn);font-size:20px;white-space:normal}
+.who{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:14px;color:var(--soft)}
+.who em{font-style:normal;color:var(--ink);font-weight:600}
+ol{list-style:none;margin:12px 0 0;padding:0;counter-reset:s}
+ol li{counter-increment:s;position:relative;padding:8px 0 10px 44px;border-bottom:1px solid #1d2f4d;color:var(--soft)}
+ol li:last-child{border:0}
+ol li::before{content:counter(s);position:absolute;left:0;top:8px;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:14px;background:var(--deep);border:1.5px solid var(--line)}
+ol li strong{display:block;color:var(--ink);font-size:16px}
+ol li span{font-size:14px;overflow-wrap:anywhere}
+ol li.on{color:var(--ink)}
+ol li.on::before{background:var(--c);color:#08131f;border-color:transparent;box-shadow:0 0 14px var(--c)}
+ol li.done::before{border-color:var(--c);color:var(--c)}
+.cmp{margin-top:16px}
+table{width:100%;border-collapse:collapse;font-size:15px;margin-top:10px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid #1d2f4d;vertical-align:top}
+th{color:var(--soft);font-weight:600;font-size:13px}
+td:first-child{color:var(--soft);font-weight:600;width:22%}
+.note{font-size:13px;color:var(--soft);margin:12px 0 0}
+@media(max-width:860px){.two,.calc{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px;border-bottom:1px solid #1d2f4d}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:8em;width:auto!important}.stack td::before{content:attr(data-l);float:inline-start;width:7.5em;margin-inline-start:-8em;color:var(--soft);font-weight:600}.stack td:first-child{padding-inline-start:0;color:var(--ink)}.stack td:first-child::before{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>A mesma conta, dois jeitos de calcular</h1>
+  <p class="sub">À esquerda, a CPU resolve a conta direto em binário, com circuitos lógicos. À direita, uma rede neural processa a mesma conta camada por camada. Digite uma conta e compare os dois caminhos.</p>
+
+  <div class="two">
+    <section class="pane" aria-labelledby="h-cpu">
+      <div class="ph"><h2 id="h-cpu"><i class="tag" style="background:var(--pink)"></i>Sem rede neural: CPU</h2><span>ULA (Unidade Lógica e Aritmética)</span></div>
+      <div class="cpu"><div class="alu" id="alu" style="--n:8"></div><div class="legend" id="leg"></div></div>
+    </section>
+    <section class="pane" aria-labelledby="h-net">
+      <div class="ph"><h2 id="h-net"><i class="tag" style="background:var(--lilac)"></i>Com rede neural</h2><span>4 → 6 → 6 → 3 neurônios</span></div>
+      <div class="net" id="net"><canvas id="cv" role="img" aria-label="Rede neural com entrada, duas camadas ocultas e saída"></canvas></div>
+    </section>
+  </div>
+
+  <section class="card calc">
+    <form id="f" autocomplete="off">
+      <label for="expr">Sua conta</label>
+      <div class="row">
+        <input id="expr" placeholder="ex.: 12 + 7" value="12 + 7" aria-describedby="hint">
+        <button class="go" type="submit">Calcular</button>
+      </div>
+      <p class="hint" id="hint">Use + − × ÷ (ou * e /). Aceita negativos e decimais com vírgula.</p>
+      <div class="chips" id="chips"></div>
+    </form>
+    <div aria-live="polite">
+      <div class="eq" id="eq">—</div>
+      <div class="who"><span>CPU: <em id="stCpu">aguardando</em></span><span>Rede neural: <em id="stNet">aguardando</em></span></div>
+    </div>
+  </section>
+
+  <div class="two">
+    <section class="card">
+      <h2>Passo a passo da CPU</h2>
+      <ol id="sCpu">
+        <li style="--c:var(--blue)"><strong>Binário</strong><span data-t>Os números decimais viram zeros e uns.</span></li>
+        <li style="--c:var(--blue)"><strong>Registradores</strong><span data-t>Os valores são carregados na CPU junto com a instrução.</span></li>
+        <li style="--c:var(--pink)"><strong>ULA calcula</strong><span data-t>Circuitos lógicos fazem a operação bit a bit.</span></li>
+        <li style="--c:var(--green)"><strong>Decimal</strong><span data-t>O resultado binário volta a ser um número decimal.</span></li>
+      </ol>
+    </section>
+    <section class="card">
+      <h2>Passo a passo da rede neural</h2>
+      <ol id="sNet">
+        <li style="--c:var(--cyan)"><strong>Entrada</strong><span data-t>Os números e a operação viram valores entre 0 e 1.</span></li>
+        <li style="--c:var(--lilac)"><strong>Camada 1</strong><span data-t>Cada neurônio soma entradas × pesos e aplica a ativação ReLU.</span></li>
+        <li style="--c:var(--lilac)"><strong>Camada 2</strong><span data-t>Combina os padrões da camada anterior em sinais mais abstratos.</span></li>
+        <li style="--c:var(--green)"><strong>Saída</strong><span data-t>Os neurônios finais aplicam a sigmoide (valor entre 0 e 1).</span></li>
+        <li style="--c:var(--green)"><strong>Resultado</strong><span data-t>A saída é decodificada em um número.</span></li>
+      </ol>
+    </section>
+  </div>
+
+  <section class="card cmp">
+    <h2>Comparando os dois caminhos</h2>
+    <table class="stack">
+      <thead><tr><th></th><th>Sem rede neural (CPU)</th><th>Com rede neural</th></tr></thead>
+      <tbody id="cmp"></tbody>
+    </table>
+    <p class="note">As animações estão em câmera lenta: um processador real faz a conta em bilionésimos de segundo. Os pesos da rede são fixos e ilustrativos, para mostrar o caminho do sinal, e o resultado exibido é o exato.</p>
+  </section>
+</div>
+
+<script>
+{
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=(n,d=6)=>n.toLocaleString('pt-BR',{maximumFractionDigits:d});
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sleep=ms=>new Promise(r=>setTimeout(r,reduce?0:ms));
+const SYM={'+':'+','-':'−','*':'×','/':'÷'},CODE={'+':.25,'-':.5,'*':.75,'/':1};
+const INS={'+':'ADD (soma)','-':'SUB (subtração)','*':'MUL (multiplicação)','/':'DIV (divisão)'};
+const CYC={'+':'cerca de 1 ciclo','-':'cerca de 1 ciclo','*':'cerca de 3 ciclos','/':'cerca de 20 a 40 ciclos'};
+let token=0;
+
+function mark(list,k,t){const li=[...$(list).children];li.forEach((x,i)=>{x.classList.toggle('on',i===k);x.classList.toggle('done',i<k)});if(t!=null&&li[k])li[k].querySelector('[data-t]').textContent=t}
+
+/* ---------- CPU / ULA ---------- */
+const bitsOf=(v,n)=>{const m=2**n;return(((v%m)+m)%m).toString(2).padStart(n,'0').split('').map(Number)};
+const f32=v=>{const f=new Float32Array([v]);return new Uint32Array(f.buffer)[0].toString(2).padStart(32,'0').split('').map(Number)};
+const R=(l,v,bits,k)=>({l,v,bits,k});
+
+function renderAlu(fr,n,isF){
+  const el=$('alu');el.style.setProperty('--n',n);el.classList.toggle('f32',isF);
+  el.innerHTML=fr.rows.map(r=>r==='rule'?'<div class="rule"></div>':
+    `<div class="lab"><b>${esc(r.l)}</b>${r.v!=null?`<small>${esc(r.v)}</small>`:''}</div>`+
+    r.bits.map((b,i)=>{const c=[r.k];if(b===1)c.push('on');if(b==null&&r.k!=='k-c')c.push('nil');if(i===fr.hi)c.push('hi');if(isF)c.push(i===0?'s':i<9?'e':'m');
+      return`<i class="${c.join(' ')}">${b==null||(r.k==='k-c'&&b===0)?'':b}</i>`}).join('')).join('');
+  $('leg').textContent=isF?'Sublinhado rosa: sinal · lilás: expoente · sem marca: mantissa':'';
+}
+
+function plan(q,res){
+  const {a,b,op}=q,F=[],I=Number.isInteger;
+  const pick=(...v)=>{const m=Math.max(...v.map(Math.abs));return m<=127?8:m<=32767?16:0};
+  let n=0;
+  if(I(a)&&I(b))n=op==='/'?pick(a,b):pick(a,b,res,op==='-'?-b:0);
+  if(!n){ // ponto flutuante
+    const rows=[R('A',fmt(a),f32(a),'k-a'),R('B',fmt(b),f32(b),'k-b')];
+    const how={'+':'alinha os expoentes, soma as mantissas e normaliza','-':'alinha os expoentes, subtrai as mantissas e normaliza','*':'soma os expoentes e multiplica as mantissas','/':'subtrai os expoentes e divide as mantissas'}[op];
+    F.push({rows,hi:-1,s:0,t:'Número com vírgula (ou grande demais para a demonstração): vira ponto flutuante de 32 bits, com sinal (1 bit), expoente (8) e mantissa (23).',d:1200});
+    F.push({rows,hi:-1,s:1,t:`Os valores vão para a FPU, a parte da CPU especializada em números com vírgula, junto com a instrução ${INS[op]}.`,d:1000});
+    const all=[...rows,'rule',R('R',fmt(res),f32(res),'k-r')];
+    F.push({rows:all,hi:-1,s:2,t:`A FPU ${how}.`,d:1200});
+    F.push({rows:all,hi:-1,s:3,t:`O padrão de bits volta a ser decimal: ${fmt(res)}. (Mostrado em 32 bits; o JavaScript usa 64 bits de precisão.)`,d:0});
+    return{n:32,f:true,F};
+  }
+  const A=bitsOf(a,n),B=bitsOf(b,n),rA=R('A',fmt(a),A,'k-a'),rB=R('B',fmt(b),B,'k-b');
+  F.push({rows:[rA,rB],hi:-1,s:0,t:`${fmt(a)} → ${A.join('')} e ${fmt(b)} → ${B.join('')} (${n} bits${a<0||b<0?'; negativos ficam em complemento de dois':''}).`,d:1000});
+  F.push({rows:[rA,rB],hi:-1,s:1,t:`A e B são carregados nos registradores, e a CPU envia a instrução ${INS[op]} para a ULA.`,d:1000});
+  if(op==='+'||op==='-'){
+    let rY=rB,Y=b;
+    if(op==='-'){Y=-b;rY=R('−B',fmt(-b),bitsOf(-b,n),'k-b');
+      F.push({rows:[rA,rB,R('inverte B',null,B.map(x=>1-x),'k-p'),rY],hi:-1,s:2,t:'Subtrair é somar o oposto: a ULA inverte os bits de B e soma 1 (complemento de dois).',d:1600})}
+    const yb=bitsOf(Y,n),r=Array(n).fill(null),c=Array(n).fill(null);let carry=0;
+    for(let i=n-1;i>=0;i--){if(carry)c[i]=1;const s=A[i]+yb[i]+carry;r[i]=s&1;
+      F.push({rows:[R('vai-um',null,[...c],'k-c'),rA,rY,'rule',R('R',null,[...r],'k-r')],hi:i,s:2,t:`Coluna ${n-i}: ${A[i]} + ${yb[i]}${c[i]?' + 1 (vai-um)':''} = ${s} → escreve ${s&1}${s>>1?' e vai 1':''}.`,d:n>8?110:190});
+      carry=s>>1}
+    const fin=[R('vai-um',null,c,'k-c'),rA,rY,'rule',R('R',fmt(res),r,'k-r')];
+    F.push({rows:fin,hi:-1,s:2,t:`Soma bit a bit concluída, da direita para a esquerda${carry?'; o vai-um final sai pela esquerda e é descartado':''}.`,d:500});
+    F.push({rows:fin,hi:-1,s:3,t:`${r.join('')} → ${fmt(res)}.`,d:0});
+  }else if(op==='*'){
+    const ua=Math.abs(a),ub=Math.abs(b),base=[R('|A|',fmt(ua),bitsOf(ua,n),'k-a'),R('|B|',fmt(ub),bitsOf(ub,n),'k-b'),'rule'],parts=[];
+    for(let i=0;i<n;i++)if(Math.floor(ub/2**i)%2){parts.push(R(`A≪${i}`,fmt(ua*2**i),bitsOf(ua*2**i,n),'k-p'));
+      F.push({rows:[...base,...parts],hi:n-1-i,s:2,t:`O bit ${i} de B é 1 → copia A deslocado ${i} casa${i===1?'':'s'} para a esquerda (A × ${2**i}).`,d:650})}
+    if(!parts.length)F.push({rows:base,hi:-1,s:2,t:'B é zero: nenhum produto parcial.',d:600});
+    const prod=ua*ub,rows=[...base,...parts,'rule',R('soma',fmt(prod),bitsOf(prod,n),'k-r')];
+    F.push({rows,hi:-1,s:2,t:'Soma os produtos parciais: multiplicar em binário é deslocar e somar.',d:1000});
+    if(res<0)rows.push(R('R',fmt(res),bitsOf(res,n),'k-r'));
+    F.push({rows,hi:-1,s:3,t:`${res<0?'Sinais diferentes: o resultado vai para complemento de dois. ':''}${bitsOf(res,n).join('')} → ${fmt(res)}.`,d:0});
+  }else{
+    const ua=Math.abs(a),ub=Math.abs(b),base=[R('|A|',fmt(ua),bitsOf(ua,n),'k-a'),R('|B|',fmt(ub),bitsOf(ub,n),'k-b'),'rule'],Q=Array(n).fill(null);let rem=0;
+    for(let i=n-1;i>=0;i--){rem=rem*2+Math.floor(ua/2**i)%2;let qb=0;if(rem>=ub){rem-=ub;qb=1}Q[n-1-i]=qb;
+      F.push({rows:[...base,R('Q',null,[...Q],'k-r'),R('resto',fmt(rem),bitsOf(rem,n),'k-p')],hi:n-1-i,s:2,t:qb?'O resto parcial cabe B: subtrai B e escreve 1 no quociente.':'O resto parcial é menor que B: escreve 0 no quociente.',d:n>8?110:200})}
+    const q=Math.trunc(ua/ub),rows=[...base,R('Q',fmt(q),Q,'k-r'),R('resto',fmt(rem),bitsOf(rem,n),'k-p')];
+    F.push({rows,hi:-1,s:2,t:'Divisão longa em binário: deslocar, comparar e subtrair, bit a bit.',d:600});
+    F.push({rows,hi:-1,s:3,t:rem?`Quociente inteiro ${fmt(q)}, resto ${fmt(rem)}. Para as casas decimais, a CPU usa a FPU (unidade de ponto flutuante): ${fmt(res)}.`:`${Q.join('')} → ${fmt(Math.abs(res))}${res<0?', com sinal negativo':''} = ${fmt(res)}.`,d:0});
+  }
+  return{n,f:false,F};
+}
+
+async function runCpu(q,res,my){
+  const P=plan(q,res);
+  for(const fr of P.F){if(my!==token)return false;renderAlu(fr,P.n,P.f);mark('sCpu',fr.s,fr.t);await sleep(fr.d)}
+  return my===token;
+}
+
+/* ---------- Rede neural ---------- */
+const SIZES=[4,6,6,3],NAMES=['ENTRADA','CAMADA 1','CAMADA 2','SAÍDA'],COLORS=['#22d3ee','#a78bfa','#a78bfa','#34d399'];
+const IN_L=['A','B','Op','Viés'],OUT_L=['y₁','y₂','y₃'];
+let seed=20261124;
+const rnd=()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+const W=[];for(let l=1;l<SIZES.length;l++)W.push(Array.from({length:SIZES[l]},()=>Array.from({length:SIZES[l-1]},()=>rnd()*2-1)));
+const BI=SIZES.slice(1).map(n=>Array.from({length:n},()=>rnd()*.4-.1));
+const MULTS=SIZES.slice(1).reduce((s,n,i)=>s+n*SIZES[i],0),NEUR=SIZES.slice(1).reduce((s,n)=>s+n,0);
+const cv=$('cv'),box=$('net'),ctx=cv.getContext('2d');
+let w=0,h=0,pos=[],acts=[null,null,null,null],lit=-1,flow=-1,flowT=0,pulses=[],inT=[],outT=[];
+
+function layout(){const r=box.getBoundingClientRect(),dpr=devicePixelRatio||1;w=r.width;h=r.height;cv.width=w*dpr;cv.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+  const pl=w<460?40:84,pr=w<460?40:86,top=36,bot=14,gap=Math.min(58,(h-top-bot)/Math.max(...SIZES));
+  pos=SIZES.map((n,l)=>{const x=pl+l*(w-pl-pr)/(SIZES.length-1),y0=top+(h-top-bot-gap*(n-1))/2;return Array.from({length:n},(_,i)=>({x,y:y0+i*gap}))})}
+const ro=new ResizeObserver(layout);ro.observe(box);layout();
+
+function draw(now){
+  ctx.clearRect(0,0,w,h);const Rr=Math.max(7,Math.min(13,w/55)),small=w<460;
+  for(let l=0;l<3;l++)for(let j=0;j<SIZES[l+1];j++)for(let i=0;i<SIZES[l];i++){
+    const a=pos[l][i],b=pos[l+1][j];let al=.16,col='147,197,253',lw=1;
+    if(flow===l&&acts[l]){const k=Math.min(1,(now-flowT)/500),c=Math.abs(W[l][j][i]*acts[l][i]);al=.16+k*Math.min(.7,c*.9);col=W[l][j][i]>0?'34,211,238':'167,139,250';lw=1+k*Math.min(2,c*2)}
+    ctx.strokeStyle=`rgba(${col},${al})`;ctx.lineWidth=lw;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke()}
+  pulses=pulses.filter(p=>now<p.t0+p.d);
+  for(const p of pulses){const k=(now-p.t0)/p.d;if(k<0)continue;ctx.fillStyle='#fff';ctx.shadowColor=p.c;ctx.shadowBlur=10;ctx.beginPath();ctx.arc(p.a.x+(p.b.x-p.a.x)*k,p.a.y+(p.b.y-p.a.y)*k,p.s,0,7);ctx.fill();ctx.shadowBlur=0}
+  ctx.fillStyle='#93a4bf';ctx.font=`700 ${small?10:11}px Manrope,sans-serif`;ctx.textAlign='center';
+  NAMES.forEach((n,l)=>ctx.fillText(small&&l%3?'C'+l:n,pos[l][0].x,16));
+  SIZES.forEach((n,l)=>{const mx=acts[l]?Math.max(...acts[l].map(Math.abs),1e-6):1;
+    pos[l].forEach((p,i)=>{let on=.45;if(acts[l]&&lit>=l)on=.35+.65*Math.abs(acts[l][i])/mx;const pz=lit===l?1+.12*Math.sin(now/140):1;
+      ctx.shadowColor=COLORS[l];ctx.shadowBlur=8+22*on;ctx.globalAlpha=.35+on*.65;ctx.fillStyle=COLORS[l];ctx.beginPath();ctx.arc(p.x,p.y,Rr*pz,0,7);ctx.fill();
+      ctx.shadowBlur=0;ctx.globalAlpha=1;ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(p.x,p.y,Rr*.34,0,7);ctx.fill();
+      ctx.font=`600 ${small?10:11}px Manrope,sans-serif`;
+      if(l===0){ctx.textAlign='right';ctx.fillStyle='#cfe9f3';ctx.fillText(small?IN_L[i]:(inT[i]||IN_L[i]),p.x-Rr-6,p.y+4)}
+      else if(l===3){ctx.textAlign='left';ctx.fillStyle='#c8f5e3';ctx.fillText(small?OUT_L[i]:(outT[i]||OUT_L[i]),p.x+Rr+6,p.y+4)}
+      else if(acts[l]&&lit>=l&&!small){ctx.textAlign='center';ctx.fillStyle='#c4b5fd';ctx.font='600 10px Manrope,sans-serif';ctx.fillText(acts[l][i].toFixed(2),p.x,p.y-Rr-5)}})});
+  requestAnimationFrame(draw);
+}
+requestAnimationFrame(draw);
+setInterval(()=>{if(flow>=0||document.hidden||reduce)return;const l=Math.floor(Math.random()*3);
+  pulses.push({a:pos[l][Math.floor(Math.random()*SIZES[l])],b:pos[l+1][Math.floor(Math.random()*SIZES[l+1])],t0:performance.now(),d:1400,s:2.5,c:'#93c5fd'})},260);
+function spawn(l,dur){const now=performance.now();for(let j=0;j<SIZES[l+1];j++)for(let i=0;i<SIZES[l];i++){const c=Math.abs(W[l][j][i]*acts[l][i]);if(c<.05)continue;
+  pulses.push({a:pos[l][i],b:pos[l+1][j],t0:now+Math.random()*dur*.35,d:dur*.6,s:2+Math.min(2.5,c*3),c:COLORS[l+1]})}}
+const relu=v=>Math.max(0,v),sig=v=>1/(1+Math.exp(-v));
+function forward(x){const out=[x];let cur=x;W.forEach((M,l)=>{cur=M.map((row,j)=>{const z=row.reduce((s,wt,i)=>s+wt*cur[i],BI[l][j]);return l===2?sig(z):relu(z)});out.push(cur)});return out}
+
+async function runNet(q,res,my){
+  const x=[Math.tanh(Math.abs(q.a)/50),Math.tanh(Math.abs(q.b)/50),CODE[q.op],1],all=forward(x);
+  acts=[x,null,null,null];lit=0;flow=-1;pulses=[];outT=[];
+  inT=[`A = ${fmt(q.a,2)}`,`B = ${fmt(q.b,2)}`,`Op = ${SYM[q.op]}`,'Viés = 1'];
+  mark('sNet',0,`A → ${x[0].toFixed(2)}, B → ${x[1].toFixed(2)}, “${SYM[q.op]}” → ${x[2].toFixed(2)}, viés → 1.`);
+  await sleep(900);if(my!==token)return false;
+  for(let l=0;l<3;l++){
+    flow=l;flowT=performance.now();spawn(l,1300);await sleep(1300);if(my!==token)return false;
+    acts[l+1]=all[l+1];lit=l+1;flow=-1;const v=all[l+1],top=v.indexOf(Math.max(...v));
+    if(l<2){const z=v.filter(n=>n===0).length;mark('sNet',l+1,`${v.length-z} de ${v.length} neurônios ativados. Mais forte: neurônio ${top+1} (${v[top].toFixed(2)}).${z?` ${z} ficaram em 0 pela ReLU.`:''}`)}
+    else{outT=v.map((n,i)=>`${OUT_L[i]} = ${n.toFixed(2)}`);mark('sNet',3,`Sigmoide nas saídas: ${v.map(n=>n.toFixed(2)).join(' · ')}.`)}
+    await sleep(700);if(my!==token)return false;
+  }
+  mark('sNet',4,`Saída [${all[3].map(n=>n.toFixed(3)).join('; ')}] decodificada: ${fmt(res)}.`);
+  return true;
+}
+
+/* ---------- conta ---------- */
+function parse(s){
+  s=s.replace(/\s+/g,'').replace(/[−–]/g,'-').replace(/[x×]/gi,'*').replace(/÷|:/g,'/');
+  const m=s.match(/^(-?\d+(?:[.,]\d+)?)([+\-*/])(-?\d+(?:[.,]\d+)?)$/);
+  return m?{a:parseFloat(m[1].replace(',','.')),op:m[2],b:parseFloat(m[3].replace(',','.'))}:null;
+}
+function compare(q){
+  const rows=[['Como calcula','Circuitos lógicos da ULA operam os bits diretamente, seguindo regras fixas.','Multiplica entradas por pesos, soma e aplica funções de ativação, camada por camada.'],
+    ['Trabalho para esta conta',`1 instrução ${INS[q.op].split(' ')[0]}, ${CYC[q.op]} do processador (aprox.; varia por modelo).`,`${MULTS} multiplicações, ${MULTS+NEUR} somas e ${NEUR} ativações, para qualquer conta.`],
+    ['Resultado','Exato (dentro da precisão dos bits).','Aproximado: depende de quão bem a rede foi treinada.'],
+    ['Precisa treinar?','Não. As regras estão no circuito.','Sim. Os pesos são ajustados com milhares de exemplos.'],
+    ['Quando é melhor','Contas, lógica e regras bem definidas.','Padrões difíceis de escrever como regra: imagens, voz, texto.']];
+  $('cmp').innerHTML=rows.map(r=>`<tr><td data-l="">${esc(r[0])}</td><td data-l="CPU">${esc(r[1])}</td><td data-l="Rede neural">${esc(r[2])}</td></tr>`).join('');
+}
+async function run(e){
+  e&&e.preventDefault();
+  const my=++token,q=parse($('expr').value),eq=$('eq');eq.className='eq';
+  if(!q){eq.className='eq err';eq.textContent='Não entendi essa conta. Tente algo como 12 + 7 ou 8 × 3.';return}
+  if(q.op==='/'&&q.b===0){eq.className='eq err';eq.textContent='Divisão por zero não tem resultado definido.';return}
+  const res={'+':q.a+q.b,'-':q.a-q.b,'*':q.a*q.b,'/':q.a/q.b}[q.op];
+  compare(q);eq.textContent=`${fmt(q.a)} ${SYM[q.op]} ${fmt(q.b)} = …`;$('stCpu').textContent='calculando…';$('stNet').textContent='processando…';
+  const show=()=>{eq.textContent=`${fmt(q.a)} ${SYM[q.op]} ${fmt(q.b)} = `;const b=document.createElement('b');b.textContent=fmt(res);eq.append(b)};
+  const c=runCpu(q,res,my).then(ok=>{if(ok){$('stCpu').textContent=`pronto: ${fmt(res)}`;show()}});
+  const n=runNet(q,res,my).then(ok=>{if(ok)$('stNet').textContent=`pronto: ${fmt(res)}`});
+  await Promise.all([c,n]);
+}
+$('f').addEventListener('submit',run);
+$('chips').innerHTML=['7 + 5','12 × 3','81 ÷ 9','15 − 22','100 ÷ 7','2,5 × 4'].map(p=>`<button type="button">${p}</button>`).join('');
+$('chips').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$('expr').value=b.textContent;run()});
+run();
+}
+</script>
+</body>
+</html>
