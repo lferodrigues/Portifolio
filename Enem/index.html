@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Corretor de Redação ENEM · Prof. Felipe Rodrigues</title>
+  <meta name="description" content="Corrija sua redação no padrão ENEM: nota por competência, pontos fortes, pontos fracos e o que melhorar.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Source+Sans+3:wght@400;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="marca">
+      <span class="selo">1000</span>
+      <div>
+        <h1>Corretor de Redação <em>ENEM</em></h1>
+        <p>por Prof. Felipe Rodrigues</p>
+      </div>
+    </div>
+    <nav>
+      <button class="btn-link" data-abrir="painel-base">O que o corretor estudou</button>
+      <button class="btn-link" data-abrir="painel-historico">Histórico</button>
+      <button class="btn-config" id="btn-config" title="Configurar correção por IA">
+        <span class="ponto" id="status-ia"></span> Configurar IA
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h2>Escreva. Envie. Descubra quanto você tiraria no ENEM.</h2>
+      <p>A correção segue a matriz de referência do Inep e os padrões dos 10 últimos editais (2017–2026): nota de 0 a 200 em cada uma das 5 competências, pontos fortes, pontos fracos e um plano para subir a nota.</p>
+    </section>
+
+    <section class="area-escrita">
+      <div class="folha-wrap">
+        <label class="rotulo" for="tema">Tema da proposta</label>
+        <div class="linha-tema">
+          <input id="tema" list="lista-temas" placeholder="Digite o tema ou escolha um dos últimos 10 do ENEM">
+          <datalist id="lista-temas"></datalist>
+        </div>
+
+        <div class="folha">
+          <div class="folha-cab">
+            <span>FOLHA DE REDAÇÃO</span>
+            <span id="contador-linhas">0 / 30 linhas</span>
+          </div>
+          <div class="folha-corpo">
+            <ol class="numeros" id="numeros" aria-hidden="true"></ol>
+            <textarea id="redacao" spellcheck="true" placeholder="Cole ou digite sua redação aqui. Separe os parágrafos com uma linha em branco ou Enter."></textarea>
+          </div>
+        </div>
+
+        <div class="acoes">
+          <button class="btn-primario" id="btn-corrigir">Corrigir redação</button>
+          <button class="btn-secundario" id="btn-exemplo">Carregar exemplo</button>
+          <button class="btn-secundario" id="btn-limpar">Limpar</button>
+        </div>
+        <p class="aviso-modo" id="aviso-modo"></p>
+      </div>
+
+      <aside class="lateral">
+        <div class="cartao">
+          <h3>Ao vivo</h3>
+          <dl class="metricas">
+            <div><dt>Palavras</dt><dd id="m-palavras">0</dd></div>
+            <div><dt>Parágrafos</dt><dd id="m-paragrafos">0</dd></div>
+            <div><dt>Linhas (estim.)</dt><dd id="m-linhas">0</dd></div>
+            <div><dt>Conectivos</dt><dd id="m-conectivos">0</dd></div>
+          </dl>
+          <div class="barra-linhas"><span id="barra-linhas"></span></div>
+          <p class="nota-pequena">Entre 8 e 30 linhas manuscritas. Até 7 linhas a redação é zerada.</p>
+        </div>
+        <div class="cartao">
+          <h3>Proposta de intervenção</h3>
+          <ul class="checklist" id="check-proposta"></ul>
+          <p class="nota-pequena">Detectado automaticamente no último parágrafo.</p>
+        </div>
+        <div class="cartao dica">
+          <h3>Lembrete do corretor</h3>
+          <p id="dica-rotativa"></p>
+        </div>
+      </aside>
+    </section>
+
+    <section class="resultado" id="resultado" hidden>
+      <div class="carregando" id="carregando" hidden>
+        <div class="caneta"></div>
+        <p>Corrigindo como um avaliador do Inep…</p>
+      </div>
+      <div id="conteudo-resultado"></div>
+    </section>
+  </main>
+
+  <!-- Painel: base de conhecimento -->
+  <dialog id="painel-base" class="painel">
+    <div class="painel-cab"><h2>O que o corretor estudou</h2><button class="fechar" data-fechar>×</button></div>
+    <div id="conteudo-base"></div>
+  </dialog>
+
+  <!-- Painel: histórico -->
+  <dialog id="painel-historico" class="painel">
+    <div class="painel-cab"><h2>Histórico de correções</h2><button class="fechar" data-fechar>×</button></div>
+    <div id="conteudo-historico"></div>
+  </dialog>
+
+  <!-- Painel: configurações -->
+  <dialog id="painel-config" class="painel estreito">
+    <div class="painel-cab"><h2>Correção por IA</h2><button class="fechar" data-fechar>×</button></div>
+    <p>Para a correção completa (como um professor de português), o site usa a IA Claude, da Anthropic. Cole sua chave de API abaixo — ela fica salva <strong>apenas neste navegador</strong> e é enviada somente para a Anthropic.</p>
+    <label class="rotulo" for="chave">Chave de API (começa com <code>sk-ant-</code>)</label>
+    <input id="chave" type="password" autocomplete="off" placeholder="sk-ant-...">
+    <label class="rotulo" for="modelo">Modelo</label>
+    <select id="modelo">
+      <option value="claude-sonnet-5-5">Claude Sonnet 5.5 — equilibrado (recomendado)</option>
+      <option value="claude-opus-5-5">Claude Opus 5.5 — correção mais rigorosa</option>
+      <option value="claude-haiku-5-5">Claude Haiku 5.5 — mais rápido e barato</option>
+    </select>
+    <div class="acoes">
+      <button class="btn-primario" id="btn-salvar-chave">Salvar</button>
+      <button class="btn-secundario" id="btn-apagar-chave">Apagar chave</button>
+    </div>
+    <p class="nota-pequena">Sem chave, o site faz uma pré-correção automática (contagem de linhas, conectivos, desvios comuns e elementos da proposta) com nota estimada. Crie uma chave em <a href="https://console.anthropic.com/" target="_blank" rel="noopener">console.anthropic.com</a>.</p>
+  </dialog>
+
+  <footer class="rodape">
+    <p>Ferramenta de estudo. A nota é uma estimativa baseada na matriz de referência do Inep e não substitui a correção oficial.</p>
+    <p>© <span id="ano"></span> Prof. Felipe Rodrigues</p>
+  </footer>
+
+  <script src="dados.js"></script>
+  <script src="analisador.js"></script>
+  <script src="ia.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
