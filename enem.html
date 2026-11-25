@@ -158,9 +158,52 @@
     body{background:#fff}
     .card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}
   }
+
+  /* POP-UP DE BOAS-VINDAS */
+  .modal-fundo{position:fixed;inset:0;background:rgba(17,22,34,.62);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:18px;z-index:1000;animation:fade .25s ease}
+  .modal-fundo[hidden]{display:none}
+  .modal{background:var(--papel);max-width:560px;width:100%;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.35);overflow:hidden;animation:sobe .3s ease}
+  .modal-topo{background:linear-gradient(135deg,var(--tinta),#33406a);color:#fff;padding:22px 26px;display:flex;gap:14px;align-items:center}
+  .modal-topo .selo{flex:none}
+  .modal-topo h2{font-size:1.35rem}
+  .modal-topo p{margin:2px 0 0;opacity:.8;font-size:.92rem}
+  .modal-corpo{padding:22px 26px 8px}
+  .modal-corpo p{margin:0 0 12px}
+  .modal-info{display:grid;gap:8px;margin:6px 0 14px}
+  .modal-info div{display:flex;gap:10px;align-items:flex-start;background:#fff;border-radius:10px;padding:9px 12px;font-size:.95rem;box-shadow:0 1px 4px rgba(29,36,51,.06)}
+  .modal-info span{font-size:1.1rem;line-height:1.4}
+  .modal-aviso{background:var(--amar-c);border-left:4px solid var(--amar);border-radius:8px;padding:10px 14px;color:#6b4a12;font-size:.95rem}
+  .modal-pe{padding:16px 26px 22px;display:flex;justify-content:flex-end}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  @keyframes sobe{from{transform:translateY(18px);opacity:0}to{transform:none;opacity:1}}
+  @media print{.modal-fundo{display:none!important}}
 </style>
 </head>
 <body>
+
+<div class="modal-fundo" id="boasVindas" role="dialog" aria-modal="true" aria-labelledby="bvTitulo">
+  <div class="modal">
+    <div class="modal-topo">
+      <span class="selo">1000</span>
+      <div>
+        <h2 id="bvTitulo">Bem-vindo(a) ao Corretor de Redação ENEM</h2>
+        <p>Um projeto feito em sala de aula, com os alunos</p>
+      </div>
+    </div>
+    <div class="modal-corpo">
+      <p>Este site foi construído durante a <b>palestra sobre Inteligência Artificial</b> na <b>Escola Gabriel Arcanjo de Mendonça</b>, em colaboração com os alunos.</p>
+      <div class="modal-info">
+        <div><span>📅</span><div>25 de novembro de 2026</div></div>
+        <div><span>📍</span><div>São João Nepomuceno – MG</div></div>
+        <div><span>✍️</span><div>Feito para treinar as habilidades de escrita da redação do ENEM, com todos os temas de 1998 a 2026.</div></div>
+      </div>
+      <p class="modal-aviso"><b>Atenção:</b> a correção deste site <b>não substitui a correção de um professor humano</b>. Ela serve apenas para treino, como uma primeira leitura do seu texto.</p>
+    </div>
+    <div class="modal-pe">
+      <button class="btn btn-pri" id="bvFechar">Entendi, vamos treinar!</button>
+    </div>
+  </div>
+</div>
 
 <header class="topo">
   <div class="wrap">
@@ -182,7 +225,7 @@
 <main class="wrap">
   <section class="hero">
     <h2>Escreva sua redação e veja quanto você tiraria no ENEM.</h2>
-    <p>O corretor usa as 5 competências da matriz do Inep e os 10 últimos temas do exame (2017 a 2026). Ele dá uma nota estimada de 0 a 1000, aponta os pontos fortes e fracos do texto e mostra o que fazer para subir a nota.</p>
+    <p>O corretor usa as 5 competências da matriz do Inep e todos os temas da história do exame, de 1998 a 2026. Ele dá uma nota estimada de 0 a 1000, aponta os pontos fortes e fracos do texto e mostra o que fazer para subir a nota.</p>
     <p class="aviso"><b>Importante:</b> a correção é automática e roda só no seu navegador, sem internet nem inteligência artificial. Ela reconhece padrões do texto (estrutura, conectivos, repertório, proposta, desvios comuns), mas não substitui a leitura de um professor. Use a nota como referência para treinar.</p>
   </section>
 
@@ -280,15 +323,15 @@
 
   <section class="base" id="base">
     <h2>O que o corretor estudou</h2>
-    <p style="color:var(--suave);max-width:820px">Os critérios vêm da matriz de referência da redação do ENEM (Inep) e das cartilhas do participante. Os 10 últimos temas foram usados para calibrar as palavras-chave de cada recorte e os padrões que o exame repete ano após ano.</p>
+    <p style="color:var(--suave);max-width:820px">Os critérios vêm da matriz de referência da redação do ENEM (Inep) e das cartilhas do participante. Todos os temas, de 1998 a 2026, foram usados para calibrar as palavras-chave de cada recorte e os padrões que o exame repete ano após ano.</p>
 
-    <h3 style="margin-top:24px">Os 10 últimos temas</h3>
+    <h3 style="margin-top:24px">Todos os temas do ENEM (1998 a 2026)</h3>
     <div class="temas" id="listaTemas"></div>
 
     <h3 style="margin-top:30px">As 5 competências (0 a 200 pontos cada)</h3>
     <div class="comps" id="listaComps"></div>
 
-    <h3 style="margin-top:30px">Padrões que se repetem nos últimos 10 anos</h3>
+    <h3 style="margin-top:30px">Padrões que se repetem nos temas</h3>
     <ul class="padroes">
       <li><b>Sempre um problema social brasileiro com um recorte.</b> Não basta falar do assunto geral: é preciso discutir o recorte ("desafios para…", "valorização de…", "invisibilidade…", "estigma…").</li>
       <li><b>Grupos invisibilizados e direitos de cidadania dominam</b>: surdos (2017), pessoas com doenças mentais (2020), pessoas sem registro civil (2021), povos tradicionais (2022), mulheres cuidadoras (2023), herança africana (2024), pessoas idosas (2025) e o SUS como direito universal (2026).</li>
@@ -301,7 +344,7 @@
 </main>
 
 <footer>
-  Corretor de Redação ENEM · feito pelo <a href="./">Prof. Felipe Rodrigues</a> para treino em sala de aula. A nota é uma estimativa automática; a correção oficial do ENEM é feita por dois corretores humanos.
+  Corretor de Redação ENEM · feito pelo <a href="./">Prof. Felipe Rodrigues</a> com os alunos da Escola Gabriel Arcanjo de Mendonça (São João Nepomuceno – MG, 25/11/2026), para treino de escrita. A nota é uma estimativa automática; a correção oficial do ENEM é feita por dois corretores humanos.
 </footer>
 
 <script>
@@ -338,7 +381,64 @@ const TEMAS = [
     nucleos:[["dados","algoritmo","internet","rede social","redes sociais","plataforma","privacidade","big data","digital"],["manipula","comportamento","controle","bolha","influenci","vigilancia","direcion"]] },
   { ano:2017, tema:"Desafios para a formação educacional de surdos no Brasil",
     recorte:"A educação de pessoas surdas: Libras, escolas bilíngues, falta de intérpretes e de professores preparados.",
-    nucleos:[["surdo","surda","surdez","deficiencia auditiva","libras"],["educa","escola","ensino","formacao","bilingue","inclus","interprete","professor"]] }
+    nucleos:[["surdo","surda","surdez","deficiencia auditiva","libras"],["educa","escola","ensino","formacao","bilingue","inclus","interprete","professor"]] },
+  { ano:2016, tema:"Caminhos para combater a intolerância religiosa no Brasil",
+    recorte:"Discutir caminhos (soluções) para enfrentar o preconceito e a violência contra religiões, especialmente as de matriz africana; liberdade de crença e Estado laico.",
+    nucleos:[["intoleran","religi","crenca","culto","fe ","candomble","umbanda","laico","laicidade"],["combat","caminho","respeito","liberdade","preconceito","violencia","diversidade"]] },
+  { ano:2015, tema:"A persistência da violência contra a mulher na sociedade brasileira",
+    recorte:"Por que a violência contra a mulher continua acontecendo: machismo estrutural, impunidade, dependência financeira, Lei Maria da Penha e Lei do Feminicídio.",
+    nucleos:[["violencia","agress","feminicid","abuso","assedio"],["mulher","mulheres","feminin","genero","maria da penha"],["persist","continua","ainda","machis","patriarc","impunidade","cultur"]] },
+  { ano:2014, tema:"Publicidade infantil em questão no Brasil",
+    recorte:"Os limites da propaganda dirigida às crianças: consumismo, vulnerabilidade infantil, papel da família, do Estado e do Conanda.",
+    nucleos:[["publicidade","propaganda","anuncio","marketing","comercia"],["infantil","crianca","criancas","infancia","menor"],["consum","regula","limite","vulnerab","influenc","em questao","etic"]] },
+  { ano:2013, tema:"Efeitos da implantação da Lei Seca no Brasil",
+    recorte:"Os resultados da lei que proíbe dirigir após beber: redução de acidentes, fiscalização, mudança de comportamento e seus limites.",
+    nucleos:[["lei seca","alcool","bebida","embriag","beber","alcoolem"],["transito","acidente","motorista","dirigir","volante","fiscaliza","blitz","efeito","implanta"]] },
+  { ano:2012, tema:"O movimento imigratório para o Brasil no século XXI",
+    recorte:"A chegada de imigrantes (haitianos, bolivianos, venezuelanos…) ao Brasil: acolhimento, xenofobia, trabalho e integração.",
+    nucleos:[["imigra","imigrante","migra","refugiad","estrangeir","haitian","bolivian","venezuelan"],["brasil","acolh","xenofob","integra","trabalho","seculo xxi","direitos"]] },
+  { ano:2011, tema:"Viver em rede no século XXI: os limites entre o público e o privado",
+    recorte:"A exposição da vida pessoal nas redes sociais: privacidade, superexposição, vigilância e onde termina o público e começa o privado.",
+    nucleos:[["rede","redes sociais","internet","virtual","digital","online","conectad"],["publico","privado","privacidade","intimidade","exposicao","limite","expor"]] },
+  { ano:2010, tema:"O trabalho na construção da dignidade humana",
+    recorte:"O papel do trabalho na dignidade das pessoas: trabalho decente, exploração, trabalho análogo à escravidão, desemprego e informalidade.",
+    nucleos:[["trabalho","trabalhador","emprego","desemprego","laboral","ocupacao"],["dignidade","digno","humano","realiza","explora","escrav","direitos","cidadania"]] },
+  { ano:2009, tema:"O indivíduo frente à ética nacional",
+    recorte:"A responsabilidade de cada cidadão com a ética no país: corrupção do dia a dia, 'jeitinho brasileiro', exemplo individual e coletivo.",
+    nucleos:[["etica","etico","moral","corrup","jeitinho","honest"],["individuo","cidadao","pessoa","cada um","nacional","sociedade","coletiv"]] },
+  { ano:2008, tema:"Como preservar a floresta Amazônica",
+    recorte:"Propor caminhos para preservar a Amazônia: desmatamento, fiscalização e multas, incentivos financeiros a quem preserva, desenvolvimento sustentável.",
+    nucleos:[["amazon","floresta","mata","bioma"],["preserv","desmat","conserva","sustentav","fiscaliza","queimada","incentivo","proteg"]] },
+  { ano:2007, tema:"O desafio de se conviver com a diferença",
+    recorte:"Conviver com quem é diferente (etnia, religião, deficiência, orientação, classe social): tolerância, preconceito e respeito à diversidade.",
+    nucleos:[["diferen","diversidade","divers","outro"],["conviv","toleran","respeito","preconceito","discrimina","aceita","desafio","inclus"]] },
+  { ano:2006, tema:"O poder de transformação da leitura",
+    recorte:"Como a leitura transforma o indivíduo e a sociedade: senso crítico, cidadania, acesso a livros e bibliotecas, índices de leitura no Brasil.",
+    nucleos:[["leitura","ler","leitor","livro","livros","biblioteca","literatura"],["transforma","poder","critic","conhecimento","cidadania","mudanca","forma"]] },
+  { ano:2005, tema:"O trabalho infantil na sociedade brasileira",
+    recorte:"Crianças que trabalham em vez de estudar: pobreza, evasão escolar, exploração, ECA e o papel do Estado e da família.",
+    nucleos:[["trabalho infantil","crianca","criancas","infancia","infantil","menor","menores"],["trabalh","explora","eca","pobreza","evasao","escola"]] },
+  { ano:2004, tema:"Como garantir a liberdade de informação e evitar abusos nos meios de comunicação",
+    recorte:"O equilíbrio entre liberdade de imprensa e responsabilidade: censura x abusos, sensacionalismo, invasão de privacidade, regulação.",
+    nucleos:[["informa","comunica","imprensa","midia","jornal","televis","meios de comunicacao"],["liberdade","abuso","censura","responsab","garantir","sensacional","manipula","etica"]] },
+  { ano:2003, tema:"A violência na sociedade brasileira: como mudar as regras desse jogo?",
+    recorte:"As causas da violência no Brasil (desigualdade, impunidade, falta de oportunidades) e como transformar esse cenário.",
+    nucleos:[["violen","criminal","crime","homicid","seguranca"],["mudar","regras","desigual","impunidade","causa","combat","soluc","transforma"]] },
+  { ano:2002, tema:"O direito de votar: como fazer dessa conquista um meio para promover as transformações sociais de que o Brasil necessita?",
+    recorte:"O voto como ferramenta de mudança social: consciência política, compra de votos, desinteresse e participação cidadã.",
+    nucleos:[["voto","votar","eleic","eleitor","urna","sufragio"],["direito","conquista","transforma","cidadania","consciencia","democra","mudanca","politic"]] },
+  { ano:2001, tema:"Desenvolvimento e preservação ambiental: como conciliar os interesses em conflito?",
+    recorte:"Como crescer economicamente sem destruir o meio ambiente: desenvolvimento sustentável, interesses econômicos x preservação.",
+    nucleos:[["ambient","natureza","ecolog","preserv","sustentav","desmat","poluic"],["desenvolv","economi","conciliar","conflito","interesse","crescimento","progresso"]] },
+  { ano:2000, tema:"Direitos da criança e do adolescente: como enfrentar esse desafio nacional?",
+    recorte:"Garantir na prática os direitos de crianças e adolescentes (ECA): educação, saúde, proteção contra violência, trabalho infantil e abandono.",
+    nucleos:[["crianca","criancas","adolescen","infancia","juventude","menor","eca"],["direito","proteg","enfrentar","desafio","garant","violencia","abandono","educa"]] },
+  { ano:1999, tema:"Cidadania e participação social",
+    recorte:"O que é ser cidadão além de votar: participação em associações, voluntariado, conselhos, fiscalização do poder público.",
+    nucleos:[["cidadania","cidadao","cidada"],["participa","social","coletiv","comunidade","voluntari","engaja","direitos e deveres","deveres"]] },
+  { ano:1998, tema:"Viver e aprender",
+    recorte:"A relação entre a vida e o aprendizado contínuo: educação ao longo da vida, experiências, escola e conhecimento.",
+    nucleos:[["aprend","educa","conhecimento","ensino","escola","estud","saber"],["viver","vida","experienc","cotidian","longo da vida","existencia"]] }
 ];
 
 const COMPETENCIAS = {
@@ -798,7 +898,10 @@ const store = { get(k){ try { return localStorage.getItem(k); } catch(e){ return
 
 function montarTemas(){
   const sel = $("tema");
-  sel.innerHTML = TEMAS.map(t => `<option value="${escHTML(t.tema)}">ENEM ${t.ano} · ${escHTML(t.tema)}</option>`).join("") + `<option value="__livre">Outro tema (digitar)…</option>`;
+  const opt = t => `<option value="${escHTML(t.tema)}">ENEM ${t.ano} · ${escHTML(t.tema)}</option>`;
+  sel.innerHTML = `<optgroup label="Últimos 10 anos (2017–2026)">${TEMAS.filter(t => t.ano >= 2017).map(opt).join("")}</optgroup>`
+    + `<optgroup label="Temas anteriores (1998–2016)">${TEMAS.filter(t => t.ano < 2017).map(opt).join("")}</optgroup>`
+    + `<optgroup label="Outro"><option value="__livre">Outro tema (digitar)…</option></optgroup>`;
   $("listaTemas").innerHTML = TEMAS.map(t => `<div class="tema"><div class="ano">${t.ano}</div><h4>${escHTML(t.tema)}</h4><p>${escHTML(t.recorte)}</p><button data-tema="${escHTML(t.tema)}">Treinar este tema</button></div>`).join("");
   $("listaTemas").addEventListener("click", e => { const b = e.target.closest("button[data-tema]"); if (!b) return; sel.value = b.dataset.tema; atualizarTema(); $("editor").scrollIntoView({ behavior:"smooth" }); $("redacao").focus(); });
   $("listaComps").innerHTML = Object.entries(COMPETENCIAS).map(([n,c]) => `<div class="compcard"><h4>Competência ${n} · ${c.nome}</h4><p>${c.titulo}.</p><ul>${c.dicas.map(d => `<li>${d}</li>`).join("")}</ul></div>`).join("");
@@ -919,6 +1022,15 @@ $("btnVoltar").addEventListener("click", () => $("editor").scrollIntoView({ beha
 montarTemas();
 const rasc = store.get("enem_rascunho"); if (rasc) $("redacao").value = rasc;
 atualizarContadores();
+
+/* pop-up de boas-vindas: aparece sempre que o site é aberto */
+(() => {
+  const fundo = $("boasVindas"), fechar = () => { fundo.hidden = true; $("redacao").focus({ preventScroll:true }); };
+  $("bvFechar").addEventListener("click", fechar);
+  fundo.addEventListener("click", e => { if (e.target === fundo) fechar(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !fundo.hidden) fechar(); });
+  $("bvFechar").focus();
+})();
 </script>
 </body>
 </html>
