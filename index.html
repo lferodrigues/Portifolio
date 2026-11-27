@@ -16,9 +16,9 @@
 <link rel="apple-touch-icon" href="Assets/img/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="preload" as="image" href="Assets/img/felipe-hero.webp" fetchpriority="high">
-<link rel="stylesheet" href="Assets/css/portfolio.css">
+<link rel="stylesheet" href="Assets/css/portfolio.css?v=3">
 </head>
 <body>
 
@@ -76,11 +76,21 @@
 <main>
 <!-- Hero -->
 <section class="hero" id="inicio">
-  <div class="container">
+  <div class="code-deco" aria-hidden="true"></div>
+  <div class="container hero-wrap">
     <div class="hero-text">
-      <span class="tag">Olá, eu sou</span>
+      <p class="hello mono"><span class="c-var">console</span>.<span class="c-fn">log</span>(<span class="c-str">"Olá! Meu nome é"</span>)</p>
       <h1>Felipe <span>Rodrigues</span></h1>
-      <p class="role">Analista de Sistemas e Segurança da Informação, professor de informática e mestrando em Ciência da Computação pela UFJF.</p>
+      <p class="title">Analista de Sistemas &amp; Segurança da Informação</p>
+      <p class="role">Professor de informática e mestrando em Ciência da Computação pela UFJF. Desenvolvo sites, protejo dados e ensino tecnologia para pessoas e empresas.</p>
+      <ul class="chips" aria-label="Áreas e tecnologias">
+        <li class="k1"><svg class="ico"><use href="#i-shield"/></svg>Segurança</li>
+        <li class="k2"><svg class="ico"><use href="#i-lock"/></svg>LGPD</li>
+        <li class="k3"><svg class="ico"><use href="#i-code"/></svg>HTML · CSS · JS</li>
+        <li class="k4"><svg class="ico"><use href="#i-code"/></svg>Python</li>
+        <li class="k5"><svg class="ico"><use href="#i-file"/></svg>Excel · Power BI</li>
+        <li class="k6"><svg class="ico"><use href="#i-zap"/></svg>IA</li>
+      </ul>
       <div class="hero-cta">
         <a href="#projetos" class="btn btn-gold">Ver projetos <svg class="ico"><use href="#i-arrow"/></svg></a>
         <a href="#sobre" class="btn btn-ghost">Sobre mim</a>
@@ -94,24 +104,44 @@
         <a href="https://github.com/lferodrigues" target="_blank" rel="noopener" aria-label="GitHub"><svg class="ico"><use href="#i-github"/></svg></a>
       </div>
     </div>
-    <div class="hero-photo">
-      <div class="frame"><img src="Assets/img/felipe-hero.webp" alt="Felipe Rodrigues" width="560" height="925" fetchpriority="high"></div>
+
+    <div class="hero-visual">
+      <div class="editor" role="img" aria-label="Editor de código com o perfil de Felipe Rodrigues em TypeScript">
+        <div class="ed-top">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <span class="tab on"><b class="ts">TS</b>felipe.ts</span>
+          <span class="tab"><b class="md">MD</b>README.md</span>
+        </div>
+        <pre class="ed-code mono" aria-hidden="true"><code><span class="ln">1</span><span class="c-cm">// felipe.ts — quem sou eu</span>
+<span class="ln">2</span><span class="c-kw">const</span> <span class="c-var">felipe</span>: <span class="c-type">Perfil</span> = {
+<span class="ln">3</span>  <span class="c-prop">nome</span>: <span class="c-str">"Felipe Rodrigues"</span>,
+<span class="ln">4</span>  <span class="c-prop">cargo</span>: <span class="c-str">"Analista de Sistemas"</span>,
+<span class="ln">5</span>  <span class="c-prop">foco</span>: [<span class="c-str">"Segurança"</span>, <span class="c-str">"LGPD"</span>, <span class="c-str">"Web"</span>],
+<span class="ln">6</span>  <span class="c-prop">ensina</span>: [<span class="c-str">"Excel"</span>, <span class="c-str">"Power BI"</span>, <span class="c-str">"IA"</span>],
+<span class="ln">7</span>  <span class="c-prop">formacao</span>: <span class="c-str">"Mestrando · UFJF"</span>,
+<span class="ln">8</span>  <span class="c-prop">cidade</span>: <span class="c-str">"São João Nepomuceno - MG"</span>,
+<span class="ln">9</span>  <span class="c-prop">disponivel</span>: <span class="c-kw2">true</span>,
+<span class="ln">10</span>};
+<span class="ln">11</span>
+<span class="ln">12</span><span class="c-ctl">export default</span> <span class="c-var">felipe</span>;<span class="caret"></span></code></pre>
+        <div class="ed-status mono"><span><svg class="ico"><use href="#i-code"/></svg> main</span><span>TypeScript</span><span>UTF-8</span></div>
+      </div>
+      <div class="avatar"><div class="avatar-in"><img src="Assets/img/felipe-hero.webp" alt="Felipe Rodrigues" width="560" height="925" fetchpriority="high"></div></div>
+      <a class="lets-talk" href="https://wa.me/5532998409798" target="_blank" rel="noopener">Vamos<br>conversar <svg class="ico"><use href="#i-arrow"/></svg></a>
     </div>
   </div>
-  <a href="#servicos" class="scroll-cue" aria-label="Rolar para baixo"></a>
+  <a href="#servicos" class="scroll-down" aria-label="Rolar para baixo"><span>Rolar</span><svg class="ico" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
 </section>
+
+<!-- Trilha lateral de seções -->
+<nav class="rail" aria-label="Seções">
+  <a href="#inicio" class="active">00</a><a href="#servicos">01</a><a href="#sobre">02</a><a href="#projetos">03</a><a href="#artigos">04</a><a href="#palestras">05</a><a href="#certificacoes">06</a><a href="#contato">07</a>
+</nav>
 
 <!-- Números + Serviços -->
 <section class="section alt" id="servicos">
   <div class="container">
-    <div class="stats reveal">
-      <div class="stat hl"><strong>60+</strong><span>Certificações</span></div>
-      <div class="stat"><strong>4</strong><span>Pós-graduações</span></div>
-      <div class="stat"><strong>Supervisor</strong><span>Curso Operadora de Computador<br>Mulheres Mil – IF Sudeste MG</span></div>
-      <div class="stat"><strong>Professor</strong><span>Informática Básica<br>ADSJNR</span></div>
-    </div>
-
-    <div class="head reveal" style="margin-top:88px">
+    <div class="head reveal">
       <span class="kicker">Serviços</span>
       <h2>O que eu faço</h2>
       <p>Coloco o seu negócio na internet e ajudo a proteger os seus dados contra ataques cibernéticos.</p>
@@ -132,10 +162,14 @@
   <div class="container about">
     <div class="about-media reveal">
       <div class="slide"><img id="slideshow" src="Assets/img/slides/01.webp" alt="Momentos da trajetória de Felipe Rodrigues" width="720" height="720" loading="lazy" decoding="async"></div>
-      <div class="badge"><strong>2012</strong><span>início da trajetória</span></div>
+      <ul class="pills" aria-label="Atuação">
+        <li class="p1"><b>Professor e supervisor</b><span>Mulheres Mil · IF Sudeste MG</span></li>
+        <li class="p2"><b>Perito Judicial</b><span>Análise de Sistemas · TJMG</span></li>
+        <li class="p3"><b>Mestrando</b><span>Ciência da Computação · UFJF</span></li>
+      </ul>
     </div>
     <div class="reveal">
-      <span class="tag">Biografia</span>
+      <span class="kicker">Sobre mim</span>
       <h2>Tecnologia, segurança e <span>educação</span></h2>
       <p>Natural de São João Nepomuceno (MG), Luis Felipe Rodrigues iniciou sua trajetória pública em 2012, no projeto “Vereadores Mirins” da Câmara Municipal. Desde então construiu uma carreira sólida em Tecnologia da Informação, Segurança da Informação e Educação Profissional.</p>
       <details>
@@ -151,6 +185,10 @@
         <li><b>Pós em Privacidade, Proteção de Dados e LGPD · Eng. de Segurança do Trabalho</b><small>Faculdade Alphaville · 2024</small></li>
         <li><b>Análise e Desenvolvimento de Sistemas</b><small>Estácio de Sá · 2017</small></li>
       </ul>
+      <h3 class="skills-title">Principais habilidades</h3>
+      <ul class="skills">
+        <li>Segurança da Informação</li><li>LGPD</li><li>Redes</li><li>Desenvolvimento Web</li><li>Python</li><li>Excel</li><li>Power BI</li><li>Automação</li><li>Inteligência Artificial</li><li>Canva</li>
+      </ul>
       <div class="links">
         <a href="http://lattes.cnpq.br/2122439276634834" class="btn btn-gold btn-sm" target="_blank" rel="noopener"><svg class="ico"><use href="#i-file"/></svg> Currículo Lattes</a>
         <a href="https://professorfeliperodrigues.com.br/links" class="btn btn-ghost btn-sm" target="_blank" rel="noopener"><svg class="ico"><use href="#i-book"/></svg> Aprenda comigo</a>
@@ -165,11 +203,17 @@
 <section class="section alt" id="projetos">
   <div class="container">
     <div class="head reveal">
-      <span class="kicker">Portfólio</span>
-      <h2>Projetos</h2>
-      <p>Sites que desenvolvi e que estão no ar.</p>
+      <span class="kicker">Meus trabalhos</span>
+      <h2>Projetos em destaque</h2>
+      <p>Sites e sistemas que desenvolvi e que estão no ar.</p>
     </div>
-    <div class="projects">
+    <div class="filters reveal" role="tablist" aria-label="Filtrar projetos">
+      <button class="on" data-f="all" role="tab" aria-selected="true">Todos</button>
+      <button data-f="site" role="tab" aria-selected="false">Sites</button>
+      <button data-f="sistema" role="tab" aria-selected="false">Sistemas web</button>
+      <button data-f="ferramenta" role="tab" aria-selected="false">Ferramentas</button>
+    </div>
+    <div class="projects" id="projects">
       <article class="project reveal">
         <a href="https://professorfeliperodrigues.com.br" target="_blank" rel="noopener" class="browser" aria-label="Abrir professorfeliperodrigues.com.br">
           <div class="bar"><i></i><i></i><i></i><em>professorfeliperodrigues.com.br</em></div>
@@ -600,13 +644,21 @@
 
   if('IntersectionObserver' in window){
     // Link ativo conforme a seção
-    var links={};d.querySelectorAll('.nav-links a').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
-    var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&links[e.target.id]){for(var k in links)links[k].classList.remove('active');links[e.target.id].classList.add('active')}})},{rootMargin:'-45% 0px -50% 0px'});
+    var links={};d.querySelectorAll('.nav-links a,.rail a').forEach(function(a){var k=a.getAttribute('href').slice(1);(links[k]=links[k]||[]).push(a)});
+    var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&links[e.target.id]){d.querySelectorAll('.nav-links a,.rail a').forEach(function(a){a.classList.remove('active')});links[e.target.id].forEach(function(a){a.classList.add('active')})}})},{rootMargin:'-45% 0px -50% 0px'});
     d.querySelectorAll('section[id]').forEach(function(s){so.observe(s)});
     // Animação de entrada
     var ro=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
     d.querySelectorAll('.reveal').forEach(function(el){ro.observe(el)});
   } else d.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in')});
+
+  // Filtro de projetos (classifica pela categoria do card)
+  var cards=d.querySelectorAll('#projects .project:not(.cta)');
+  cards.forEach(function(c){var t=(c.querySelector('.cat')||{}).textContent||'';c.dataset.k=/^(Sistema|Plataforma)/.test(t)?'sistema':/^Ferramenta/.test(t)?'ferramenta':'site'});
+  d.querySelectorAll('.filters button').forEach(function(b){b.addEventListener('click',function(){
+    d.querySelectorAll('.filters button').forEach(function(x){x.classList.toggle('on',x===b);x.setAttribute('aria-selected',x===b)});
+    var f=b.dataset.f;cards.forEach(function(c){c.hidden=!(f==='all'||c.dataset.k===f)});
+  })});
 
   // Certificações: mostrar todas
   var certs=d.getElementById('certs'), cb=d.getElementById('certsBtn'), label=cb.textContent;
