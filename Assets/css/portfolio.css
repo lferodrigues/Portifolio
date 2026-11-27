@@ -103,14 +103,11 @@ p{margin:0 0 1em}
 .social a:hover{color:var(--ink);background:var(--gold);border-color:var(--gold);transform:translateY(-2px)}
 
 /* foto de corpo + editor estilo VS Code */
-.hero-visual{position:relative;min-height:clamp(520px,72vh,680px)}
-.person{position:absolute;right:0;top:0;bottom:0;display:flex;align-items:flex-end;justify-content:flex-end;z-index:1}
-.person img{height:100%;width:auto;max-width:none;
-  -webkit-mask-image:linear-gradient(to bottom,#000 78%,transparent 100%),linear-gradient(to right,#000 86%,transparent 100%);
-  -webkit-mask-composite:source-in;
-  mask-image:linear-gradient(to bottom,#000 78%,transparent 100%),linear-gradient(to right,#000 86%,transparent 100%);
-  mask-composite:intersect}
-.editor{position:absolute;left:-36px;bottom:56px;width:min(392px,72%);z-index:2;background:var(--vs-bg);border:1px solid #33333a;border-radius:12px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(0,0,0,.95),0 0 0 1px rgba(255,233,146,.04);transform:perspective(1400px) rotateY(-5deg) rotateX(2deg);transition:transform .5s}
+.hero-visual{position:relative;min-height:clamp(560px,74vh,660px);margin-right:18px}
+.person{position:absolute;right:0;top:0;width:min(420px,74%);z-index:1}
+.person::before{content:"";position:absolute;inset:18px -18px -18px 18px;border:2px solid var(--gold);border-radius:22px;z-index:-1}
+.person img{width:100%;height:auto;border-radius:20px;box-shadow:0 40px 70px -30px rgba(0,0,0,.95)}
+.editor{position:absolute;left:-36px;bottom:24px;width:min(392px,72%);z-index:2;background:var(--vs-bg);border:1px solid #33333a;border-radius:12px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(0,0,0,.95),0 0 0 1px rgba(255,233,146,.04);transform:perspective(1400px) rotateY(-5deg) rotateX(2deg);transition:transform .5s}
 .editor:hover{transform:none}
 .ed-top{display:flex;align-items:stretch;background:var(--vs-bar);border-bottom:1px solid #2b2b2b;font-size:.78rem}
 .ed-top .dots{display:flex;align-items:center;gap:7px;padding:0 14px}
@@ -127,7 +124,7 @@ p{margin:0 0 1em}
 .ed-status{display:flex;gap:18px;padding:5px 14px;font-size:.7rem;color:var(--ink);background:var(--gold)}
 .ed-status span{display:inline-flex;align-items:center;gap:5px}
 .ed-status span:first-child{margin-right:auto}
-.lets-talk{position:absolute;left:-60px;bottom:6px;width:104px;height:104px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:var(--gold);color:var(--ink);font-weight:700;font-size:.82rem;line-height:1.15;box-shadow:0 0 0 8px rgba(255,233,146,.12),0 18px 36px -12px rgba(0,0,0,.8);transition:transform .25s;z-index:3}
+.lets-talk{position:absolute;left:-60px;bottom:-24px;width:104px;height:104px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:var(--gold);color:var(--ink);font-weight:700;font-size:.82rem;line-height:1.15;box-shadow:0 0 0 8px rgba(255,233,146,.12),0 18px 36px -12px rgba(0,0,0,.8);transition:transform .25s;z-index:3}
 .lets-talk .ico{margin-top:4px;transform:rotate(-45deg)}
 .lets-talk:hover{transform:scale(1.06) rotate(-4deg)}
 .scroll-down{position:absolute;right:28px;bottom:26px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--muted);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase}
@@ -297,11 +294,10 @@ p{margin:0 0 1em}
   .nav-links a::after{display:none}
   .hero{padding-top:calc(var(--nav-h) + 28px)}
   .hero-wrap{grid-template-columns:1fr;gap:28px}
-  .hero-visual{max-width:560px;width:100%;margin:0 auto;min-height:0;display:flex;flex-direction:column;align-items:center}
-  .person{position:relative;inset:auto;height:min(118vw,520px);justify-content:center}
-      .editor{position:relative;left:auto;bottom:auto;transform:none;width:100%;margin-top:-90px}
+  .hero-visual{max-width:560px;width:100%;margin:0 auto;min-height:0;margin-right:auto;display:flex;flex-direction:column;align-items:center}
+  .person{position:relative;inset:auto;width:min(340px,82%);margin-right:18px}
+      .editor{position:relative;left:auto;bottom:auto;transform:none;width:100%;margin-top:-70px}
   .ed-code{font-size:.68rem}
-  .person img{-webkit-mask-image:linear-gradient(to bottom,#000 80%,transparent 100%),linear-gradient(to right,#000 90%,transparent 100%);mask-image:linear-gradient(to bottom,#000 80%,transparent 100%),linear-gradient(to right,#000 90%,transparent 100%)}
   .lets-talk{width:80px;height:80px;font-size:.7rem;left:auto;right:-4px;bottom:-26px}
   .scroll-down{display:none}
   .code-deco{opacity:.22}
