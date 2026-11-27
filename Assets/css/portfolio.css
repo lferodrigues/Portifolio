@@ -105,9 +105,6 @@ p{margin:0 0 1em}
 /* foto de corpo + editor estilo VS Code */
 .hero-visual{position:relative;min-height:clamp(520px,72vh,680px)}
 .person{position:absolute;right:0;top:0;bottom:0;display:flex;align-items:flex-end;justify-content:flex-end;z-index:1}
-.person::before{content:"";position:absolute;right:4%;top:2%;width:min(420px,78%);aspect-ratio:1;border-radius:50%;
-  background:radial-gradient(circle at 50% 45%,rgba(255,233,146,.30) 0%,rgba(255,233,146,.12) 45%,transparent 70%);z-index:-1}
-.person::after{content:"";position:absolute;right:10%;top:6%;width:min(360px,66%);aspect-ratio:1;border-radius:50%;border:1px dashed rgba(255,233,146,.28);z-index:-1}
 .person img{height:100%;width:auto;max-width:none;
   -webkit-mask-image:linear-gradient(to bottom,#000 78%,transparent 100%),linear-gradient(to right,#000 86%,transparent 100%);
   -webkit-mask-composite:source-in;
@@ -302,9 +299,7 @@ p{margin:0 0 1em}
   .hero-wrap{grid-template-columns:1fr;gap:28px}
   .hero-visual{max-width:560px;width:100%;margin:0 auto;min-height:0;display:flex;flex-direction:column;align-items:center}
   .person{position:relative;inset:auto;height:min(118vw,520px);justify-content:center}
-  .person::before{right:auto;left:50%;transform:translateX(-50%);width:min(360px,84vw)}
-  .person::after{right:auto;left:50%;transform:translateX(-50%);width:min(310px,72vw)}
-  .editor{position:relative;left:auto;bottom:auto;transform:none;width:100%;margin-top:-90px}
+      .editor{position:relative;left:auto;bottom:auto;transform:none;width:100%;margin-top:-90px}
   .ed-code{font-size:.68rem}
   .person img{-webkit-mask-image:linear-gradient(to bottom,#000 80%,transparent 100%),linear-gradient(to right,#000 90%,transparent 100%);mask-image:linear-gradient(to bottom,#000 80%,transparent 100%),linear-gradient(to right,#000 90%,transparent 100%)}
   .lets-talk{width:80px;height:80px;font-size:.7rem;left:auto;right:-4px;bottom:-26px}
