@@ -319,10 +319,18 @@ p{margin:0 0 1em}
   .about-media::before{inset:14px 0 auto 14px;aspect-ratio:1}
   .hero-cta .btn{flex:1 1 auto;justify-content:center}
   .chips li{font-size:.7rem;padding:5px 9px}
-  .ed-code{font-size:.7rem;padding-right:12px}
-  .ed-code .ln{width:2.6em;padding-right:.9em}
-  .ed-status span:nth-child(3){display:none}
-  .filters{gap:8px}
+  .hero{padding-bottom:48px}
+  .person{width:min(230px,62%)}
+  .person::before{inset:10px -10px -10px 10px;border-radius:18px}
+  .editor{width:min(330px,100%);margin-top:-48px;border-radius:10px}
+  .ed-top{font-size:.7rem}
+  .ed-top .tab:not(.on),.ed-status{display:none}
+  .tab{padding:7px 12px}
+  .ed-top .dots{padding:0 10px;gap:5px}.ed-top .dots i{width:9px;height:9px}
+  .ed-code{font-size:.62rem;line-height:1.55;padding:10px 10px 12px 0}
+  .ed-code .ln{width:2.4em;padding-right:.8em}
+  .lets-talk{width:68px;height:68px;font-size:.62rem;bottom:-18px;box-shadow:0 0 0 5px rgba(255,233,146,.12),0 12px 24px -10px rgba(0,0,0,.8)}
+    .filters{gap:8px}
   .filters button{flex:1 1 auto;padding:.7em .9em}  .footer .container{flex-direction:column;text-align:center}
 }
 
