@@ -102,9 +102,18 @@ p{margin:0 0 1em}
 .social a{width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);background:var(--card);border-radius:10px;color:var(--muted);font-size:1.05rem;transition:all .2s}
 .social a:hover{color:var(--ink);background:var(--gold);border-color:var(--gold);transform:translateY(-2px)}
 
-/* editor estilo VS Code */
-.hero-visual{position:relative;padding:44px 0 40px 28px}
-.editor{position:relative;background:var(--vs-bg);border:1px solid #33333a;border-radius:12px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(0,0,0,.9),0 0 0 1px rgba(255,233,146,.04);transform:perspective(1400px) rotateY(-6deg) rotateX(2deg);transition:transform .5s}
+/* foto de corpo + editor estilo VS Code */
+.hero-visual{position:relative;min-height:clamp(520px,72vh,680px)}
+.person{position:absolute;right:0;top:0;bottom:0;display:flex;align-items:flex-end;justify-content:flex-end;z-index:1}
+.person::before{content:"";position:absolute;right:4%;top:2%;width:min(420px,78%);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 50% 45%,rgba(255,233,146,.30) 0%,rgba(255,233,146,.12) 45%,transparent 70%);z-index:-1}
+.person::after{content:"";position:absolute;right:10%;top:6%;width:min(360px,66%);aspect-ratio:1;border-radius:50%;border:1px dashed rgba(255,233,146,.28);z-index:-1}
+.person img{height:100%;width:auto;max-width:none;
+  -webkit-mask-image:linear-gradient(to bottom,#000 78%,transparent 100%),linear-gradient(to right,#000 86%,transparent 100%);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to bottom,#000 78%,transparent 100%),linear-gradient(to right,#000 86%,transparent 100%);
+  mask-composite:intersect}
+.editor{position:absolute;left:-36px;bottom:56px;width:min(392px,72%);z-index:2;background:var(--vs-bg);border:1px solid #33333a;border-radius:12px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(0,0,0,.95),0 0 0 1px rgba(255,233,146,.04);transform:perspective(1400px) rotateY(-5deg) rotateX(2deg);transition:transform .5s}
 .editor:hover{transform:none}
 .ed-top{display:flex;align-items:stretch;background:var(--vs-bar);border-bottom:1px solid #2b2b2b;font-size:.78rem}
 .ed-top .dots{display:flex;align-items:center;gap:7px;padding:0 14px}
@@ -114,17 +123,14 @@ p{margin:0 0 1em}
 .tab.on{background:var(--vs-bg);color:#e6e6e6;box-shadow:inset 0 2px 0 var(--gold)}
 .tab b{font:700 .62rem/1 var(--mono);padding:2px 3px;border-radius:3px}
 .tab b.ts{color:#fff;background:#3178c6}.tab b.md{color:#fff;background:#6b6b75}
-.ed-code{margin:0;padding:18px 18px 22px 0;font-size:clamp(.72rem,1.05vw,.86rem);line-height:1.75;color:#d4d4d4;overflow-x:auto;white-space:pre;tab-size:2}
-.ed-code .ln{display:inline-block;width:3.2em;padding-right:1.2em;text-align:right;color:#5a5a60;user-select:none}
+.ed-code{margin:0;padding:16px 14px 18px 0;font-size:.76rem;line-height:1.7;color:#d4d4d4;overflow-x:auto;white-space:pre;tab-size:2}
+.ed-code .ln{display:inline-block;width:2.8em;padding-right:1em;text-align:right;color:#5a5a60;user-select:none}
 .caret{display:inline-block;width:2px;height:1.1em;margin-left:2px;vertical-align:-.15em;background:var(--gold);animation:blink 1.05s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
 .ed-status{display:flex;gap:18px;padding:5px 14px;font-size:.7rem;color:var(--ink);background:var(--gold)}
 .ed-status span{display:inline-flex;align-items:center;gap:5px}
 .ed-status span:first-child{margin-right:auto}
-.avatar{position:absolute;right:-6px;top:0;width:112px;height:112px;border-radius:50%;padding:4px;background:conic-gradient(from 200deg,var(--gold),var(--gold-3),#fff3bf,var(--gold));box-shadow:0 14px 40px -10px rgba(0,0,0,.8);z-index:3}
-.avatar-in{width:100%;height:100%;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 50% 35%,#2e2e34,#151518)}
-.avatar img{width:100%;height:100%;object-fit:cover;object-position:50% 0;transform:scale(1.85);transform-origin:52% 4%}
-.lets-talk{position:absolute;left:-34px;bottom:-8px;width:104px;height:104px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:var(--gold);color:var(--ink);font-weight:700;font-size:.82rem;line-height:1.15;box-shadow:0 0 0 8px rgba(255,233,146,.12),0 18px 36px -12px rgba(0,0,0,.8);transition:transform .25s;z-index:3}
+.lets-talk{position:absolute;left:-60px;bottom:6px;width:104px;height:104px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:var(--gold);color:var(--ink);font-weight:700;font-size:.82rem;line-height:1.15;box-shadow:0 0 0 8px rgba(255,233,146,.12),0 18px 36px -12px rgba(0,0,0,.8);transition:transform .25s;z-index:3}
 .lets-talk .ico{margin-top:4px;transform:rotate(-45deg)}
 .lets-talk:hover{transform:scale(1.06) rotate(-4deg)}
 .scroll-down{position:absolute;right:28px;bottom:26px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--muted);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase}
@@ -294,10 +300,14 @@ p{margin:0 0 1em}
   .nav-links a::after{display:none}
   .hero{padding-top:calc(var(--nav-h) + 28px)}
   .hero-wrap{grid-template-columns:1fr;gap:28px}
-  .hero-visual{padding:36px 0 34px 18px;max-width:560px;width:100%;margin:0 auto}
-  .editor{transform:none}
-  .avatar{width:88px;height:88px;right:0}
-  .lets-talk{width:84px;height:84px;font-size:.72rem;left:-6px;bottom:-22px}
+  .hero-visual{max-width:560px;width:100%;margin:0 auto;min-height:0;display:flex;flex-direction:column;align-items:center}
+  .person{position:relative;inset:auto;height:min(118vw,520px);justify-content:center}
+  .person::before{right:auto;left:50%;transform:translateX(-50%);width:min(360px,84vw)}
+  .person::after{right:auto;left:50%;transform:translateX(-50%);width:min(310px,72vw)}
+  .editor{position:relative;left:auto;bottom:auto;transform:none;width:100%;margin-top:-90px}
+  .ed-code{font-size:.68rem}
+  .person img{-webkit-mask-image:linear-gradient(to bottom,#000 80%,transparent 100%),linear-gradient(to right,#000 90%,transparent 100%);mask-image:linear-gradient(to bottom,#000 80%,transparent 100%),linear-gradient(to right,#000 90%,transparent 100%)}
+  .lets-talk{width:80px;height:80px;font-size:.7rem;left:auto;right:-4px;bottom:-26px}
   .scroll-down{display:none}
   .code-deco{opacity:.22}
   .about{grid-template-columns:1fr}
